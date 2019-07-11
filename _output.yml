@@ -5,4 +5,5 @@ bookdown::gitbook:
     toc:
       collapse: section
       before: |
-          <li><strong><a href="./">MRDA 2019</a></strong></li>
+          <li><strong><a href="./">BA 2019</a></strong></li>
+          
