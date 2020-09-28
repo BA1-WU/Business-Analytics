@@ -2,4 +2,4 @@ delete_merged_file: yes
 apple-touch-icon: "logo.png"
 apple-touch-icon-size: 120
 favicon: "favicon.ico"
-output_dir: "docs"
+output_dir:"_book"
