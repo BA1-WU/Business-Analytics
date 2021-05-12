@@ -1,0 +1,65 @@
+---
+title: "18-Linear_Programming"
+output:
+  html_notebook: default
+  html_document:
+    toc: yes
+  pdf_document:
+    toc: yes
+---
+
+# Linear Programming
+
+This chapter is primarily based on 
+
+* Hillier-Liebermann (2001): Introduction to Operations Research
+
+
+[You can download the corresponding R-Code here](./Code/14-lp.R)
+
+## Introduction
+
+Linear programming is a problem-solving approach that has been developed to help managers make decisions. It uses a mathematical model to describe the problem of concern. The adjective linear means that all the mathematical functions in this model are required to be linear functions. The word programming does not refer here to computer programming; rather, it is essentially a synonym for planning. Thus, linear programming involves the planning of activities to obtain an optimal result that maximizes or minimizes the outcome.
+
+In general, the process of Linear Programming follows three steps:
+
+* The process begins by carefully observing and formulating the problem, including gathering all relevant data.
+
+* The next step is to construct a mathematical model that attempts to abstract the real problem.
+
+* It then attempts to find an optimal solution.
+
+Optimization models are used to make the optimum decision concerning the design of a system by allocating scarce resources.
+
+* **Production Planning**: Given several products with varying production requirements and cost structures, determine how much of each product to produce in order to maximize profits.
+
+* **Scheduling**: Given a staff of people, determine an optimal work schedule that maximizes worker preferences while adhering to scheduling rules. 
+
+* **Network Installation**: Given point-to-point demands on a network, install capacities on the telecom links so as to minimize installation and routing costs.
+
+The three main components of an optimization model are:
+
+* **Objective function**: a function to be minimized or maximized
+
+* **Decision variables**: controllable variables that influence the result of the objective function
+
+* **Constraints**: restrictions for the values the decision variables can take
+
+When all decision variables and constraints in the model are linear, linear programming is used to solve an optimization problem.
+In R, the package lpSolve is used for solving linear programming problems. 
+
+Consider the following mathematical model as a simple example for how to solve linear programs in R.
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
