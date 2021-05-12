@@ -1,9 +1,9 @@
 ---
-title: "18-Linear_Programming"
+title: "18-Linear Programming"
 output:
-  html_notebook: default
   html_document:
     toc: yes
+  html_notebook: default
   pdf_document:
     toc: yes
 ---
