@@ -1,9 +1,9 @@
 ---
 title: "18-Linear Programming"
 output:
+  html_notebook: default
   html_document:
     toc: yes
-  html_notebook: default
   pdf_document:
     toc: yes
 ---
@@ -48,13 +48,87 @@ The three main components of an optimization model are:
 When all decision variables and constraints in the model are linear, linear programming is used to solve an optimization problem.
 In R, the package lpSolve is used for solving linear programming problems. 
 
-Consider the following mathematical model as a simple example for how to solve linear programs in R.
+Consider the following example on how to solve linear programs in R.
 
-```{r cars}
-summary(cars)
+> A company wants to determine how much of each product 1 and 2 to produce in order to maximize profits. They have three plants with limited capacities. Product 1 requires 1 hour at plant 1 and 3 hours at plant 3, generating profits of $3 per item. Product 2 requires 2 hours at plant 2 and 3 hours at plant 3, and can be sold for $5 per item. The production capacities are 4, 12, and 18 hours, for plant 1, 2, and 3, respectively. Because both products are competing for the same production capacity in Plant 3, it is not clear which mix of the two products is most profitable. 
+> Determine how many items of each of the two products should be produced in order to maximize the total profit, subject to the restrictions imposed by the limited production capacities available in the three plants.
+
+The corresponding mathematical model will then be defined as follows:
+
+$$
+x_1:\text{ number of produced items of product 1} \\
+x_2:\text{ number of produced items of product 2} \\
+\\
+max.\ 3x_1 * 5x_2 \\
+s.t. \\
+3x_1 \leq 4 \\
+2x_2 \leq 12 \\
+3x_1 + 2x_2 \leq 18 \\
+x_1 \geq 0 \\
+x_2 \geq 0
+$$
+
+To solve this linear programming model in R, we first need to import the lpSolve package. Do not forget to install the package first, if not already installed.
+```{r lpSolve}
+#install.packages(lpSolve)
+library(lpSolve)
 ```
 
-## Including Plots
+To build the model, first the coefficients f the objective function need to be set:
+```{r objective}
+objective<-c(3,5)
+```
+
+The production capacity constraints of the linear programming model shown above can be summarized in the following matrix:
+$$
+\begin{bmatrix}
+3 & 0\\
+0 & 2\\
+3 & 2
+\end{bmatrix}
+\begin{bmatrix}
+x_1\\
+x_2
+\end{bmatrix}
+\leq
+\begin{bmatrix}
+4\\
+12\\
+18
+\end{bmatrix}
+$$
+The non-negativity constraint can be ignored, R automatically assumes this constraint.
+The constraints are constructed with three different functions. First, the left-hand side:
+
+```{r constraintl}
+constraint.lhs <- matrix(c(3, 0, 0, 2, 3, 2), nrow = 3, byrow = TRUE)
+```
+
+The argument nrow=3 ensures that the matrix has three rows. The argument byrow=TRUE causes the numbers 3,0,0,2,3,2 to be arranged line by line in the generated matrix.
+
+Next, the inequality signs are set:
+```{r signs}
+constraint.direction <- c("<=","<=","<=")
+```
+
+Finally, the right hand side of the constraints are set:
+```{r constraintr}
+constraint.rhs <- c(4,12,18)
+```
+
+To run the optimization, the function “lp” is used. The final values are displayed using this function and adding $solution. Adding $duals shows the shadow prices for the constraints as well as for the decision variables.
+```{r run}
+lp(direction="max", objective, constraint.lhs, constraint.direction, constraint.rhs)
+
+# display final values
+lp(direction="max", objective, constraint.lhs, constraint.direction, constraint.rhs)$solution
+
+# display shadow prices and decision variables
+lp("max", f.obj, f.con, f.dir, f.rhs, compute.sens=TRUE)$duals
+```
+
+
+## Transportation problem
 
 You can also embed plots, for example:
 

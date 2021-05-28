@@ -1,9 +1,9 @@
 ---
 title: "13-Factor Analysis"
 output:
+  html_notebook: default
   html_document:
     toc: yes
-  html_notebook: default
   pdf_document:
     toc: yes
 ---
