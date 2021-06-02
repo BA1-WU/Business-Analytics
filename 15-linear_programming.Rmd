@@ -14,9 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Linear Programming
 
-This chapter is primarily based on 
-
-* Hillier-Liebermann (2001): Introduction to Operations Research
+This chapter is primarily based on Hillier-Liebermann (2001): Introduction to Operations Research.
 
 
 [You can download the corresponding R-Code here](./Code/14-lp.R)
