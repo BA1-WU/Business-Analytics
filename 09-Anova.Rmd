@@ -499,6 +499,7 @@ leveneTest(hours ~ group, data = hours_abc, center = mean)
 The null hypothesis of the test is that the group variances are equal. Thus, if the test result is significant it means that the variances are not equal. If we cannot reject the null hypothesis (i.e., the group variances are not significantly different), we can proceed with the ANOVA as follows: 
 
 ```{r message=FALSE, warning=FALSE, echo=TRUE, eval=TRUE}
+hours_abc$group <- as.factor(hours_abc$group)
 aov <- aov(hours ~ group, data = hours_abc)
 summary(aov)
 ```

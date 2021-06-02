@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<html >
-
+<html lang="" xml:lang="">
 <head>
 
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>11- Logistic Regression</title>
-  <meta name="description" content="11- Logistic Regression">
-  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+  <meta name="description" content="11- Logistic Regression" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
   <meta property="og:title" content="11- Logistic Regression" />
   <meta property="og:type" content="book" />
@@ -25,19 +24,24 @@
 
 
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
 
 
+<script src="libs/header-attrs-2.8/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
 
 
 
@@ -47,31 +51,32 @@
 
 <link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
 <script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; position: absolute; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; }
-pre.numberSource a.sourceLine:empty
-  { position: absolute; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
-    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all;
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -80,9 +85,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -115,6 +120,7 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+
 </head>
 
 <body>
@@ -127,9 +133,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li><strong><a href="./">MRDA 2018</a></strong></li>
+<li><strong><a href="./">BA</a></strong></li>
+
 <li class="divider"></li>
-<li class="chapter" data-level="0.1" data-path=""><a href="#logistic-regression"><i class="fa fa-check"></i><b>0.1</b> Logistic regression</a><ul>
+<li class="chapter" data-level="0.1" data-path=""><a href="#logistic-regression"><i class="fa fa-check"></i><b>0.1</b> Logistic regression</a>
+<ul>
 <li class="chapter" data-level="0.1.1" data-path=""><a href="#motivation-and-intuition"><i class="fa fa-check"></i><b>0.1.1</b> Motivation and intuition</a></li>
 <li class="chapter" data-level="0.1.2" data-path=""><a href="#technical-details-of-the-model"><i class="fa fa-check"></i><b>0.1.2</b> Technical details of the model</a></li>
 <li class="chapter" data-level="0.1.3" data-path=""><a href="#estimation-in-r"><i class="fa fa-check"></i><b>0.1.3</b> Estimation in R</a></li>
@@ -154,16 +162,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="header">
 <h1 class="title">11- Logistic Regression</h1>
 </div>
-<div id="logistic-regression" class="section level2">
+<div id="logistic-regression" class="section level2" number="0.1">
 <h2><span class="header-section-number">0.1</span> Logistic regression</h2>
-<div id="motivation-and-intuition" class="section level3">
+<p><strong>The following video summarizes how to visualize log-transformed regressions in R</strong></p>
+<div align="center">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/phpl7vEJUQY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+</iframe>
+</div>
+<div id="motivation-and-intuition" class="section level3" number="0.1.1">
 <h3><span class="header-section-number">0.1.1</span> Motivation and intuition</h3>
-<p>In the last section we saw how to predict continuous outcomes (sales, height, etc.) via linear regression models. Another interesting case is that of binary outcomes, i.e. when the variable we want to model can only take two values (yes or no, group 1 or group 2, dead or alive, etc.). To this end we would like to estimate how our predictor variables change the probability of a value being 0 or 1. In this case we can technically still use a linear model (e.g. OLS). However, its predictions will most likely not be particularly useful. A more usefull method is the logistic regression. In particular we are going to have a look at the logit model. In the following dataset we are trying to predict whether a song will be a top-10 hit on a popular music streaming platform. In a first step we are going to use only the danceability index as a predictor. Later we are going to add more independent variables.</p>
+<p>In the last section we saw how to predict continuous outcomes (sales, height, etc.) via linear regression models. Another interesting case is that of binary outcomes, i.e. when the variable we want to model can only take two values (yes or no, group 1 or group 2, dead or alive, etc.). To this end we would like to estimate how our predictor variables change the probability of a value being 0 or 1. In this case we can technically still use a linear model (e.g. OLS). However, its predictions will most likely not be particularly useful. A more useful method is the logistic regression. In particular we are going to have a look at the logit model. In the following dataset we are trying to predict whether a song will be a top-10 hit on a popular music streaming platform. In a first step we are going to use only the danceability index as a predictor. Later we are going to add more independent variables.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>chart_data <span class="ot">&lt;-</span> <span class="fu">read.delim2</span>(<span class="st">&quot;https://raw.githubusercontent.com/IMSMWU/MRDA2018/master/data/chart_data_logistic.dat&quot;</span>,<span class="at">header=</span>T, <span class="at">sep =</span> <span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>,<span class="at">stringsAsFactors =</span> F, <span class="at">dec =</span> <span class="st">&quot;.&quot;</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Create a new dummy variable &quot;top10&quot;, which is 1 if a song made it to the top10 and 0 else:</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>chart_data<span class="sc">$</span>top10 <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(chart_data<span class="sc">$</span>rank<span class="sc">&lt;</span><span class="dv">11</span>,<span class="dv">1</span>,<span class="dv">0</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Inspect data</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(chart_data)</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["artistName"],"name":[1],"type":["chr"],"align":["left"]},{"label":["trackID"],"name":[2],"type":["chr"],"align":["left"]},{"label":["trackName"],"name":[3],"type":["chr"],"align":["left"]},{"label":["rank"],"name":[4],"type":["int"],"align":["right"]},{"label":["streams"],"name":[5],"type":["int"],"align":["right"]},{"label":["frequency"],"name":[6],"type":["int"],"align":["right"]},{"label":["danceability"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["energy"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["key"],"name":[9],"type":["int"],"align":["right"]},{"label":["loudness"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["speechiness"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["acousticness"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["instrumentalness"],"name":[13],"type":["dbl"],"align":["right"]},{"label":["liveness"],"name":[14],"type":["dbl"],"align":["right"]},{"label":["valence"],"name":[15],"type":["dbl"],"align":["right"]},{"label":["tempo"],"name":[16],"type":["dbl"],"align":["right"]},{"label":["duration_ms"],"name":[17],"type":["int"],"align":["right"]},{"label":["time_signature"],"name":[18],"type":["int"],"align":["right"]},{"label":["isrc"],"name":[19],"type":["chr"],"align":["left"]},{"label":["spotifyArtistID"],"name":[20],"type":["chr"],"align":["left"]},{"label":["releaseDate"],"name":[21],"type":["chr"],"align":["left"]},{"label":["daysSinceRelease"],"name":[22],"type":["int"],"align":["right"]},{"label":["spotifyFollowers"],"name":[23],"type":["int"],"align":["right"]},{"label":["mbid"],"name":[24],"type":["chr"],"align":["left"]},{"label":["artistCountry"],"name":[25],"type":["chr"],"align":["left"]},{"label":["indicator"],"name":[26],"type":["int"],"align":["right"]},{"label":["top10"],"name":[27],"type":["dbl"],"align":["right"]}],"data":[{"1":"dj mustard","2":"01gNiOqg8u7vT90uVgOVmz","3":"Whole Lotta Lovin'","4":"120","5":"917710","6":"3","7":"0.438","8":"0.399","9":"4","10":"-8.75","11":"0.0623","12":"0.1540","13":"8.45e-06","14":"0.0646","15":"0.382","16":"160.2","17":"299160","18":"5","19":"QMJMT1500808","20":"0YinUQ50QDB7ZxSCLyQ40k","21":"08.01.2016","22":"450","23":"139718","24":"0612bcce-e351-40be-b3d7-2bb5e1c23479","25":"US","26":"1","27":"0"},{"1":"bing crosby","2":"01h424WG38dgY34vkI3Yd0","3":"White Christmas","4":"70","5":"1865526","6":"9","7":"0.225","8":"0.248","9":"9","10":"-15.87","11":"0.0337","12":"0.9120","13":"1.43e-04","14":"0.4040","15":"0.185","16":"96.0","17":"183613","18":"4","19":"USMC14750470","20":"6ZjFtWeHP9XN7FeKSUe80S","21":"27.08.2007","22":"1000","23":"123135","24":"2437980f-513a-44fc-80f1-b90d9d7fcf8f","25":"US","26":"1","27":"0"},{"1":"post malone","2":"02opp1cycqiFNDpLd2o1J3","3":"Big Lie","4":"129","5":"1480436","6":"1","7":"0.325","8":"0.689","9":"6","10":"-4.95","11":"0.2430","12":"0.1970","13":"0.00e+00","14":"0.0722","15":"0.225","16":"77.9","17":"207680","18":"4","19":"USUM71614468","20":"246dkjvS1zLTtiykXe5h60","21":"09.12.2016","22":"114","23":"629600","24":"b1e26560-60e5-4236-bbdb-9aa5a8d5ee19","25":"0","26":"1","27":"0"},{"1":"chris brown","2":"02yRHV9Cgk8CUS2fx9lKVC","3":"Anyway","4":"130","5":"894216","6":"1","7":"0.469","8":"0.664","9":"7","10":"-7.16","11":"0.1210","12":"0.0566","13":"1.58e-06","14":"0.4820","15":"0.267","16":"124.7","17":"211413","18":"4","19":"USRC11502943","20":"7bXgB6jMjp9ATFy66eO08Z","21":"11.12.2015","22":"478","23":"4077185","24":"c234fa42-e6a6-443e-937e-2f4b073538a3","25":"US","26":"1","27":"0"},{"1":"5 seconds of summer","2":"0375PEO6HIwCHx5Y2sowQm","3":"Waste The Night","4":"182","5":"642784","6":"1","7":"0.286","8":"0.907","9":"8","10":"-4.74","11":"0.1130","12":"0.0144","13":"0.00e+00","14":"0.2680","15":"0.271","16":"75.6","17":"266640","18":"4","19":"GBUM71505159","20":"5Rl15oVamLq7FbSb0NNBNy","21":"23.10.2015","22":"527","23":"2221348","24":"830e5c4e-6b7d-431d-86ab-00c751281dc5","25":"AU","26":"1","27":"0"},{"1":"rihanna","2":"046irIGshCqu24AjmEWZtr","3":"Same Ol’ Mistakes","4":"163","5":"809256","6":"2","7":"0.447","8":"0.795","9":"8","10":"-5.43","11":"0.0443","12":"0.2110","13":"1.69e-03","14":"0.0725","15":"0.504","16":"151.3","17":"397093","18":"4","19":"QM5FT1600108","20":"5pKCCKE2ajJHZ9KAiaK11H","21":"29.01.2016","22":"429","23":"9687258","24":"73e5e69d-3554-40d8-8516-00cb38737a1c","25":"0","26":"1","27":"0"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["artistName"],"name":[1],"type":["chr"],"align":["left"]},{"label":["trackID"],"name":[2],"type":["chr"],"align":["left"]},{"label":["trackName"],"name":[3],"type":["chr"],"align":["left"]},{"label":["rank"],"name":[4],"type":["int"],"align":["right"]},{"label":["streams"],"name":[5],"type":["int"],"align":["right"]},{"label":["frequency"],"name":[6],"type":["int"],"align":["right"]},{"label":["danceability"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["energy"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["key"],"name":[9],"type":["int"],"align":["right"]},{"label":["loudness"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["speechiness"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["acousticness"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["instrumentalness"],"name":[13],"type":["dbl"],"align":["right"]},{"label":["liveness"],"name":[14],"type":["dbl"],"align":["right"]},{"label":["valence"],"name":[15],"type":["dbl"],"align":["right"]},{"label":["tempo"],"name":[16],"type":["dbl"],"align":["right"]},{"label":["duration_ms"],"name":[17],"type":["int"],"align":["right"]},{"label":["time_signature"],"name":[18],"type":["int"],"align":["right"]},{"label":["isrc"],"name":[19],"type":["chr"],"align":["left"]},{"label":["spotifyArtistID"],"name":[20],"type":["chr"],"align":["left"]},{"label":["releaseDate"],"name":[21],"type":["chr"],"align":["left"]},{"label":["daysSinceRelease"],"name":[22],"type":["int"],"align":["right"]},{"label":["spotifyFollowers"],"name":[23],"type":["int"],"align":["right"]},{"label":["mbid"],"name":[24],"type":["chr"],"align":["left"]},{"label":["artistCountry"],"name":[25],"type":["chr"],"align":["left"]},{"label":["indicator"],"name":[26],"type":["int"],"align":["right"]},{"label":["top10"],"name":[27],"type":["dbl"],"align":["right"]}],"data":[{"1":"dj mustard","2":"01gNiOqg8u7vT90uVgOVmz","3":"Whole Lotta Lovin'","4":"120","5":"917710","6":"3","7":"0.438","8":"0.399","9":"4","10":"-8.752","11":"0.0623","12":"0.1540","13":"0.00000845","14":"0.0646","15":"0.382","16":"160.159","17":"299160","18":"5","19":"QMJMT1500808","20":"0YinUQ50QDB7ZxSCLyQ40k","21":"08.01.2016","22":"450","23":"139718","24":"0612bcce-e351-40be-b3d7-2bb5e1c23479","25":"US","26":"1","27":"0"},{"1":"bing crosby","2":"01h424WG38dgY34vkI3Yd0","3":"White Christmas","4":"70","5":"1865526","6":"9","7":"0.225","8":"0.248","9":"9","10":"-15.871","11":"0.0337","12":"0.9120","13":"0.00014300","14":"0.4040","15":"0.185","16":"96.013","17":"183613","18":"4","19":"USMC14750470","20":"6ZjFtWeHP9XN7FeKSUe80S","21":"27.08.2007","22":"1000","23":"123135","24":"2437980f-513a-44fc-80f1-b90d9d7fcf8f","25":"US","26":"1","27":"0"},{"1":"post malone","2":"02opp1cycqiFNDpLd2o1J3","3":"Big Lie","4":"129","5":"1480436","6":"1","7":"0.325","8":"0.689","9":"6","10":"-4.951","11":"0.2430","12":"0.1970","13":"0.00000000","14":"0.0722","15":"0.225","16":"77.917","17":"207680","18":"4","19":"USUM71614468","20":"246dkjvS1zLTtiykXe5h60","21":"09.12.2016","22":"114","23":"629600","24":"b1e26560-60e5-4236-bbdb-9aa5a8d5ee19","25":"0","26":"1","27":"0"},{"1":"chris brown","2":"02yRHV9Cgk8CUS2fx9lKVC","3":"Anyway","4":"130","5":"894216","6":"1","7":"0.469","8":"0.664","9":"7","10":"-7.160","11":"0.1210","12":"0.0566","13":"0.00000158","14":"0.4820","15":"0.267","16":"124.746","17":"211413","18":"4","19":"USRC11502943","20":"7bXgB6jMjp9ATFy66eO08Z","21":"11.12.2015","22":"478","23":"4077185","24":"c234fa42-e6a6-443e-937e-2f4b073538a3","25":"US","26":"1","27":"0"},{"1":"5 seconds of summer","2":"0375PEO6HIwCHx5Y2sowQm","3":"Waste The Night","4":"182","5":"642784","6":"1","7":"0.286","8":"0.907","9":"8","10":"-4.741","11":"0.1130","12":"0.0144","13":"0.00000000","14":"0.2680","15":"0.271","16":"75.640","17":"266640","18":"4","19":"GBUM71505159","20":"5Rl15oVamLq7FbSb0NNBNy","21":"23.10.2015","22":"527","23":"2221348","24":"830e5c4e-6b7d-431d-86ab-00c751281dc5","25":"AU","26":"1","27":"0"},{"1":"rihanna","2":"046irIGshCqu24AjmEWZtr","3":"Same Olâ\\200\\231 Mistakes","4":"163","5":"809256","6":"2","7":"0.447","8":"0.795","9":"8","10":"-5.435","11":"0.0443","12":"0.2110","13":"0.00169000","14":"0.0725","15":"0.504","16":"151.277","17":"397093","18":"4","19":"QM5FT1600108","20":"5pKCCKE2ajJHZ9KAiaK11H","21":"29.01.2016","22":"429","23":"9687258","24":"73e5e69d-3554-40d8-8516-00cb38737a1c","25":"0","26":"1","27":"0"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(chart_data)</span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    422 obs. of  27 variables:
 ##  $ artistName      : chr  &quot;dj mustard&quot; &quot;bing crosby&quot; &quot;post malone&quot; &quot;chris brown&quot; ...
 ##  $ trackID         : chr  &quot;01gNiOqg8u7vT90uVgOVmz&quot; &quot;01h424WG38dgY34vkI3Yd0&quot; &quot;02opp1cycqiFNDpLd2o1J3&quot; &quot;02yRHV9Cgk8CUS2fx9lKVC&quot; ...
@@ -177,7 +200,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  $ loudness        : num  -8.75 -15.87 -4.95 -7.16 -4.74 ...
 ##  $ speechiness     : num  0.0623 0.0337 0.243 0.121 0.113 0.0443 0.0937 0.0362 0.119 0.056 ...
 ##  $ acousticness    : num  0.154 0.912 0.197 0.0566 0.0144 0.211 0.0426 0.0178 0.072 0.289 ...
-##  $ instrumentalness: num  8.45e-06 1.43e-04 0.00 1.58e-06 0.00 1.69e-03 1.67e-05 0.00 0.00 1.01e-04 ...
+##  $ instrumentalness: num  0.00000845 0.000143 0 0.00000158 0 0.00169 0.0000167 0 0 0.000101 ...
 ##  $ liveness        : num  0.0646 0.404 0.0722 0.482 0.268 0.0725 0.193 0.0804 0.116 0.102 ...
 ##  $ valence         : num  0.382 0.185 0.225 0.267 0.271 0.504 0.0729 0.415 0.442 0.398 ...
 ##  $ tempo           : num  160.2 96 77.9 124.7 75.6 ...
@@ -192,23 +215,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  $ artistCountry   : chr  &quot;US&quot; &quot;US&quot; &quot;0&quot; &quot;US&quot; ...
 ##  $ indicator       : int  1 1 1 1 1 1 1 1 1 1 ...
 ##  $ top10           : num  0 0 0 0 0 0 0 0 0 0 ...</code></pre>
-<p>Below are two attempts to model the data. The left assumes a linear probability model (calculated with the same methods that we used in the last chapter), while the right model is a <strong>logistic regression model</strong>. As you can see, the linear probability model produces probabilities that are above 1 and below 0, which are not valid probabilities, while the logistic model stays between 0 and 1. Notice that songs with a higher dancability index (on the right of the x-axis) seem to cluster more at <span class="math inline">\(1\)</span> and those with a lower more at <span class="math inline">\(0\)</span> so we expect a positive influence of dancability on the probability of a song to become a top-10 hit.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-3"></span>
-<img src="12-Logistic_Regression_files/figure-html/unnamed-chunk-3-1.png" alt="The same binary data explained by two models; A linear probabilty model (on the left) and a logistic regression model (on the right)" width="672" />
+<p>Below are two attempts to model the data. The left assumes a linear probability model (calculated with the same methods that we used in the last chapter), while the right model is a <strong>logistic regression model</strong>. As you can see, the linear probability model produces probabilities that are above 1 and below 0, which are not valid probabilities, while the logistic model stays between 0 and 1. Notice that songs with a higher danceability index (on the right of the x-axis) seem to cluster more at <span class="math inline">\(1\)</span> and those with a lower more at <span class="math inline">\(0\)</span> so we expect a positive influence of danceability on the probability of a song to become a top-10 hit.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-4"></span>
+<img src="12-Logistic_Regression_files/figure-html/unnamed-chunk-4-1.png" alt="The same binary data explained by two models; A linear probability model (on the left) and a logistic regression model (on the right)" width="672" />
 <p class="caption">
-Figure 1: The same binary data explained by two models; A linear probabilty model (on the left) and a logistic regression model (on the right)
+Figure 1: The same binary data explained by two models; A linear probability model (on the left) and a logistic regression model (on the right)
 </p>
 </div>
 <p>A key insight at this point is that the connection between <span class="math inline">\(\mathbf{X}\)</span> and <span class="math inline">\(Y\)</span> is <strong>non-linear</strong> in the logistic regression model. As we can see in the plot, the probability of success is most strongly affected by danceability around values of <span class="math inline">\(0.5\)</span>, while higher and lower values have a smaller marginal effect. This obviously also has consequences for the interpretation of the coefficients later on.</p>
 </div>
-<div id="technical-details-of-the-model" class="section level3">
+<div id="technical-details-of-the-model" class="section level3" number="0.1.2">
 <h3><span class="header-section-number">0.1.2</span> Technical details of the model</h3>
 <p>As the name suggests, the logistic function is an important component of the logistic regression model. It has the following form:</p>
 <p><span class="math display">\[
 f(\mathbf{X}) = \frac{1}{1 + e^{-\mathbf{X}}}
 \]</span>
 This function transforms all real numbers into the range between 0 and 1. We need this to model probabilities, as probabilities can only be between 0 and 1.</p>
-<p><img src="12-Logistic_Regression_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p><img src="12-Logistic_Regression_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <p>The logistic function on its own is not very useful yet, as we want to be able to determine how predictors influence the probability of a value to be equal to 1. To this end we replace the <span class="math inline">\(\mathbf{X}\)</span> in the function above with our familiar linear specification, i.e.</p>
 <p><span class="math display">\[
 \mathbf{X} = \beta_0 + \beta_1 * x_{1,i} + \beta_2 * x_{2,i} + ... +\beta_m * x_{m,i}\\
@@ -217,26 +240,26 @@ f(\mathbf{X}) = P(y_i = 1) = \frac{1}{1 + e^{-(\beta_0 + \beta_1 * x_{1,i} + \be
 <p>In our case we only have <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>, the coefficient associated with danceability.</p>
 <p>In general we now have a mathematical relationship between our predictor variables <span class="math inline">\((x_1, ..., x_m)\)</span> and the probability of <span class="math inline">\(y_i\)</span> being equal to one. The last step is to estimate the parameters of this model <span class="math inline">\((\beta_0, \beta_1, ..., \beta_m)\)</span> to determine the magnitude of the effects.</p>
 </div>
-<div id="estimation-in-r" class="section level3">
+<div id="estimation-in-r" class="section level3" number="0.1.3">
 <h3><span class="header-section-number">0.1.3</span> Estimation in R</h3>
 <p>We are now going to show how to perform logistic regression in R. Instead of <code>lm()</code> we now use <code>glm(Y~X, family=binomial(link = 'logit'))</code> to use the logit model. We can still use the <code>summary()</code> command to inspect the output of the model.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co">#Run the glm</span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">logit_model &lt;-<span class="st"> </span><span class="kw">glm</span>(top10 <span class="op">~</span><span class="st"> </span>danceability,<span class="dt">family=</span><span class="kw">binomial</span>(<span class="dt">link=</span><span class="st">&#39;logit&#39;</span>),<span class="dt">data=</span>chart_data)</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="co">#Inspect model summary</span></a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="kw">summary</span>(logit_model )</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Run the glm</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>logit_model <span class="ot">&lt;-</span> <span class="fu">glm</span>(top10 <span class="sc">~</span> danceability,<span class="at">family=</span><span class="fu">binomial</span>(<span class="at">link=</span><span class="st">&#39;logit&#39;</span>),<span class="at">data=</span>chart_data)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#Inspect model summary</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(logit_model )</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = top10 ~ danceability, family = binomial(link = &quot;logit&quot;), 
 ##     data = chart_data)
 ## 
 ## Deviance Residuals: 
-##    Min      1Q  Median      3Q     Max  
-## -2.885  -0.501  -0.238   0.293   2.820  
+##     Min       1Q   Median       3Q      Max  
+## -2.8852  -0.5011  -0.2385   0.2932   2.8196  
 ## 
 ## Coefficients:
-##              Estimate Std. Error z value Pr(&gt;|z|)    
-## (Intercept)   -10.041      0.896   -11.2   &lt;2e-16 ***
-## danceability   17.094      1.602    10.7   &lt;2e-16 ***
+##              Estimate Std. Error z value            Pr(&gt;|z|)    
+## (Intercept)  -10.0414     0.8963  -11.20 &lt;0.0000000000000002 ***
+## danceability  17.0939     1.6016   10.67 &lt;0.0000000000000002 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
@@ -244,52 +267,52 @@ f(\mathbf{X}) = P(y_i = 1) = \frac{1}{1 + e^{-(\beta_0 + \beta_1 * x_{1,i} + \be
 ## 
 ##     Null deviance: 539.05  on 421  degrees of freedom
 ## Residual deviance: 258.49  on 420  degrees of freedom
-## AIC: 262.5
+## AIC: 262.49
 ## 
 ## Number of Fisher Scoring iterations: 6</code></pre>
-<p>Noticably this output does not include an <span class="math inline">\(R^2\)</span> value to asses model fit. Multiple “Pseudo <span class="math inline">\(R^2\)</span>s”, similar to the one used in OLS, have been developed. There are packages that return the <span class="math inline">\(R^2\)</span> given a logit model (see <code>rcompanion</code> or <code>pscl</code>). The calculation by hand is also fairly simple. We define the function <code>logisticPseudoR2s()</code> that takes a logit model as an input and returns three popular pseudo <span class="math inline">\(R^2\)</span> values.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">logisticPseudoR2s &lt;-<span class="st"> </span><span class="cf">function</span>(LogModel) {</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">  dev &lt;-<span class="st"> </span>LogModel<span class="op">$</span>deviance </a>
-<a class="sourceLine" id="cb4-3" data-line-number="3">  nullDev &lt;-<span class="st"> </span>LogModel<span class="op">$</span>null.deviance </a>
-<a class="sourceLine" id="cb4-4" data-line-number="4">  modelN &lt;-<span class="st"> </span><span class="kw">length</span>(LogModel<span class="op">$</span>fitted.values)</a>
-<a class="sourceLine" id="cb4-5" data-line-number="5">  R.l &lt;-<span class="st">  </span><span class="dv">1</span> <span class="op">-</span><span class="st">  </span>dev <span class="op">/</span><span class="st"> </span>nullDev</a>
-<a class="sourceLine" id="cb4-6" data-line-number="6">  R.cs &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">-</span><span class="st"> </span><span class="kw">exp</span> ( <span class="op">-</span>(nullDev <span class="op">-</span><span class="st"> </span>dev) <span class="op">/</span><span class="st"> </span>modelN)</a>
-<a class="sourceLine" id="cb4-7" data-line-number="7">  R.n &lt;-<span class="st"> </span>R.cs <span class="op">/</span><span class="st"> </span>( <span class="dv">1</span> <span class="op">-</span><span class="st"> </span>( <span class="kw">exp</span> (<span class="op">-</span>(nullDev <span class="op">/</span><span class="st"> </span>modelN))))</a>
-<a class="sourceLine" id="cb4-8" data-line-number="8">  <span class="kw">cat</span>(<span class="st">&quot;Pseudo R^2 for logistic regression</span><span class="ch">\n</span><span class="st">&quot;</span>)</a>
-<a class="sourceLine" id="cb4-9" data-line-number="9">  <span class="kw">cat</span>(<span class="st">&quot;Hosmer and Lemeshow R^2  &quot;</span>, <span class="kw">round</span>(R.l, <span class="dv">3</span>), <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</a>
-<a class="sourceLine" id="cb4-10" data-line-number="10">  <span class="kw">cat</span>(<span class="st">&quot;Cox and Snell R^2        &quot;</span>, <span class="kw">round</span>(R.cs, <span class="dv">3</span>), <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</a>
-<a class="sourceLine" id="cb4-11" data-line-number="11">  <span class="kw">cat</span>(<span class="st">&quot;Nagelkerke R^2           &quot;</span>, <span class="kw">round</span>(R.n, <span class="dv">3</span>),    <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</a>
-<a class="sourceLine" id="cb4-12" data-line-number="12">}</a>
-<a class="sourceLine" id="cb4-13" data-line-number="13"><span class="co">#Inspect Pseudo R2s</span></a>
-<a class="sourceLine" id="cb4-14" data-line-number="14"><span class="kw">logisticPseudoR2s</span>(logit_model )</a></code></pre></div>
+<p>Noticeably this output does not include an <span class="math inline">\(R^2\)</span> value to asses model fit. Multiple “Pseudo <span class="math inline">\(R^2\)</span>s”, similar to the one used in OLS, have been developed. There are packages that return the <span class="math inline">\(R^2\)</span> given a logit model (see <code>rcompanion</code> or <code>pscl</code>). The calculation by hand is also fairly simple. We define the function <code>logisticPseudoR2s()</code> that takes a logit model as an input and returns three popular pseudo <span class="math inline">\(R^2\)</span> values.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>logisticPseudoR2s <span class="ot">&lt;-</span> <span class="cf">function</span>(LogModel) {</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  dev <span class="ot">&lt;-</span> LogModel<span class="sc">$</span>deviance </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  nullDev <span class="ot">&lt;-</span> LogModel<span class="sc">$</span>null.deviance </span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  modelN <span class="ot">&lt;-</span> <span class="fu">length</span>(LogModel<span class="sc">$</span>fitted.values)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  R.l <span class="ot">&lt;-</span>  <span class="dv">1</span> <span class="sc">-</span>  dev <span class="sc">/</span> nullDev</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  R.cs <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">-</span> <span class="fu">exp</span> ( <span class="sc">-</span>(nullDev <span class="sc">-</span> dev) <span class="sc">/</span> modelN)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  R.n <span class="ot">&lt;-</span> R.cs <span class="sc">/</span> ( <span class="dv">1</span> <span class="sc">-</span> ( <span class="fu">exp</span> (<span class="sc">-</span>(nullDev <span class="sc">/</span> modelN))))</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;Pseudo R^2 for logistic regression</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;Hosmer and Lemeshow R^2  &quot;</span>, <span class="fu">round</span>(R.l, <span class="dv">3</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;Cox and Snell R^2        &quot;</span>, <span class="fu">round</span>(R.cs, <span class="dv">3</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;Nagelkerke R^2           &quot;</span>, <span class="fu">round</span>(R.n, <span class="dv">3</span>),    <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co">#Inspect Pseudo R2s</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="fu">logisticPseudoR2s</span>(logit_model )</span></code></pre></div>
 <pre><code>## Pseudo R^2 for logistic regression
 ## Hosmer and Lemeshow R^2   0.52 
 ## Cox and Snell R^2         0.486 
 ## Nagelkerke R^2            0.673</code></pre>
 <p>The coefficients of the model give the change in the <a href="https://en.wikipedia.org/wiki/Odds#Statistical_usage">log odds</a> of the dependent variable due to a unit change in the regressor. This makes the exact interpretation of the coefficients difficult, but we can still interpret the signs and the p-values which will tell us if a variable has a significant positive or negative impact on the probability of the dependent variable being <span class="math inline">\(1\)</span>. In order to get the odds ratios we can simply take the exponent of the coefficients.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw">exp</span>(<span class="kw">coef</span>(logit_model ))</a></code></pre></div>
-<pre><code>##  (Intercept) danceability 
-##     4.36e-05     2.65e+07</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">coef</span>(logit_model ))</span></code></pre></div>
+<pre><code>##          (Intercept)         danceability 
+##        0.00004355897 26532731.71142345294</code></pre>
 <p>Notice that the coefficient is extremely large. That is (partly) due to the fact that the danceability variable is constrained to values between <span class="math inline">\(0\)</span> and <span class="math inline">\(1\)</span> and the coefficients are for a unit change. We can make the “unit-change” interpretation more meaningful by multiplying the danceability index by <span class="math inline">\(100\)</span>. This linear transformation does not affect the model fit or the p-values.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="co">#Re-scale independet variable</span></a>
-<a class="sourceLine" id="cb8-2" data-line-number="2">chart_data<span class="op">$</span>danceability_<span class="dv">100</span> &lt;-<span class="st"> </span>chart_data<span class="op">$</span>danceability<span class="op">*</span><span class="dv">100</span> </a>
-<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="co">#Run the regression model</span></a>
-<a class="sourceLine" id="cb8-4" data-line-number="4">logit_model &lt;-<span class="st"> </span><span class="kw">glm</span>(top10 <span class="op">~</span><span class="st"> </span>danceability_<span class="dv">100</span>,<span class="dt">family=</span><span class="kw">binomial</span>(<span class="dt">link=</span><span class="st">&#39;logit&#39;</span>),<span class="dt">data=</span>chart_data)</a>
-<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="co">#Inspect model summary</span></a>
-<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="kw">summary</span>(logit_model )</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Re-scale independet variable</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>chart_data<span class="sc">$</span>danceability_100 <span class="ot">&lt;-</span> chart_data<span class="sc">$</span>danceability<span class="sc">*</span><span class="dv">100</span> </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co">#Run the regression model</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>logit_model <span class="ot">&lt;-</span> <span class="fu">glm</span>(top10 <span class="sc">~</span> danceability_100,<span class="at">family=</span><span class="fu">binomial</span>(<span class="at">link=</span><span class="st">&#39;logit&#39;</span>),<span class="at">data=</span>chart_data)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Inspect model summary</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(logit_model )</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = top10 ~ danceability_100, family = binomial(link = &quot;logit&quot;), 
 ##     data = chart_data)
 ## 
 ## Deviance Residuals: 
-##    Min      1Q  Median      3Q     Max  
-## -2.885  -0.501  -0.238   0.293   2.820  
+##     Min       1Q   Median       3Q      Max  
+## -2.8852  -0.5011  -0.2385   0.2932   2.8196  
 ## 
 ## Coefficients:
-##                  Estimate Std. Error z value Pr(&gt;|z|)    
-## (Intercept)       -10.041      0.896   -11.2   &lt;2e-16 ***
-## danceability_100    0.171      0.016    10.7   &lt;2e-16 ***
+##                   Estimate Std. Error z value            Pr(&gt;|z|)    
+## (Intercept)      -10.04139    0.89629  -11.20 &lt;0.0000000000000002 ***
+## danceability_100   0.17094    0.01602   10.67 &lt;0.0000000000000002 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
@@ -297,73 +320,73 @@ f(\mathbf{X}) = P(y_i = 1) = \frac{1}{1 + e^{-(\beta_0 + \beta_1 * x_{1,i} + \be
 ## 
 ##     Null deviance: 539.05  on 421  degrees of freedom
 ## Residual deviance: 258.49  on 420  degrees of freedom
-## AIC: 262.5
+## AIC: 262.49
 ## 
 ## Number of Fisher Scoring iterations: 6</code></pre>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="co">#Inspect Pseudo R2s</span></a>
-<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="kw">logisticPseudoR2s</span>(logit_model )</a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Inspect Pseudo R2s</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">logisticPseudoR2s</span>(logit_model )</span></code></pre></div>
 <pre><code>## Pseudo R^2 for logistic regression
 ## Hosmer and Lemeshow R^2   0.52 
 ## Cox and Snell R^2         0.486 
 ## Nagelkerke R^2            0.673</code></pre>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="co">#Convert coefficients to odds ratios</span></a>
-<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="kw">exp</span>(<span class="kw">coef</span>(logit_model ))</a></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Convert coefficients to odds ratios</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">coef</span>(logit_model ))</span></code></pre></div>
 <pre><code>##      (Intercept) danceability_100 
-##         4.36e-05         1.19e+00</code></pre>
+##    0.00004355897    1.18641825295</code></pre>
 <p>We observe that danceability positively affects the likelihood of becoming at top-10 hit. To get the confidence intervals for the coefficients we can use the same function as with OLS</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw">confint</span>(logit_model)</a></code></pre></div>
-<pre><code>##                    2.5 % 97.5 %
-## (Intercept)      -11.921 -8.395
-## danceability_100   0.142  0.205</code></pre>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(logit_model)</span></code></pre></div>
+<pre><code>##                        2.5 %     97.5 %
+## (Intercept)      -11.9208213 -8.3954496
+## danceability_100   0.1415602  0.2045529</code></pre>
 <p>In order to get a rough idea about the magnitude of the effects we can calculate the partial effects at the mean of the data (that is the effect for the average observation). Alternatively, we can calculate the mean of the effects (that is the average of the individual effects). Both can be done with the <code>logitmfx(...)</code> function from the <code>mfx</code> package. If we set <code>logitmfx(logit_model, data = my_data, atmean = FALSE)</code> we calculate the latter. Setting <code>atmean = TRUE</code> will calculate the former. However, in general we are most interested in the sign and significance of the coefficient.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="kw">library</span>(mfx)</a>
-<a class="sourceLine" id="cb16-2" data-line-number="2"><span class="co"># Average partial effect</span></a>
-<a class="sourceLine" id="cb16-3" data-line-number="3"><span class="kw">logitmfx</span>(logit_model, <span class="dt">data =</span> chart_data, <span class="dt">atmean =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mfx)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Average partial effect</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">logitmfx</span>(logit_model, <span class="at">data =</span> chart_data, <span class="at">atmean =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <pre><code>## Call:
 ## logitmfx(formula = logit_model, data = chart_data, atmean = FALSE)
 ## 
 ## Marginal Effects:
-##                    dF/dx Std. Err.    z   P&gt;|z|    
-## danceability_100 0.01573   0.00298 5.29 1.3e-07 ***
+##                      dF/dx Std. Err.      z        P&gt;|z|    
+## danceability_100 0.0157310 0.0029761 5.2857 0.0000001252 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<p>This now gives the average partial effects in percentage points. An additional point on the dancability scale (from <span class="math inline">\(1\)</span> to <span class="math inline">\(100\)</span>), on average, makes it <span class="math inline">\(1.57%\)</span> more likely for a song to become at top-10 hit.</p>
-<p>To get the effect of an additional point at a specific value, we can calculate the odds ratio by predicting the probability at a value and at the value <span class="math inline">\(+1\)</span>. For example if we are interested in how much more likely a song with 51 compared to 50 dancability is to become a hit we can simply calculate the following</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="co">#Probability of a top 10 hit with a danceability of 50</span></a>
-<a class="sourceLine" id="cb18-2" data-line-number="2">prob_<span class="dv">50</span> &lt;-<span class="st"> </span><span class="kw">exp</span>(<span class="op">-</span>(<span class="op">-</span><span class="kw">summary</span>(logit_model)<span class="op">$</span>coefficients[<span class="dv">1</span>,<span class="dv">1</span>]<span class="op">-</span><span class="kw">summary</span>(logit_model)<span class="op">$</span>coefficients[<span class="dv">2</span>,<span class="dv">1</span>]<span class="op">*</span><span class="dv">50</span> ))</a>
-<a class="sourceLine" id="cb18-3" data-line-number="3">prob_<span class="dv">50</span></a></code></pre></div>
-<pre><code>## [1] 0.224</code></pre>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1"><span class="co">#Probability of a top 10 hit with a danceability of 51</span></a>
-<a class="sourceLine" id="cb20-2" data-line-number="2">prob_<span class="dv">51</span> &lt;-<span class="st"> </span><span class="kw">exp</span>(<span class="op">-</span>(<span class="op">-</span><span class="kw">summary</span>(logit_model)<span class="op">$</span>coefficients[<span class="dv">1</span>,<span class="dv">1</span>]<span class="op">-</span><span class="kw">summary</span>(logit_model)<span class="op">$</span>coefficients[<span class="dv">2</span>,<span class="dv">1</span>]<span class="op">*</span><span class="dv">51</span> ))</a>
-<a class="sourceLine" id="cb20-3" data-line-number="3">prob_<span class="dv">51</span></a></code></pre></div>
-<pre><code>## [1] 0.266</code></pre>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1"><span class="co">#Odds ratio</span></a>
-<a class="sourceLine" id="cb22-2" data-line-number="2">prob_<span class="dv">51</span><span class="op">/</span>prob_<span class="dv">50</span></a></code></pre></div>
-<pre><code>## [1] 1.19</code></pre>
+<p>This now gives the average partial effects in percentage points. An additional point on the danceability scale (from <span class="math inline">\(1\)</span> to <span class="math inline">\(100\)</span>), on average, makes it <span class="math inline">\(1.57%\)</span> more likely for a song to become at top-10 hit.</p>
+<p>To get the effect of an additional point at a specific value, we can calculate the odds ratio by predicting the probability at a value and at the value <span class="math inline">\(+1\)</span>. For example if we are interested in how much more likely a song with 51 compared to 50 danceability is to become a hit we can simply calculate the following</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Probability of a top 10 hit with a danceability of 50</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>prob_50 <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="sc">-</span>(<span class="sc">-</span><span class="fu">summary</span>(logit_model)<span class="sc">$</span>coefficients[<span class="dv">1</span>,<span class="dv">1</span>]<span class="sc">-</span><span class="fu">summary</span>(logit_model)<span class="sc">$</span>coefficients[<span class="dv">2</span>,<span class="dv">1</span>]<span class="sc">*</span><span class="dv">50</span> ))</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>prob_50</span></code></pre></div>
+<pre><code>## [1] 0.224372</code></pre>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Probability of a top 10 hit with a danceability of 51</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>prob_51 <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="sc">-</span>(<span class="sc">-</span><span class="fu">summary</span>(logit_model)<span class="sc">$</span>coefficients[<span class="dv">1</span>,<span class="dv">1</span>]<span class="sc">-</span><span class="fu">summary</span>(logit_model)<span class="sc">$</span>coefficients[<span class="dv">2</span>,<span class="dv">1</span>]<span class="sc">*</span><span class="dv">51</span> ))</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>prob_51</span></code></pre></div>
+<pre><code>## [1] 0.266199</code></pre>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Odds ratio</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>prob_51<span class="sc">/</span>prob_50</span></code></pre></div>
+<pre><code>## [1] 1.186418</code></pre>
 <p>So the odds are 20% higher at 51 than at 50.</p>
-<div id="logistic-model-with-multiple-predictors" class="section level4">
+<div id="logistic-model-with-multiple-predictors" class="section level4" number="0.1.3.1">
 <h4><span class="header-section-number">0.1.3.1</span> Logistic model with multiple predictors</h4>
 <p>Of course we can also use multiple predictors in logistic regression as shown in the formula above. We might want to add spotify followers (in million) and weeks since the release of the song.</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1">chart_data<span class="op">$</span>spotify_followers_m &lt;-<span class="st"> </span>chart_data<span class="op">$</span>spotifyFollowers<span class="op">/</span><span class="dv">1000000</span></a>
-<a class="sourceLine" id="cb24-2" data-line-number="2">chart_data<span class="op">$</span>weeks_since_release &lt;-<span class="st"> </span>chart_data<span class="op">$</span>daysSinceRelease<span class="op">/</span><span class="dv">7</span></a></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>chart_data<span class="sc">$</span>spotify_followers_m <span class="ot">&lt;-</span> chart_data<span class="sc">$</span>spotifyFollowers<span class="sc">/</span><span class="dv">1000000</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>chart_data<span class="sc">$</span>weeks_since_release <span class="ot">&lt;-</span> chart_data<span class="sc">$</span>daysSinceRelease<span class="sc">/</span><span class="dv">7</span></span></code></pre></div>
 <p>Again, the familiar formula interface can be used with the <code>glm()</code> function. All the model summaries shown above still work with multiple predictors.</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">multiple_logit_model &lt;-<span class="st"> </span><span class="kw">glm</span>(top10 <span class="op">~</span><span class="st"> </span>danceability_<span class="dv">100</span> <span class="op">+</span><span class="st"> </span>spotify_followers_m <span class="op">+</span><span class="st"> </span>weeks_since_release,<span class="dt">family=</span><span class="kw">binomial</span>(<span class="dt">link=</span><span class="st">&#39;logit&#39;</span>),<span class="dt">data=</span>chart_data)</a>
-<a class="sourceLine" id="cb25-2" data-line-number="2"><span class="kw">summary</span>(multiple_logit_model)</a></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>multiple_logit_model <span class="ot">&lt;-</span> <span class="fu">glm</span>(top10 <span class="sc">~</span> danceability_100 <span class="sc">+</span> spotify_followers_m <span class="sc">+</span> weeks_since_release,<span class="at">family=</span><span class="fu">binomial</span>(<span class="at">link=</span><span class="st">&#39;logit&#39;</span>),<span class="at">data=</span>chart_data)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(multiple_logit_model)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = top10 ~ danceability_100 + spotify_followers_m + 
 ##     weeks_since_release, family = binomial(link = &quot;logit&quot;), data = chart_data)
 ## 
 ## Deviance Residuals: 
-##    Min      1Q  Median      3Q     Max  
-## -2.886  -0.439  -0.208   0.231   2.801  
+##     Min       1Q   Median       3Q      Max  
+## -2.8861  -0.4390  -0.2083   0.2311   2.8015  
 ## 
 ## Coefficients:
-##                     Estimate Std. Error z value Pr(&gt;|z|)    
-## (Intercept)         -9.60376    0.99048   -9.70  &lt; 2e-16 ***
-## danceability_100     0.16624    0.01636   10.16  &lt; 2e-16 ***
-## spotify_followers_m  0.19772    0.06003    3.29  0.00099 ***
-## weeks_since_release -0.01298    0.00496   -2.62  0.00883 ** 
+##                      Estimate Std. Error z value             Pr(&gt;|z|)    
+## (Intercept)         -9.603762   0.990481  -9.696 &lt; 0.0000000000000002 ***
+## danceability_100     0.166236   0.016358  10.162 &lt; 0.0000000000000002 ***
+## spotify_followers_m  0.197717   0.060030   3.294             0.000989 ***
+## weeks_since_release -0.012976   0.004956  -2.619             0.008832 ** 
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
@@ -372,48 +395,45 @@ f(\mathbf{X}) = P(y_i = 1) = \frac{1}{1 + e^{-(\beta_0 + \beta_1 * x_{1,i} + \be
 ##     Null deviance: 534.91  on 416  degrees of freedom
 ## Residual deviance: 239.15  on 413  degrees of freedom
 ##   (5 observations deleted due to missingness)
-## AIC: 247.1
+## AIC: 247.15
 ## 
 ## Number of Fisher Scoring iterations: 6</code></pre>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1"><span class="kw">logisticPseudoR2s</span>(multiple_logit_model)</a></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">logisticPseudoR2s</span>(multiple_logit_model)</span></code></pre></div>
 <pre><code>## Pseudo R^2 for logistic regression
 ## Hosmer and Lemeshow R^2   0.553 
 ## Cox and Snell R^2         0.508 
 ## Nagelkerke R^2            0.703</code></pre>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1"><span class="kw">exp</span>(<span class="kw">coef</span>(multiple_logit_model))</a></code></pre></div>
-<pre><code>##         (Intercept)    danceability_100 spotify_followers_m 
-##            6.75e-05            1.18e+00            1.22e+00 
-## weeks_since_release 
-##            9.87e-01</code></pre>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1"><span class="kw">confint</span>(multiple_logit_model)</a></code></pre></div>
-<pre><code>##                        2.5 %   97.5 %
-## (Intercept)         -11.6798 -7.78212
-## danceability_100      0.1363  0.20063
-## spotify_followers_m   0.0808  0.31712
-## weeks_since_release  -0.0231 -0.00357</code></pre>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">coef</span>(multiple_logit_model))</span></code></pre></div>
+<pre><code>##         (Intercept)    danceability_100 spotify_followers_m weeks_since_release 
+##        0.0000674744        1.1808513243        1.2186174345        0.9871076460</code></pre>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(multiple_logit_model)</span></code></pre></div>
+<pre><code>##                            2.5 %       97.5 %
+## (Intercept)         -11.67983072 -7.782122558
+## danceability_100      0.13625795  0.200625438
+## spotify_followers_m   0.08079476  0.317115293
+## weeks_since_release  -0.02307859 -0.003566462</code></pre>
 </div>
-<div id="model-selection" class="section level4">
+<div id="model-selection" class="section level4" number="0.1.3.2">
 <h4><span class="header-section-number">0.1.3.2</span> Model selection</h4>
 <p>The question remains, whether a variable <em>should</em> be added to the model. We will present two methods for model selection for logistic regression. The first is based on the <em>Akaike Information Criterium</em> (AIC). It is reported with the summary output for logit models. The value of the AIC is <strong>relative</strong>, meaning that it has no interpretation by itself. However, it can be used to compare and select models. The model with the lowest AIC value is the one that should be chosen. Note that the AIC does not indicate how well the model fits the data, but is merely used to compare models.</p>
 <p>For example, consider the following model, where we exclude the <code>followers</code> covariate. Seeing as it was able to contribute significantly to the explanatory power of the model, the AIC increases, indicating that the model including <code>followers</code> is better suited to explain the data. We always want the lowest possible AIC.</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1"><span class="co"># Take &quot;religious&quot; out. Compare AIC to full model!</span></a>
-<a class="sourceLine" id="cb33-2" data-line-number="2">multiple_logit_model2 &lt;-<span class="st"> </span><span class="kw">glm</span>(top10 <span class="op">~</span><span class="st"> </span>danceability_<span class="dv">100</span> <span class="op">+</span><span class="st"> </span>weeks_since_release,<span class="dt">family=</span><span class="kw">binomial</span>(<span class="dt">link=</span><span class="st">&#39;logit&#39;</span>),<span class="dt">data=</span>chart_data)</a>
-<a class="sourceLine" id="cb33-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb33-4" data-line-number="4"><span class="kw">summary</span>(multiple_logit_model2)</a></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>multiple_logit_model2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(top10 <span class="sc">~</span> danceability_100 <span class="sc">+</span> weeks_since_release,<span class="at">family=</span><span class="fu">binomial</span>(<span class="at">link=</span><span class="st">&#39;logit&#39;</span>),<span class="at">data=</span>chart_data)</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(multiple_logit_model2)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = top10 ~ danceability_100 + weeks_since_release, 
 ##     family = binomial(link = &quot;logit&quot;), data = chart_data)
 ## 
 ## Deviance Residuals: 
-##    Min      1Q  Median      3Q     Max  
-## -2.958  -0.472  -0.219   0.256   2.876  
+##     Min       1Q   Median       3Q      Max  
+## -2.9578  -0.4721  -0.2189   0.2562   2.8759  
 ## 
 ## Coefficients:
-##                     Estimate Std. Error z value Pr(&gt;|z|)    
-## (Intercept)         -8.98023    0.93065   -9.65   &lt;2e-16 ***
-## danceability_100     0.16650    0.01611   10.34   &lt;2e-16 ***
-## weeks_since_release -0.01281    0.00484   -2.65   0.0081 ** 
+##                      Estimate Std. Error z value            Pr(&gt;|z|)    
+## (Intercept)         -8.980225   0.930654  -9.649 &lt;0.0000000000000002 ***
+## danceability_100     0.166498   0.016107  10.337 &lt;0.0000000000000002 ***
+## weeks_since_release -0.012805   0.004836  -2.648              0.0081 ** 
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
@@ -422,82 +442,81 @@ f(\mathbf{X}) = P(y_i = 1) = \frac{1}{1 + e^{-(\beta_0 + \beta_1 * x_{1,i} + \be
 ##     Null deviance: 534.91  on 416  degrees of freedom
 ## Residual deviance: 250.12  on 414  degrees of freedom
 ##   (5 observations deleted due to missingness)
-## AIC: 256.1
+## AIC: 256.12
 ## 
 ## Number of Fisher Scoring iterations: 6</code></pre>
 <p>As a second measure for variable selection, you can use the pseudo <span class="math inline">\(R^2\)</span>s as shown above. The fit is distinctly worse according to all three values presented here, when excluding the spotify followers.</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1"><span class="kw">logisticPseudoR2s</span>(multiple_logit_model2)</a></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">logisticPseudoR2s</span>(multiple_logit_model2)</span></code></pre></div>
 <pre><code>## Pseudo R^2 for logistic regression
 ## Hosmer and Lemeshow R^2   0.532 
 ## Cox and Snell R^2         0.495 
 ## Nagelkerke R^2            0.685</code></pre>
 </div>
-<div id="predictions" class="section level4">
+<div id="predictions" class="section level4" number="0.1.3.3">
 <h4><span class="header-section-number">0.1.3.3</span> Predictions</h4>
-<p>We can predict the probability given an observation using the <code>predict(my_logit, newdata = ..., type = &quot;response&quot;)</code> function. Replace <code>...</code> with the observed values for which you would like to predict the outcome variable.</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1"><span class="co"># Prediction for one observation</span></a>
-<a class="sourceLine" id="cb37-2" data-line-number="2"><span class="kw">predict</span>(multiple_logit_model, <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">danceability_100=</span><span class="dv">50</span>, <span class="dt">spotify_followers_m=</span><span class="dv">10</span>, <span class="dt">weeks_since_release=</span><span class="dv">1</span>), <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>)</a></code></pre></div>
-<pre><code>##     1 
-## 0.662</code></pre>
+<p>We can predict the probability given an observation using the <code>predict(my_logit, newdata = ..., type = "response")</code> function. Replace <code>...</code> with the observed values for which you would like to predict the outcome variable.</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Prediction for one observation</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(multiple_logit_model, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">danceability_100=</span><span class="dv">50</span>, <span class="at">spotify_followers_m=</span><span class="dv">10</span>, <span class="at">weeks_since_release=</span><span class="dv">1</span>), <span class="at">type =</span> <span class="st">&quot;response&quot;</span>)</span></code></pre></div>
+<pre><code>##         1 
+## 0.6619986</code></pre>
 <p>The prediction indicates that a song with danceability of <span class="math inline">\(50\)</span> from an artist with <span class="math inline">\(10M\)</span> spotify followers has a <span class="math inline">\(66%\)</span> chance of being in the top-10, 1 week after its release.</p>
 </div>
-<div id="perfect-prediction-logit" class="section level4">
+<div id="perfect-prediction-logit" class="section level4" number="0.1.3.4">
 <h4><span class="header-section-number">0.1.3.4</span> Perfect Prediction Logit</h4>
 <p>Perfect prediction occurs whenever a linear function of <span class="math inline">\(X\)</span> can perfectly separate the <span class="math inline">\(1\)</span>s from the <span class="math inline">\(0\)</span>s in the dependent variable. This is problematic when estimating a logit model as it will result in biased estimators (also check to p-values in the example!). R will return the following message if this occurs:</p>
 <p><code>glm.fit: fitted probabilities numerically 0 or 1 occurred</code></p>
 <p>Given this error, one should not use the output of the <code>glm(...)</code> function for the analysis. There are <a href="https://stats.stackexchange.com/a/68917">various ways</a> to deal with this problem, one of which is to use Firth’s bias-reduced penalized-likelihood logistic regression with the <code>logistf(Y~X)</code> function in the <code>logistf</code> package.</p>
-<div id="example" class="section level5">
+<div id="example" class="section level5" number="0.1.3.4.1">
 <h5><span class="header-section-number">0.1.3.4.1</span> Example</h5>
-<p>In this example data <span class="math inline">\(Y = 0\)</span> if <span class="math inline">\(x_1 &lt;0\)</span> and <span class="math inline">\(Y=1\)</span> if <span class="math inline">\(x_1&gt;0\)</span> and we thus have perfect prediction. As we can see the output of the regular logit model is not interpretable. The standard errors are huge compared to the coefficients and thus the p-values are <span class="math inline">\(1\)</span> despite <span class="math inline">\(x_1\)</span> being a predictor of <span class="math inline">\(Y\)</span>. Thus we turn to the penalized-likelihood version. This model correctly indicates that <span class="math inline">\(x_1\)</span> is in fact a predictor for <span class="math inline">\(Y\)</span> as the coefficient is significant.</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" data-line-number="1">Y &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb39-2" data-line-number="2">X &lt;-<span class="st"> </span><span class="kw">cbind</span>(<span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>,<span class="op">-</span><span class="dv">2</span>,<span class="op">-</span><span class="dv">3</span>,<span class="op">-</span><span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">10</span>,<span class="dv">11</span>),<span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">2</span>,<span class="op">-</span><span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">0</span>))</a>
-<a class="sourceLine" id="cb39-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb39-4" data-line-number="4"><span class="co"># Perfect prediction with regular logit</span></a>
-<a class="sourceLine" id="cb39-5" data-line-number="5"><span class="kw">summary</span>(<span class="kw">glm</span>(Y<span class="op">~</span>X, <span class="dt">family=</span><span class="kw">binomial</span>(<span class="dt">link=</span><span class="st">&quot;logit&quot;</span>)))</a></code></pre></div>
+<p>In this example data <span class="math inline">\(Y = 0\)</span> if <span class="math inline">\(x_1 &lt;0\)</span> and <span class="math inline">\(Y=1\)</span> if <span class="math inline">\(x_1&gt;0\)</span> and we thus have perfect prediction. As we can see the output of the regular logit model is not interpretable. The standard errors are huge compared to the coefficients and thus the p-values are <span class="math inline">\(1\)</span> despite <span class="math inline">\(x_1\)</span> being a predictor of <span class="math inline">\(Y\)</span>. Thus, we turn to the penalized-likelihood version. This model correctly indicates that <span class="math inline">\(x_1\)</span> is in fact a predictor for <span class="math inline">\(Y\)</span> as the coefficient is significant.</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>)</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">2</span>,<span class="sc">-</span><span class="dv">3</span>,<span class="sc">-</span><span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">10</span>,<span class="dv">11</span>),<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">2</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">0</span>))</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Perfect prediction with regular logit</span></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">glm</span>(Y<span class="sc">~</span>X, <span class="at">family=</span><span class="fu">binomial</span>(<span class="at">link=</span><span class="st">&quot;logit&quot;</span>)))</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = Y ~ X, family = binomial(link = &quot;logit&quot;))
 ## 
 ## Deviance Residuals: 
-##         1          2          3          4          5          6  
-## -1.02e-05  -1.23e-06  -3.37e-06  -3.37e-06   1.06e-05   6.08e-06  
-##         7          8  
-##  2.10e-08   2.10e-08  
+##             1              2              3              4              5  
+## -0.0000102197  -0.0000012300  -0.0000033675  -0.0000033675   0.0000105893  
+##             6              7              8  
+##  0.0000060786   0.0000000211   0.0000000211  
 ## 
 ## Coefficients:
-##              Estimate Std. Error z value Pr(&gt;|z|)
-## (Intercept)     -6.94  113859.81       0        1
-## X1               7.36   15925.25       0        1
-## X2              -3.12   43853.49       0        1
+##               Estimate Std. Error z value Pr(&gt;|z|)
+## (Intercept)     -6.943 113859.814       0        1
+## X1               7.359  15925.251       0        1
+## X2              -3.125  43853.489       0        1
 ## 
 ## (Dispersion parameter for binomial family taken to be 1)
 ## 
-##     Null deviance: 1.1090e+01  on 7  degrees of freedom
-## Residual deviance: 2.7772e-10  on 5  degrees of freedom
+##     Null deviance: 11.09035488895912  on 7  degrees of freedom
+## Residual deviance:  0.00000000027772  on 5  degrees of freedom
 ## AIC: 6
 ## 
 ## Number of Fisher Scoring iterations: 24</code></pre>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" data-line-number="1"><span class="kw">library</span>(logistf)</a>
-<a class="sourceLine" id="cb41-2" data-line-number="2"><span class="co"># Perfect prediction with penalized-likelihood logit</span></a>
-<a class="sourceLine" id="cb41-3" data-line-number="3"><span class="kw">summary</span>(<span class="kw">logistf</span>(Y<span class="op">~</span>X))</a></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(logistf)</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Perfect prediction with penalized-likelihood logit</span></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">logistf</span>(Y<span class="sc">~</span>X))</span></code></pre></div>
 <pre><code>## logistf(formula = Y ~ X)
 ## 
 ## Model fitted by Penalized ML
-## Confidence intervals and p-values by Profile Likelihood Profile Likelihood Profile Likelihood 
+## Coefficients:
+##                    coef  se(coef)  lower 0.95 upper 0.95      Chisq          p
+## (Intercept) -0.98871431 1.4283595 -10.2169313   1.884501 0.59231445 0.44152553
+## X1           0.33195157 0.2142516   0.0417035   1.463409 5.31583569 0.02113246
+## X2           0.08250307 0.6085055  -2.1788866   3.379327 0.01980379 0.88808646
+##             method
+## (Intercept)      2
+## X1               2
+## X2               2
 ## 
-##                coef se(coef) lower 0.95 upper 0.95  Chisq      p
-## (Intercept) -0.9887    1.428   -10.2169       1.88 0.5923 0.4415
-## X1           0.3320    0.214     0.0417       1.46 5.3158 0.0211
-## X2           0.0825    0.609    -2.1789       3.38 0.0198 0.8881
+## Method: 1-Wald, 2-Profile penalized log-likelihood, 3-None
 ## 
-## Likelihood ratio test=5.8 on 2 df, p=0.055, n=8
-## Wald test = 2.71 on 2 df, p = 0.258
-## 
-## Covariance-Matrix:
-##         [,1]    [,2]    [,3]
-## [1,]  2.0402 -0.0456 -0.5676
-## [2,] -0.0456  0.0459 -0.0336
-## [3,] -0.5676 -0.0336  0.3703</code></pre>
+## Likelihood ratio test=5.800986 on 2 df, p=0.05499609, n=8
+## Wald test = 2.706445 on 2 df, p = 0.2584062</code></pre>
 </div>
 </div>
 </div>
@@ -513,11 +532,13 @@ f(\mathbf{X}) = P(y_i = 1) = \frac{1}{1 + e^{-(\beta_0 + \beta_1 * x_{1,i} + \be
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
@@ -525,12 +546,12 @@ gitbook.start({
 "github": false,
 "facebook": true,
 "twitter": true,
-"google": false,
 "linkedin": false,
 "weibo": false,
-"instapper": false,
+"instapaper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -538,6 +559,14 @@ gitbook.start({
 "size": 2
 },
 "edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
 "link": null,
 "text": null
 },
@@ -556,9 +585,10 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(src))
-      src = src.replace(/^https?:/, '');
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
