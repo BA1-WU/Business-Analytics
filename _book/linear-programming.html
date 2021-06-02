@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>9 Linear Programming | Business Analytics</title>
+  <meta name="description" content="An Introduction to Statistics Using R" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="9 Linear Programming | Business Analytics" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="An Introduction to Statistics Using R" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="9 Linear Programming | Business Analytics" />
+  
+  <meta name="twitter:description" content="An Introduction to Statistics Using R" />
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+<link rel="prev" href="simulation.html"/>
+<link rel="next" href="appendix.html"/>
+<script src="libs/header-attrs-2.8/header-attrs.js"></script>
+<script src="libs/jquery-3.5.1/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.9.3/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><strong><a href="./">BA</a></strong></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome!</a></li>
+<li class="chapter" data-level="" data-path="course-materials.html"><a href="course-materials.html"><i class="fa fa-check"></i>Course materials</a>
+<ul>
+<li class="chapter" data-level="" data-path="course-materials.html"><a href="course-materials.html#main-reference"><i class="fa fa-check"></i>Main reference</a></li>
+<li class="chapter" data-level="" data-path="course-materials.html"><a href="course-materials.html#further-readings"><i class="fa fa-check"></i>Further readings</a></li>
+<li class="chapter" data-level="" data-path="course-materials.html"><a href="course-materials.html#datacamp"><i class="fa fa-check"></i>DataCamp</a></li>
+<li class="chapter" data-level="" data-path="course-materials.html"><a href="course-materials.html#other-web-resources"><i class="fa fa-check"></i>Other web-resources</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="getting-started.html"><a href="getting-started.html"><i class="fa fa-check"></i><b>1</b> Getting started</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="getting-started.html"><a href="getting-started.html#how-to-download-and-install-r-and-rstudio"><i class="fa fa-check"></i><b>1.1</b> How to download and install R and RStudio</a></li>
+<li class="chapter" data-level="1.2" data-path="getting-started.html"><a href="getting-started.html#getting-help"><i class="fa fa-check"></i><b>1.2</b> Getting help</a></li>
+<li class="chapter" data-level="1.3" data-path="getting-started.html"><a href="getting-started.html#functions"><i class="fa fa-check"></i><b>1.3</b> Functions</a></li>
+<li class="chapter" data-level="1.4" data-path="getting-started.html"><a href="getting-started.html#packages"><i class="fa fa-check"></i><b>1.4</b> Packages</a></li>
+<li class="chapter" data-level="1.5" data-path="getting-started.html"><a href="getting-started.html#a-typical-r-session"><i class="fa fa-check"></i><b>1.5</b> A typical R session</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="data-handling.html"><a href="data-handling.html"><i class="fa fa-check"></i><b>2</b> Data handling</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="data-handling.html"><a href="data-handling.html#basic-data-handling"><i class="fa fa-check"></i><b>2.1</b> Basic data handling</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="data-handling.html"><a href="data-handling.html#creating-objects"><i class="fa fa-check"></i><b>2.1.1</b> Creating objects</a></li>
+<li class="chapter" data-level="2.1.2" data-path="data-handling.html"><a href="data-handling.html#data-types"><i class="fa fa-check"></i><b>2.1.2</b> Data types</a></li>
+<li class="chapter" data-level="2.1.3" data-path="data-handling.html"><a href="data-handling.html#data-structures"><i class="fa fa-check"></i><b>2.1.3</b> Data structures</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="data-handling.html"><a href="data-handling.html#advanced-data-handling"><i class="fa fa-check"></i><b>2.2</b> Advanced data handling</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="data-handling.html"><a href="data-handling.html#the-dplyr-package"><i class="fa fa-check"></i><b>2.2.1</b> The dplyr package</a></li>
+<li class="chapter" data-level="2.2.2" data-path="data-handling.html"><a href="data-handling.html#dealing-with-strings"><i class="fa fa-check"></i><b>2.2.2</b> Dealing with strings</a></li>
+<li class="chapter" data-level="2.2.3" data-path="data-handling.html"><a href="data-handling.html#case-study"><i class="fa fa-check"></i><b>2.2.3</b> Case study</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="data-handling.html"><a href="data-handling.html#data-import-and-export"><i class="fa fa-check"></i><b>2.3</b> Data import and export</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="data-handling.html"><a href="data-handling.html#getting-data-for-this-course"><i class="fa fa-check"></i><b>2.3.1</b> Getting data for this course</a></li>
+<li class="chapter" data-level="2.3.2" data-path="data-handling.html"><a href="data-handling.html#import-data-created-by-other-software-packages"><i class="fa fa-check"></i><b>2.3.2</b> Import data created by other software packages</a></li>
+<li class="chapter" data-level="2.3.3" data-path="data-handling.html"><a href="data-handling.html#export-data"><i class="fa fa-check"></i><b>2.3.3</b> Export data</a></li>
+<li class="chapter" data-level="2.3.4" data-path="data-handling.html"><a href="data-handling.html#import-data-from-the-web"><i class="fa fa-check"></i><b>2.3.4</b> Import data from the Web</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="summarizing-data.html"><a href="summarizing-data.html"><i class="fa fa-check"></i><b>3</b> Summarizing data</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="summarizing-data.html"><a href="summarizing-data.html#summary-statistics"><i class="fa fa-check"></i><b>3.1</b> Summary statistics</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="summarizing-data.html"><a href="summarizing-data.html#categorical-variables"><i class="fa fa-check"></i><b>3.1.1</b> Categorical variables</a></li>
+<li class="chapter" data-level="3.1.2" data-path="summarizing-data.html"><a href="summarizing-data.html#continuous-variables"><i class="fa fa-check"></i><b>3.1.2</b> Continuous variables</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="summarizing-data.html"><a href="summarizing-data.html#data-visualization"><i class="fa fa-check"></i><b>3.2</b> Data visualization</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="summarizing-data.html"><a href="summarizing-data.html#categorical-variables-1"><i class="fa fa-check"></i><b>3.2.1</b> Categorical variables</a></li>
+<li class="chapter" data-level="3.2.2" data-path="summarizing-data.html"><a href="summarizing-data.html#continuous-variables-1"><i class="fa fa-check"></i><b>3.2.2</b> Continuous variables</a></li>
+<li class="chapter" data-level="3.2.3" data-path="summarizing-data.html"><a href="summarizing-data.html#saving-plots"><i class="fa fa-check"></i><b>3.2.3</b> Saving plots</a></li>
+<li class="chapter" data-level="3.2.4" data-path="summarizing-data.html"><a href="summarizing-data.html#additional-options"><i class="fa fa-check"></i><b>3.2.4</b> Additional options</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="summarizing-data.html"><a href="summarizing-data.html#writing-reports-using-r-markdown"><i class="fa fa-check"></i><b>3.3</b> Writing reports using R-Markdown</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="summarizing-data.html"><a href="summarizing-data.html#creating-a-new-r-markdown-document"><i class="fa fa-check"></i><b>3.3.1</b> Creating a new R-Markdown document</a></li>
+<li class="chapter" data-level="3.3.2" data-path="summarizing-data.html"><a href="summarizing-data.html#text-and-equations"><i class="fa fa-check"></i><b>3.3.2</b> Text and Equations</a></li>
+<li class="chapter" data-level="3.3.3" data-path="summarizing-data.html"><a href="summarizing-data.html#r-code"><i class="fa fa-check"></i><b>3.3.3</b> R-Code</a></li>
+<li class="chapter" data-level="3.3.4" data-path="summarizing-data.html"><a href="summarizing-data.html#latex-math"><i class="fa fa-check"></i><b>3.3.4</b> LaTeX Math</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="introduction-to-statistical-inference.html"><a href="introduction-to-statistical-inference.html"><i class="fa fa-check"></i><b>4</b> Introduction to Statistical Inference</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="introduction-to-statistical-inference.html"><a href="introduction-to-statistical-inference.html#if-we-knew-it-all"><i class="fa fa-check"></i><b>4.1</b> If we knew it all</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="introduction-to-statistical-inference.html"><a href="introduction-to-statistical-inference.html#sampling-from-a-known-population"><i class="fa fa-check"></i><b>4.1.1</b> Sampling from a known population</a></li>
+<li class="chapter" data-level="4.1.2" data-path="introduction-to-statistical-inference.html"><a href="introduction-to-statistical-inference.html#standard-error-of-the-mean"><i class="fa fa-check"></i><b>4.1.2</b> Standard error of the mean</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="introduction-to-statistical-inference.html"><a href="introduction-to-statistical-inference.html#the-central-limit-theorem"><i class="fa fa-check"></i><b>4.2</b> The Central Limit Theorem</a></li>
+<li class="chapter" data-level="4.3" data-path="introduction-to-statistical-inference.html"><a href="introduction-to-statistical-inference.html#using-what-we-actually-know"><i class="fa fa-check"></i><b>4.3</b> Using what we actually know</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="introduction-to-statistical-inference.html"><a href="introduction-to-statistical-inference.html#confidence-intervals-for-the-sample-mean"><i class="fa fa-check"></i><b>4.3.1</b> Confidence Intervals for the Sample Mean</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="introduction-to-statistical-inference.html"><a href="introduction-to-statistical-inference.html#summary"><i class="fa fa-check"></i><b>4.4</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html"><i class="fa fa-check"></i><b>5</b> Hypothesis testing</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#introduction"><i class="fa fa-check"></i><b>5.1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#the-null-hypothesis"><i class="fa fa-check"></i><b>5.1.1</b> The null hypothesis</a></li>
+<li class="chapter" data-level="5.1.2" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#statistical-inference-on-a-sample"><i class="fa fa-check"></i><b>5.1.2</b> Statistical inference on a sample</a></li>
+<li class="chapter" data-level="5.1.3" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#choosing-the-right-test"><i class="fa fa-check"></i><b>5.1.3</b> Choosing the right test</a></li>
+<li class="chapter" data-level="5.1.4" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#summary-1"><i class="fa fa-check"></i><b>5.1.4</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#one-sample-t-test"><i class="fa fa-check"></i><b>5.2</b> One sample t-test</a></li>
+<li class="chapter" data-level="5.3" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#comparing-two-means"><i class="fa fa-check"></i><b>5.3</b> Comparing two means</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#independent-means-t-test"><i class="fa fa-check"></i><b>5.3.1</b> Independent-means t-test</a></li>
+<li class="chapter" data-level="5.3.2" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#dependent-means-t-test"><i class="fa fa-check"></i><b>5.3.2</b> Dependent-means t-test</a></li>
+<li class="chapter" data-level="5.3.3" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#further-considerations"><i class="fa fa-check"></i><b>5.3.3</b> Further considerations</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#comparing-several-means"><i class="fa fa-check"></i><b>5.4</b> Comparing several means</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#introduction-1"><i class="fa fa-check"></i><b>5.4.1</b> Introduction</a></li>
+<li class="chapter" data-level="5.4.2" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#decomposing-variance"><i class="fa fa-check"></i><b>5.4.2</b> Decomposing variance</a></li>
+<li class="chapter" data-level="5.4.3" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#one-way-anova"><i class="fa fa-check"></i><b>5.4.3</b> One-way ANOVA</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#non-parametric-tests"><i class="fa fa-check"></i><b>5.5</b> Non-parametric tests</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#mann-whitney-u-test-a.k.a.-wilcoxon-rank-sum-test"><i class="fa fa-check"></i><b>5.5.1</b> Mann-Whitney U Test (a.k.a. Wilcoxon rank-sum test)</a></li>
+<li class="chapter" data-level="5.5.2" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#wilcoxon-signed-rank-test"><i class="fa fa-check"></i><b>5.5.2</b> Wilcoxon signed-rank test</a></li>
+<li class="chapter" data-level="5.5.3" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#kruskal-wallis-test"><i class="fa fa-check"></i><b>5.5.3</b> Kruskal-Wallis test</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#categorical-data"><i class="fa fa-check"></i><b>5.6</b> Categorical data</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#confidence-intervals-for-proportions"><i class="fa fa-check"></i><b>5.6.1</b> Confidence intervals for proportions</a></li>
+<li class="chapter" data-level="5.6.2" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#chi-square-test"><i class="fa fa-check"></i><b>5.6.2</b> Chi-square test</a></li>
+<li class="chapter" data-level="5.6.3" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#sample-size-1"><i class="fa fa-check"></i><b>5.6.3</b> Sample size</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>6</b> Regression</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="regression.html"><a href="regression.html#correlation"><i class="fa fa-check"></i><b>6.1</b> Correlation</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="regression.html"><a href="regression.html#correlation-coefficient"><i class="fa fa-check"></i><b>6.1.1</b> Correlation coefficient</a></li>
+<li class="chapter" data-level="6.1.2" data-path="regression.html"><a href="regression.html#significance-testing"><i class="fa fa-check"></i><b>6.1.2</b> Significance testing</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="regression.html"><a href="regression.html#regression-1"><i class="fa fa-check"></i><b>6.2</b> Regression</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="regression.html"><a href="regression.html#simple-linear-regression"><i class="fa fa-check"></i><b>6.2.1</b> Simple linear regression</a></li>
+<li class="chapter" data-level="6.2.2" data-path="regression.html"><a href="regression.html#multiple-linear-regression"><i class="fa fa-check"></i><b>6.2.2</b> Multiple linear regression</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="regression.html"><a href="regression.html#potential-problems"><i class="fa fa-check"></i><b>6.3</b> Potential problems</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="regression.html"><a href="regression.html#outliers"><i class="fa fa-check"></i><b>6.3.1</b> Outliers</a></li>
+<li class="chapter" data-level="6.3.2" data-path="regression.html"><a href="regression.html#influential-observations"><i class="fa fa-check"></i><b>6.3.2</b> Influential observations</a></li>
+<li class="chapter" data-level="6.3.3" data-path="regression.html"><a href="regression.html#non-linearity"><i class="fa fa-check"></i><b>6.3.3</b> Non-linearity</a></li>
+<li class="chapter" data-level="6.3.4" data-path="regression.html"><a href="regression.html#non-constant-error-variance"><i class="fa fa-check"></i><b>6.3.4</b> Non-constant error variance</a></li>
+<li class="chapter" data-level="6.3.5" data-path="regression.html"><a href="regression.html#non-normally-distributed-errors"><i class="fa fa-check"></i><b>6.3.5</b> Non-normally distributed errors</a></li>
+<li class="chapter" data-level="6.3.6" data-path="regression.html"><a href="regression.html#correlation-of-errors"><i class="fa fa-check"></i><b>6.3.6</b> Correlation of errors</a></li>
+<li class="chapter" data-level="6.3.7" data-path="regression.html"><a href="regression.html#collinearity"><i class="fa fa-check"></i><b>6.3.7</b> Collinearity</a></li>
+<li class="chapter" data-level="6.3.8" data-path="regression.html"><a href="regression.html#omitted-variables"><i class="fa fa-check"></i><b>6.3.8</b> Omitted Variables</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="regression.html"><a href="regression.html#categorical-predictors"><i class="fa fa-check"></i><b>6.4</b> Categorical predictors</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="regression.html"><a href="regression.html#two-categories"><i class="fa fa-check"></i><b>6.4.1</b> Two categories</a></li>
+<li class="chapter" data-level="6.4.2" data-path="regression.html"><a href="regression.html#more-than-two-categories"><i class="fa fa-check"></i><b>6.4.2</b> More than two categories</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="regression.html"><a href="regression.html#extensions-of-the-linear-model"><i class="fa fa-check"></i><b>6.5</b> Extensions of the linear model</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="regression.html"><a href="regression.html#interaction-effects"><i class="fa fa-check"></i><b>6.5.1</b> Interaction effects</a></li>
+<li class="chapter" data-level="6.5.2" data-path="regression.html"><a href="regression.html#non-linear-relationships"><i class="fa fa-check"></i><b>6.5.2</b> Non-linear relationships</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="regression.html"><a href="regression.html#logistic-regression"><i class="fa fa-check"></i><b>6.6</b> Logistic regression</a>
+<ul>
+<li class="chapter" data-level="6.6.1" data-path="regression.html"><a href="regression.html#motivation-and-intuition"><i class="fa fa-check"></i><b>6.6.1</b> Motivation and intuition</a></li>
+<li class="chapter" data-level="6.6.2" data-path="regression.html"><a href="regression.html#technical-details-of-the-model"><i class="fa fa-check"></i><b>6.6.2</b> Technical details of the model</a></li>
+<li class="chapter" data-level="6.6.3" data-path="regression.html"><a href="regression.html#estimation-in-r"><i class="fa fa-check"></i><b>6.6.3</b> Estimation in R</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html"><i class="fa fa-check"></i><b>7</b> Exploratory factor analysis</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#introduction-2"><i class="fa fa-check"></i><b>7.1</b> Introduction</a></li>
+<li class="chapter" data-level="7.2" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#steps-in-factor-analysis"><i class="fa fa-check"></i><b>7.2</b> Steps in factor analysis</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#are-the-assumptions-satisfied"><i class="fa fa-check"></i><b>7.2.1</b> Are the assumptions satisfied?</a></li>
+<li class="chapter" data-level="7.2.2" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#deriving-factors"><i class="fa fa-check"></i><b>7.2.2</b> Deriving factors</a></li>
+<li class="chapter" data-level="7.2.3" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#factor-interpretation"><i class="fa fa-check"></i><b>7.2.3</b> Factor interpretation</a></li>
+<li class="chapter" data-level="7.2.4" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#creating-new-variables"><i class="fa fa-check"></i><b>7.2.4</b> Creating new variables</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#reliability-analysis"><i class="fa fa-check"></i><b>7.3</b> Reliability analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="simulation.html"><a href="simulation.html"><i class="fa fa-check"></i><b>8</b> Simulation</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="simulation.html"><a href="simulation.html#introduction-3"><i class="fa fa-check"></i><b>8.1</b> Introduction</a></li>
+<li class="chapter" data-level="8.2" data-path="simulation.html"><a href="simulation.html#covid-19-vaccine-development"><i class="fa fa-check"></i><b>8.2</b> Covid-19 Vaccine Development</a></li>
+<li class="chapter" data-level="8.3" data-path="simulation.html"><a href="simulation.html#developing-a-new-product"><i class="fa fa-check"></i><b>8.3</b> Developing a New Product</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="simulation.html"><a href="simulation.html#simulation-model"><i class="fa fa-check"></i><b>8.3.1</b> Simulation Model</a></li>
+<li class="chapter" data-level="8.3.2" data-path="simulation.html"><a href="simulation.html#number-of-simulation-runs"><i class="fa fa-check"></i><b>8.3.2</b> Number of Simulation Runs</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="simulation.html"><a href="simulation.html#newsvendor-model"><i class="fa fa-check"></i><b>8.4</b> Newsvendor Model</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="simulation.html"><a href="simulation.html#demand-sampling"><i class="fa fa-check"></i><b>8.4.1</b> Demand Sampling</a></li>
+<li class="chapter" data-level="8.4.2" data-path="simulation.html"><a href="simulation.html#order-simulation-model"><i class="fa fa-check"></i><b>8.4.2</b> Order Simulation Model</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="linear-programming.html"><a href="linear-programming.html"><i class="fa fa-check"></i><b>9</b> Linear Programming</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="linear-programming.html"><a href="linear-programming.html#introduction-4"><i class="fa fa-check"></i><b>9.1</b> Introduction</a></li>
+<li class="chapter" data-level="9.2" data-path="linear-programming.html"><a href="linear-programming.html#production-planning"><i class="fa fa-check"></i><b>9.2</b> Production Planning</a></li>
+<li class="chapter" data-level="9.3" data-path="linear-programming.html"><a href="linear-programming.html#transportation-problem"><i class="fa fa-check"></i><b>9.3</b> Transportation problem</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i><b>10</b> Appendix</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="appendix.html"><a href="appendix.html#random-variables-probability-distributions"><i class="fa fa-check"></i><b>10.1</b> Random Variables &amp; Probability Distributions</a>
+<ul>
+<li class="chapter" data-level="10.1.1" data-path="appendix.html"><a href="appendix.html#random-variables"><i class="fa fa-check"></i><b>10.1.1</b> Random variables</a></li>
+<li class="chapter" data-level="10.1.2" data-path="appendix.html"><a href="appendix.html#probability-distributions"><i class="fa fa-check"></i><b>10.1.2</b> Probability Distributions</a></li>
+<li class="chapter" data-level="10.1.3" data-path="appendix.html"><a href="appendix.html#appendix-1"><i class="fa fa-check"></i><b>10.1.3</b> Appendix</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="appendix.html"><a href="appendix.html#regression-2"><i class="fa fa-check"></i><b>10.2</b> Regression</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="appendix.html"><a href="appendix.html#linear-regression"><i class="fa fa-check"></i><b>10.2.1</b> Linear regression</a></li>
+<li class="chapter" data-level="10.2.2" data-path="appendix.html"><a href="appendix.html#logistic-regression-1"><i class="fa fa-check"></i><b>10.2.2</b> Logistic regression</a></li>
+</ul></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Business Analytics</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="linear-programming" class="section level1" number="9">
+<h1><span class="header-section-number">9</span> Linear Programming</h1>
+<p>This chapter is primarily based on</p>
+<ul>
+<li>Hillier-Liebermann (2001): Introduction to Operations Research</li>
+</ul>
+<p><a href="./Code/14-lp.R">You can download the corresponding R-Code here</a></p>
+<div id="introduction-4" class="section level2" number="9.1">
+<h2><span class="header-section-number">9.1</span> Introduction</h2>
+<p>Linear programming is a problem-solving approach that has been developed to help managers make decisions. It uses a mathematical model to describe the problem of concern. The adjective linear means that all the mathematical functions in this model are required to be linear functions. The word programming does not refer here to computer programming; rather, it is essentially a synonym for planning. Thus, linear programming involves the planning of activities to obtain an optimal result that maximizes or minimizes the outcome.</p>
+<p>In general, the process of Linear Programming follows three steps:</p>
+<ul>
+<li><p>The process begins by carefully observing and formulating the problem, including gathering all relevant data.</p></li>
+<li><p>The next step is to construct a mathematical model that attempts to abstract the real problem.</p></li>
+<li><p>It then attempts to find an optimal solution.</p></li>
+</ul>
+<p>Optimization models are used to make the optimum decision concerning the design of a system by allocating scarce resources.</p>
+<ul>
+<li><p><strong>Production Planning</strong>: Given several products with varying production requirements and cost structures, determine how much of each product to produce in order to maximize profits.</p></li>
+<li><p><strong>Scheduling</strong>: Given a staff of people, determine an optimal work schedule that maximizes worker preferences while adhering to scheduling rules.</p></li>
+<li><p><strong>Network Installation</strong>: Given point-to-point demands on a network, install capacities on the telecom links so as to minimize installation and routing costs.</p></li>
+</ul>
+<p>The three main components of an optimization model are:</p>
+<ul>
+<li><p><strong>Objective function</strong>: a function to be minimized or maximized</p></li>
+<li><p><strong>Decision variables</strong>: controllable variables that influence the result of the objective function</p></li>
+<li><p><strong>Constraints</strong>: restrictions for the values the decision variables can take</p></li>
+</ul>
+<p>When all decision variables and constraints in the model are linear, linear programming is used to solve an optimization problem.
+In R, the package <code>lpSolve</code> is used for solving linear programming problems.</p>
+</div>
+<div id="production-planning" class="section level2" number="9.2">
+<h2><span class="header-section-number">9.2</span> Production Planning</h2>
+<p>Consider the following example on how to solve linear programs in R.</p>
+<blockquote>
+<p>A company wants to determine how much of each product 1 and 2 to produce in order to maximize profits. They have three plants with limited capacities. Product 1 requires 1 hour at plant 1 and 3 hours at plant 3, generating profits of $3 per item. Product 2 requires 2 hours at plant 2 and 3 hours at plant 3, and can be sold for $5 per item. The production capacities are 4, 12, and 18 hours, for plant 1, 2, and 3, respectively. Because both products are competing for the same production capacity in Plant 3, it is not clear which mix of the two products is most profitable.
+We want to determine how many items of each of the two products should be produced in order to maximize the total profit, subject to the restrictions imposed by the limited production capacities available in the three plants.</p>
+</blockquote>
+<p>The corresponding mathematical model will then be defined as follows:</p>
+<p><span class="math inline">\(x_1\)</span>: number of produced items of product 1</p>
+<p><span class="math inline">\(x_2\)</span>: number of produced items of product 2</p>
+<p><span class="math display">\[
+\begin{aligned}
+max.\ 3x_1 * 5x_2 \\
+s.t. \\
+3x_1 \leq 4 \\
+2x_2 \leq 12 \\
+3x_1 + 2x_2 \leq 18 \\
+x_1 \geq 0 \\
+x_2 \geq 0
+\end{aligned}
+\]</span></p>
+<p>To solve this linear programming model in R, we first need to import the lpSolve package. Do not forget to install the package first, if not already installed.</p>
+<p>To build the model, first the coefficients f the objective function need to be set:</p>
+<div class="sourceCode" id="cb762"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb762-1"><a href="linear-programming.html#cb762-1" aria-hidden="true" tabindex="-1"></a>objective<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">5</span>)</span></code></pre></div>
+<p>The production capacity constraints of the linear programming model shown above can be summarized in the following matrix:
+<span class="math display">\[
+\begin{bmatrix}
+3 &amp; 0\\
+0 &amp; 2\\
+3 &amp; 2
+\end{bmatrix}
+\begin{bmatrix}
+x_1\\
+x_2
+\end{bmatrix}
+\leq
+\begin{bmatrix}
+4\\
+12\\
+18
+\end{bmatrix}
+\]</span></p>
+<p>The non-negativity constraint can be ignored, R automatically assumes this constraint.
+The constraints are constructed with three different functions. First, the left-hand side:</p>
+<div class="sourceCode" id="cb763"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb763-1"><a href="linear-programming.html#cb763-1" aria-hidden="true" tabindex="-1"></a>constraint.lhs <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">2</span>), <span class="at">nrow =</span> <span class="dv">3</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p>The argument <code>nrow=3</code> ensures that the matrix has three rows. The argument <code>byrow=TRUE</code> causes the numbers 3,0,0,2,3,2 to be arranged line by line in the generated matrix.</p>
+<p>Next, the inequality signs are set:</p>
+<div class="sourceCode" id="cb764"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb764-1"><a href="linear-programming.html#cb764-1" aria-hidden="true" tabindex="-1"></a>constraint.direction <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;&lt;=&quot;</span>,<span class="st">&quot;&lt;=&quot;</span>,<span class="st">&quot;&lt;=&quot;</span>)</span></code></pre></div>
+<p>Finally, the right hand side of the constraints are set:</p>
+<div class="sourceCode" id="cb765"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb765-1"><a href="linear-programming.html#cb765-1" aria-hidden="true" tabindex="-1"></a>constraint.rhs <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">12</span>,<span class="dv">18</span>)</span></code></pre></div>
+<p>To run the optimization, the function <code>lp</code> is used.</p>
+<div class="sourceCode" id="cb766"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb766-1"><a href="linear-programming.html#cb766-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lp</span>(<span class="at">direction=</span><span class="st">&quot;max&quot;</span>, objective, constraint.lhs, constraint.direction, constraint.rhs)</span></code></pre></div>
+<pre><code>## Success: the objective function is 34</code></pre>
+<p>Here, we get a success message and the objective value of $34 is returned.</p>
+<p>The final values of the decision variables are displayed using this function and adding <code>$solution</code>.</p>
+<div class="sourceCode" id="cb768"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb768-1"><a href="linear-programming.html#cb768-1" aria-hidden="true" tabindex="-1"></a><span class="co"># display final values</span></span>
+<span id="cb768-2"><a href="linear-programming.html#cb768-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lp</span>(<span class="at">direction=</span><span class="st">&quot;max&quot;</span>, objective, constraint.lhs, constraint.direction, </span>
+<span id="cb768-3"><a href="linear-programming.html#cb768-3" aria-hidden="true" tabindex="-1"></a>   constraint.rhs)<span class="sc">$</span>solution</span></code></pre></div>
+<pre><code>## [1] 1.333333 6.000000</code></pre>
+<p>So, we should order 1.33 items of product 1 and 6 items of product 2.</p>
+<p>Adding <code>$duals</code> shows the shadow prices for the constraints as well as for the decision variables.</p>
+<div class="sourceCode" id="cb770"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb770-1"><a href="linear-programming.html#cb770-1" aria-hidden="true" tabindex="-1"></a><span class="co"># display shadow prices and decision variables</span></span>
+<span id="cb770-2"><a href="linear-programming.html#cb770-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lp</span>(<span class="st">&quot;max&quot;</span>, objective, constraint.lhs, constraint.direction, </span>
+<span id="cb770-3"><a href="linear-programming.html#cb770-3" aria-hidden="true" tabindex="-1"></a>   constraint.rhs, <span class="at">compute.sens=</span><span class="cn">TRUE</span>)<span class="sc">$</span>duals</span></code></pre></div>
+<pre><code>## [1] 1.0 2.5 0.0 0.0 0.0</code></pre>
+</div>
+<div id="transportation-problem" class="section level2" number="9.3">
+<h2><span class="header-section-number">9.3</span> Transportation problem</h2>
+<p>A transportation problem is a special form of linear programming. Here, the goal is to minimize transportation cost or distance to transport a given commodity from a number of origins to a number of destinations. The constraints are given as capacities of the origins and demand of the destinations.</p>
+<p>A common notation of transportation problems is:</p>
+<p>m = number of sources (1…m)</p>
+<p>n = number of destinations (1…n)</p>
+<p><span class="math inline">\(c_{ij}\)</span> = unit cost of shipping one unit from source i to destination j</p>
+<p><span class="math inline">\(x_{ij}\)</span>= amount shipped from source i to destination j</p>
+<p><span class="math inline">\(s_i\)</span> = supply (capacity) at source i</p>
+<p><span class="math inline">\(s_i\)</span> = demand at destination j</p>
+<p>Let’s illustrate that based on an example of a classical transportation problem. Consider a regional retail company selling organic apples. They purchase their apples at three farms or suppliers from the region. They sell the apples to four customers who process them then to organic apple juice. However, the customers and suppliers are distributed throughout the region. The company must decide now which customer should be supplied by which supplier. Here, they have to consider the transportation costs to deliver the apples from the supplier to the customer.</p>
+<p>The table provides the amount of apples each supplier can provide and the amount of apples each customer demands. The gray cells show the transportation costs for each supplier-customer combination.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Cost</th>
+<th align="center">Customer 1</th>
+<th align="center">Customer 2</th>
+<th align="center">Customer 3</th>
+<th align="center">Customer 4</th>
+<th align="center">Supply</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Supplier 1</strong></td>
+<td align="center">10</td>
+<td align="center">2</td>
+<td align="center">20</td>
+<td align="center">11</td>
+<td align="center"><strong>15</strong></td>
+</tr>
+<tr class="even">
+<td><strong>Supplier 2</strong></td>
+<td align="center">12</td>
+<td align="center">7</td>
+<td align="center">9</td>
+<td align="center">20</td>
+<td align="center"><strong>25</strong></td>
+</tr>
+<tr class="odd">
+<td><strong>Supplier 3</strong></td>
+<td align="center">4</td>
+<td align="center">14</td>
+<td align="center">16</td>
+<td align="center">18</td>
+<td align="center"><strong>10</strong></td>
+</tr>
+<tr class="even">
+<td><strong>Demand</strong></td>
+<td align="center"><strong>5</strong></td>
+<td align="center"><strong>15</strong></td>
+<td align="center"><strong>15</strong></td>
+<td align="center"><strong>15</strong></td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<p>In mathematical form, this transportation problem looks like this:
+<span class="math display">\[
+\begin{aligned}
+min.\ \sum_{i=1}^{3} \sum_{j=1}^{4} c_{ij}x_{ij} \\
+s.t. \\
+x_{11}+x_{12}+x_{13}+x_{14} \leq 15 \\
+x_{21}+x_{22}+x_{23}+x_{24} \leq 25 \\
+x_{31}+x_{32}+x_{33}+x_{34} \leq 10 \\
+x_{11}+x_{21}+x_{31} \geq 5 \\
+x_{12}+x_{22}+x_{32} \geq 15 \\
+x_{13}+x_{23}+x_{33} \geq 15 \\
+x_{14}+x_{24}+x_{34} \geq 15 \\
+x_{ij} \geq 0
+\end{aligned}
+\]</span></p>
+<p>The R code to solve this transportation problem then looks as follows. First, we define the cost matrix in R.</p>
+<div class="sourceCode" id="cb772"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb772-1"><a href="linear-programming.html#cb772-1" aria-hidden="true" tabindex="-1"></a>costs<span class="ot">&lt;-</span><span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">10</span>,<span class="dv">2</span>,<span class="dv">20</span>,<span class="dv">11</span>,<span class="dv">12</span>,<span class="dv">7</span>,<span class="dv">9</span>,<span class="dv">20</span>,<span class="dv">4</span>,<span class="dv">14</span>,<span class="dv">16</span>,<span class="dv">18</span>), <span class="at">nrow =</span> <span class="dv">3</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p>Then we specify the customers´and the suppliers´ names. They are added as column names and rownames of the cost matrix, for customers and suppliers, respectively.</p>
+<div class="sourceCode" id="cb773"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb773-1"><a href="linear-programming.html#cb773-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(costs) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Customer 1&quot;</span>, <span class="st">&quot;Customer 2&quot;</span>, <span class="st">&quot;Customer 3&quot;</span>, <span class="st">&quot;Customer 4&quot;</span>)</span>
+<span id="cb773-2"><a href="linear-programming.html#cb773-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(costs) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Supplier 1&quot;</span>, <span class="st">&quot;Supplier 2&quot;</span>, <span class="st">&quot;Supplier 3&quot;</span>)</span></code></pre></div>
+<p>The transportation problem consists out of two sets of constraints. One set specifying the maximum capacity at the supplier and the other one the minimum demand required by the customers.</p>
+<p>The supplier constraints are built with smaller or equal signs. As the suppliers are considered the rows in the matrix above, we use the following formula to set the inequality signs and right hand side coefficients:</p>
+<div class="sourceCode" id="cb774"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb774-1"><a href="linear-programming.html#cb774-1" aria-hidden="true" tabindex="-1"></a>row.signs <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="st">&quot;&lt;=&quot;</span>, <span class="dv">3</span>)</span>
+<span id="cb774-2"><a href="linear-programming.html#cb774-2" aria-hidden="true" tabindex="-1"></a>row.rhs <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">15</span>, <span class="dv">25</span>, <span class="dv">10</span>)</span></code></pre></div>
+<p>The customer constraints are built with larger or equal signs. As the customers are considered the columns in the matrix above, we use the following formula to set the inequality signs and right hand side coefficients:</p>
+<div class="sourceCode" id="cb775"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb775-1"><a href="linear-programming.html#cb775-1" aria-hidden="true" tabindex="-1"></a>col.signs <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="st">&quot;&gt;=&quot;</span>, <span class="dv">4</span>)</span>
+<span id="cb775-2"><a href="linear-programming.html#cb775-2" aria-hidden="true" tabindex="-1"></a>col.rhs <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">15</span>, <span class="dv">15</span>, <span class="dv">15</span>)</span></code></pre></div>
+<p>The final values are retrieved as in the simple linear program shown above.</p>
+<div class="sourceCode" id="cb776"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb776-1"><a href="linear-programming.html#cb776-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lp.transport</span>(costs, <span class="st">&quot;min&quot;</span>, row.signs, row.rhs, col.signs, col.rhs)</span></code></pre></div>
+<pre><code>## Success: the objective function is 435</code></pre>
+<div class="sourceCode" id="cb778"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb778-1"><a href="linear-programming.html#cb778-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lp.transport</span>(costs, <span class="st">&quot;min&quot;</span>, row.signs, row.rhs, col.signs, col.rhs)<span class="sc">$</span>solution</span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4]
+## [1,]    0    5    0   10
+## [2,]    0   10   15    0
+## [3,]    5    0    0    5</code></pre>
+<p>The total transportation costs for this problem are $435. The allocation is shown in the table below.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Allocation</th>
+<th align="center">Customer 1</th>
+<th align="center">Customer 2</th>
+<th align="center">Customer 3</th>
+<th align="center">Customer 4</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Supplier 1</strong></td>
+<td align="center">-</td>
+<td align="center">5</td>
+<td align="center">-</td>
+<td align="center">10</td>
+</tr>
+<tr class="even">
+<td><strong>Supplier 2</strong></td>
+<td align="center">-</td>
+<td align="center">10</td>
+<td align="center">15</td>
+<td align="center">-</td>
+</tr>
+<tr class="odd">
+<td><strong>Supplier 3</strong></td>
+<td align="center">5</td>
+<td align="center">-</td>
+<td align="center">-</td>
+<td align="center">5</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="simulation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="appendix.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

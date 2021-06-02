@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>7 Exploratory factor analysis | Business Analytics</title>
   <meta name="description" content="An Introduction to Statistics Using R" />
-  <meta name="generator" content="bookdown 0.11 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
   <meta property="og:title" content="7 Exploratory factor analysis | Business Analytics" />
   <meta property="og:type" content="book" />
@@ -29,15 +29,19 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-<link rel="prev" href="regression.html">
-<link rel="next" href="appendix.html">
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link rel="prev" href="regression.html"/>
+<link rel="next" href="simulation.html"/>
+<script src="libs/header-attrs-2.8/header-attrs.js"></script>
+<script src="libs/jquery-3.5.1/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
 
 
 
@@ -47,37 +51,41 @@
 
 <link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
 <script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
-<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
-<script src="libs/plotly-binding-4.9.0/plotly.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.9.3/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
-<link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
-<script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
-<link href="libs/plotly-htmlwidgets-css-1.46.1/plotly-htmlwidgets.css" rel="stylesheet" />
-<script src="libs/plotly-main-1.46.1/plotly-latest.min.js"></script>
+<link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script>
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -86,9 +94,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -121,6 +129,7 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+
 </head>
 
 <body>
@@ -137,105 +146,128 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Welcome!</a></li>
-<li class="chapter" data-level="" data-path="course-materials.html"><a href="course-materials.html"><i class="fa fa-check"></i>Course materials</a><ul>
+<li class="chapter" data-level="" data-path="course-materials.html"><a href="course-materials.html"><i class="fa fa-check"></i>Course materials</a>
+<ul>
 <li class="chapter" data-level="" data-path="course-materials.html"><a href="course-materials.html#main-reference"><i class="fa fa-check"></i>Main reference</a></li>
 <li class="chapter" data-level="" data-path="course-materials.html"><a href="course-materials.html#further-readings"><i class="fa fa-check"></i>Further readings</a></li>
 <li class="chapter" data-level="" data-path="course-materials.html"><a href="course-materials.html#datacamp"><i class="fa fa-check"></i>DataCamp</a></li>
 <li class="chapter" data-level="" data-path="course-materials.html"><a href="course-materials.html#other-web-resources"><i class="fa fa-check"></i>Other web-resources</a></li>
 </ul></li>
-<li class="chapter" data-level="1" data-path="getting-started.html"><a href="getting-started.html"><i class="fa fa-check"></i><b>1</b> Getting started</a><ul>
+<li class="chapter" data-level="1" data-path="getting-started.html"><a href="getting-started.html"><i class="fa fa-check"></i><b>1</b> Getting started</a>
+<ul>
 <li class="chapter" data-level="1.1" data-path="getting-started.html"><a href="getting-started.html#how-to-download-and-install-r-and-rstudio"><i class="fa fa-check"></i><b>1.1</b> How to download and install R and RStudio</a></li>
 <li class="chapter" data-level="1.2" data-path="getting-started.html"><a href="getting-started.html#getting-help"><i class="fa fa-check"></i><b>1.2</b> Getting help</a></li>
 <li class="chapter" data-level="1.3" data-path="getting-started.html"><a href="getting-started.html#functions"><i class="fa fa-check"></i><b>1.3</b> Functions</a></li>
 <li class="chapter" data-level="1.4" data-path="getting-started.html"><a href="getting-started.html#packages"><i class="fa fa-check"></i><b>1.4</b> Packages</a></li>
 <li class="chapter" data-level="1.5" data-path="getting-started.html"><a href="getting-started.html#a-typical-r-session"><i class="fa fa-check"></i><b>1.5</b> A typical R session</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="data-handling.html"><a href="data-handling.html"><i class="fa fa-check"></i><b>2</b> Data handling</a><ul>
-<li class="chapter" data-level="2.1" data-path="data-handling.html"><a href="data-handling.html#basic-data-handling"><i class="fa fa-check"></i><b>2.1</b> Basic data handling</a><ul>
+<li class="chapter" data-level="2" data-path="data-handling.html"><a href="data-handling.html"><i class="fa fa-check"></i><b>2</b> Data handling</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="data-handling.html"><a href="data-handling.html#basic-data-handling"><i class="fa fa-check"></i><b>2.1</b> Basic data handling</a>
+<ul>
 <li class="chapter" data-level="2.1.1" data-path="data-handling.html"><a href="data-handling.html#creating-objects"><i class="fa fa-check"></i><b>2.1.1</b> Creating objects</a></li>
 <li class="chapter" data-level="2.1.2" data-path="data-handling.html"><a href="data-handling.html#data-types"><i class="fa fa-check"></i><b>2.1.2</b> Data types</a></li>
 <li class="chapter" data-level="2.1.3" data-path="data-handling.html"><a href="data-handling.html#data-structures"><i class="fa fa-check"></i><b>2.1.3</b> Data structures</a></li>
 </ul></li>
-<li class="chapter" data-level="2.2" data-path="data-handling.html"><a href="data-handling.html#advanced-data-handling"><i class="fa fa-check"></i><b>2.2</b> Advanced data handling</a><ul>
+<li class="chapter" data-level="2.2" data-path="data-handling.html"><a href="data-handling.html#advanced-data-handling"><i class="fa fa-check"></i><b>2.2</b> Advanced data handling</a>
+<ul>
 <li class="chapter" data-level="2.2.1" data-path="data-handling.html"><a href="data-handling.html#the-dplyr-package"><i class="fa fa-check"></i><b>2.2.1</b> The dplyr package</a></li>
 <li class="chapter" data-level="2.2.2" data-path="data-handling.html"><a href="data-handling.html#dealing-with-strings"><i class="fa fa-check"></i><b>2.2.2</b> Dealing with strings</a></li>
 <li class="chapter" data-level="2.2.3" data-path="data-handling.html"><a href="data-handling.html#case-study"><i class="fa fa-check"></i><b>2.2.3</b> Case study</a></li>
 </ul></li>
-<li class="chapter" data-level="2.3" data-path="data-handling.html"><a href="data-handling.html#data-import-and-export"><i class="fa fa-check"></i><b>2.3</b> Data import and export</a><ul>
+<li class="chapter" data-level="2.3" data-path="data-handling.html"><a href="data-handling.html#data-import-and-export"><i class="fa fa-check"></i><b>2.3</b> Data import and export</a>
+<ul>
 <li class="chapter" data-level="2.3.1" data-path="data-handling.html"><a href="data-handling.html#getting-data-for-this-course"><i class="fa fa-check"></i><b>2.3.1</b> Getting data for this course</a></li>
 <li class="chapter" data-level="2.3.2" data-path="data-handling.html"><a href="data-handling.html#import-data-created-by-other-software-packages"><i class="fa fa-check"></i><b>2.3.2</b> Import data created by other software packages</a></li>
 <li class="chapter" data-level="2.3.3" data-path="data-handling.html"><a href="data-handling.html#export-data"><i class="fa fa-check"></i><b>2.3.3</b> Export data</a></li>
 <li class="chapter" data-level="2.3.4" data-path="data-handling.html"><a href="data-handling.html#import-data-from-the-web"><i class="fa fa-check"></i><b>2.3.4</b> Import data from the Web</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="summarizing-data.html"><a href="summarizing-data.html"><i class="fa fa-check"></i><b>3</b> Summarizing data</a><ul>
-<li class="chapter" data-level="3.1" data-path="summarizing-data.html"><a href="summarizing-data.html#summary-statistics"><i class="fa fa-check"></i><b>3.1</b> Summary statistics</a><ul>
+<li class="chapter" data-level="3" data-path="summarizing-data.html"><a href="summarizing-data.html"><i class="fa fa-check"></i><b>3</b> Summarizing data</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="summarizing-data.html"><a href="summarizing-data.html#summary-statistics"><i class="fa fa-check"></i><b>3.1</b> Summary statistics</a>
+<ul>
 <li class="chapter" data-level="3.1.1" data-path="summarizing-data.html"><a href="summarizing-data.html#categorical-variables"><i class="fa fa-check"></i><b>3.1.1</b> Categorical variables</a></li>
 <li class="chapter" data-level="3.1.2" data-path="summarizing-data.html"><a href="summarizing-data.html#continuous-variables"><i class="fa fa-check"></i><b>3.1.2</b> Continuous variables</a></li>
 </ul></li>
-<li class="chapter" data-level="3.2" data-path="summarizing-data.html"><a href="summarizing-data.html#data-visualization"><i class="fa fa-check"></i><b>3.2</b> Data visualization</a><ul>
+<li class="chapter" data-level="3.2" data-path="summarizing-data.html"><a href="summarizing-data.html#data-visualization"><i class="fa fa-check"></i><b>3.2</b> Data visualization</a>
+<ul>
 <li class="chapter" data-level="3.2.1" data-path="summarizing-data.html"><a href="summarizing-data.html#categorical-variables-1"><i class="fa fa-check"></i><b>3.2.1</b> Categorical variables</a></li>
 <li class="chapter" data-level="3.2.2" data-path="summarizing-data.html"><a href="summarizing-data.html#continuous-variables-1"><i class="fa fa-check"></i><b>3.2.2</b> Continuous variables</a></li>
 <li class="chapter" data-level="3.2.3" data-path="summarizing-data.html"><a href="summarizing-data.html#saving-plots"><i class="fa fa-check"></i><b>3.2.3</b> Saving plots</a></li>
 <li class="chapter" data-level="3.2.4" data-path="summarizing-data.html"><a href="summarizing-data.html#additional-options"><i class="fa fa-check"></i><b>3.2.4</b> Additional options</a></li>
 </ul></li>
-<li class="chapter" data-level="3.3" data-path="summarizing-data.html"><a href="summarizing-data.html#writing-reports-using-r-markdown"><i class="fa fa-check"></i><b>3.3</b> Writing reports using R-Markdown</a><ul>
+<li class="chapter" data-level="3.3" data-path="summarizing-data.html"><a href="summarizing-data.html#writing-reports-using-r-markdown"><i class="fa fa-check"></i><b>3.3</b> Writing reports using R-Markdown</a>
+<ul>
 <li class="chapter" data-level="3.3.1" data-path="summarizing-data.html"><a href="summarizing-data.html#creating-a-new-r-markdown-document"><i class="fa fa-check"></i><b>3.3.1</b> Creating a new R-Markdown document</a></li>
 <li class="chapter" data-level="3.3.2" data-path="summarizing-data.html"><a href="summarizing-data.html#text-and-equations"><i class="fa fa-check"></i><b>3.3.2</b> Text and Equations</a></li>
 <li class="chapter" data-level="3.3.3" data-path="summarizing-data.html"><a href="summarizing-data.html#r-code"><i class="fa fa-check"></i><b>3.3.3</b> R-Code</a></li>
 <li class="chapter" data-level="3.3.4" data-path="summarizing-data.html"><a href="summarizing-data.html#latex-math"><i class="fa fa-check"></i><b>3.3.4</b> LaTeX Math</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="introduction-to-statistical-inference.html"><a href="introduction-to-statistical-inference.html"><i class="fa fa-check"></i><b>4</b> Introduction to Statistical Inference</a><ul>
-<li class="chapter" data-level="4.1" data-path="introduction-to-statistical-inference.html"><a href="introduction-to-statistical-inference.html#if-we-knew-it-all"><i class="fa fa-check"></i><b>4.1</b> If we knew it all</a><ul>
+<li class="chapter" data-level="4" data-path="introduction-to-statistical-inference.html"><a href="introduction-to-statistical-inference.html"><i class="fa fa-check"></i><b>4</b> Introduction to Statistical Inference</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="introduction-to-statistical-inference.html"><a href="introduction-to-statistical-inference.html#if-we-knew-it-all"><i class="fa fa-check"></i><b>4.1</b> If we knew it all</a>
+<ul>
 <li class="chapter" data-level="4.1.1" data-path="introduction-to-statistical-inference.html"><a href="introduction-to-statistical-inference.html#sampling-from-a-known-population"><i class="fa fa-check"></i><b>4.1.1</b> Sampling from a known population</a></li>
 <li class="chapter" data-level="4.1.2" data-path="introduction-to-statistical-inference.html"><a href="introduction-to-statistical-inference.html#standard-error-of-the-mean"><i class="fa fa-check"></i><b>4.1.2</b> Standard error of the mean</a></li>
 </ul></li>
 <li class="chapter" data-level="4.2" data-path="introduction-to-statistical-inference.html"><a href="introduction-to-statistical-inference.html#the-central-limit-theorem"><i class="fa fa-check"></i><b>4.2</b> The Central Limit Theorem</a></li>
-<li class="chapter" data-level="4.3" data-path="introduction-to-statistical-inference.html"><a href="introduction-to-statistical-inference.html#using-what-we-actually-know"><i class="fa fa-check"></i><b>4.3</b> Using what we actually know</a><ul>
+<li class="chapter" data-level="4.3" data-path="introduction-to-statistical-inference.html"><a href="introduction-to-statistical-inference.html#using-what-we-actually-know"><i class="fa fa-check"></i><b>4.3</b> Using what we actually know</a>
+<ul>
 <li class="chapter" data-level="4.3.1" data-path="introduction-to-statistical-inference.html"><a href="introduction-to-statistical-inference.html#confidence-intervals-for-the-sample-mean"><i class="fa fa-check"></i><b>4.3.1</b> Confidence Intervals for the Sample Mean</a></li>
 </ul></li>
 <li class="chapter" data-level="4.4" data-path="introduction-to-statistical-inference.html"><a href="introduction-to-statistical-inference.html#summary"><i class="fa fa-check"></i><b>4.4</b> Summary</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html"><i class="fa fa-check"></i><b>5</b> Hypothesis testing</a><ul>
-<li class="chapter" data-level="5.1" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#introduction"><i class="fa fa-check"></i><b>5.1</b> Introduction</a><ul>
+<li class="chapter" data-level="5" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html"><i class="fa fa-check"></i><b>5</b> Hypothesis testing</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#introduction"><i class="fa fa-check"></i><b>5.1</b> Introduction</a>
+<ul>
 <li class="chapter" data-level="5.1.1" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#the-null-hypothesis"><i class="fa fa-check"></i><b>5.1.1</b> The null hypothesis</a></li>
 <li class="chapter" data-level="5.1.2" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#statistical-inference-on-a-sample"><i class="fa fa-check"></i><b>5.1.2</b> Statistical inference on a sample</a></li>
 <li class="chapter" data-level="5.1.3" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#choosing-the-right-test"><i class="fa fa-check"></i><b>5.1.3</b> Choosing the right test</a></li>
 <li class="chapter" data-level="5.1.4" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#summary-1"><i class="fa fa-check"></i><b>5.1.4</b> Summary</a></li>
 </ul></li>
 <li class="chapter" data-level="5.2" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#one-sample-t-test"><i class="fa fa-check"></i><b>5.2</b> One sample t-test</a></li>
-<li class="chapter" data-level="5.3" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#comparing-two-means"><i class="fa fa-check"></i><b>5.3</b> Comparing two means</a><ul>
+<li class="chapter" data-level="5.3" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#comparing-two-means"><i class="fa fa-check"></i><b>5.3</b> Comparing two means</a>
+<ul>
 <li class="chapter" data-level="5.3.1" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#independent-means-t-test"><i class="fa fa-check"></i><b>5.3.1</b> Independent-means t-test</a></li>
 <li class="chapter" data-level="5.3.2" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#dependent-means-t-test"><i class="fa fa-check"></i><b>5.3.2</b> Dependent-means t-test</a></li>
 <li class="chapter" data-level="5.3.3" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#further-considerations"><i class="fa fa-check"></i><b>5.3.3</b> Further considerations</a></li>
 </ul></li>
-<li class="chapter" data-level="5.4" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#comparing-several-means"><i class="fa fa-check"></i><b>5.4</b> Comparing several means</a><ul>
+<li class="chapter" data-level="5.4" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#comparing-several-means"><i class="fa fa-check"></i><b>5.4</b> Comparing several means</a>
+<ul>
 <li class="chapter" data-level="5.4.1" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#introduction-1"><i class="fa fa-check"></i><b>5.4.1</b> Introduction</a></li>
 <li class="chapter" data-level="5.4.2" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#decomposing-variance"><i class="fa fa-check"></i><b>5.4.2</b> Decomposing variance</a></li>
 <li class="chapter" data-level="5.4.3" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#one-way-anova"><i class="fa fa-check"></i><b>5.4.3</b> One-way ANOVA</a></li>
 </ul></li>
-<li class="chapter" data-level="5.5" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#non-parametric-tests"><i class="fa fa-check"></i><b>5.5</b> Non-parametric tests</a><ul>
+<li class="chapter" data-level="5.5" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#non-parametric-tests"><i class="fa fa-check"></i><b>5.5</b> Non-parametric tests</a>
+<ul>
 <li class="chapter" data-level="5.5.1" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#mann-whitney-u-test-a.k.a.-wilcoxon-rank-sum-test"><i class="fa fa-check"></i><b>5.5.1</b> Mann-Whitney U Test (a.k.a. Wilcoxon rank-sum test)</a></li>
 <li class="chapter" data-level="5.5.2" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#wilcoxon-signed-rank-test"><i class="fa fa-check"></i><b>5.5.2</b> Wilcoxon signed-rank test</a></li>
 <li class="chapter" data-level="5.5.3" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#kruskal-wallis-test"><i class="fa fa-check"></i><b>5.5.3</b> Kruskal-Wallis test</a></li>
 </ul></li>
-<li class="chapter" data-level="5.6" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#categorical-data"><i class="fa fa-check"></i><b>5.6</b> Categorical data</a><ul>
+<li class="chapter" data-level="5.6" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#categorical-data"><i class="fa fa-check"></i><b>5.6</b> Categorical data</a>
+<ul>
 <li class="chapter" data-level="5.6.1" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#confidence-intervals-for-proportions"><i class="fa fa-check"></i><b>5.6.1</b> Confidence intervals for proportions</a></li>
 <li class="chapter" data-level="5.6.2" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#chi-square-test"><i class="fa fa-check"></i><b>5.6.2</b> Chi-square test</a></li>
 <li class="chapter" data-level="5.6.3" data-path="hypothesis-testing.html"><a href="hypothesis-testing.html#sample-size-1"><i class="fa fa-check"></i><b>5.6.3</b> Sample size</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>6</b> Regression</a><ul>
-<li class="chapter" data-level="6.1" data-path="regression.html"><a href="regression.html#correlation"><i class="fa fa-check"></i><b>6.1</b> Correlation</a><ul>
+<li class="chapter" data-level="6" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>6</b> Regression</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="regression.html"><a href="regression.html#correlation"><i class="fa fa-check"></i><b>6.1</b> Correlation</a>
+<ul>
 <li class="chapter" data-level="6.1.1" data-path="regression.html"><a href="regression.html#correlation-coefficient"><i class="fa fa-check"></i><b>6.1.1</b> Correlation coefficient</a></li>
 <li class="chapter" data-level="6.1.2" data-path="regression.html"><a href="regression.html#significance-testing"><i class="fa fa-check"></i><b>6.1.2</b> Significance testing</a></li>
 </ul></li>
-<li class="chapter" data-level="6.2" data-path="regression.html"><a href="regression.html#regression-1"><i class="fa fa-check"></i><b>6.2</b> Regression</a><ul>
+<li class="chapter" data-level="6.2" data-path="regression.html"><a href="regression.html#regression-1"><i class="fa fa-check"></i><b>6.2</b> Regression</a>
+<ul>
 <li class="chapter" data-level="6.2.1" data-path="regression.html"><a href="regression.html#simple-linear-regression"><i class="fa fa-check"></i><b>6.2.1</b> Simple linear regression</a></li>
 <li class="chapter" data-level="6.2.2" data-path="regression.html"><a href="regression.html#multiple-linear-regression"><i class="fa fa-check"></i><b>6.2.2</b> Multiple linear regression</a></li>
 </ul></li>
-<li class="chapter" data-level="6.3" data-path="regression.html"><a href="regression.html#potential-problems"><i class="fa fa-check"></i><b>6.3</b> Potential problems</a><ul>
+<li class="chapter" data-level="6.3" data-path="regression.html"><a href="regression.html#potential-problems"><i class="fa fa-check"></i><b>6.3</b> Potential problems</a>
+<ul>
 <li class="chapter" data-level="6.3.1" data-path="regression.html"><a href="regression.html#outliers"><i class="fa fa-check"></i><b>6.3.1</b> Outliers</a></li>
 <li class="chapter" data-level="6.3.2" data-path="regression.html"><a href="regression.html#influential-observations"><i class="fa fa-check"></i><b>6.3.2</b> Influential observations</a></li>
 <li class="chapter" data-level="6.3.3" data-path="regression.html"><a href="regression.html#non-linearity"><i class="fa fa-check"></i><b>6.3.3</b> Non-linearity</a></li>
@@ -245,23 +277,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.3.7" data-path="regression.html"><a href="regression.html#collinearity"><i class="fa fa-check"></i><b>6.3.7</b> Collinearity</a></li>
 <li class="chapter" data-level="6.3.8" data-path="regression.html"><a href="regression.html#omitted-variables"><i class="fa fa-check"></i><b>6.3.8</b> Omitted Variables</a></li>
 </ul></li>
-<li class="chapter" data-level="6.4" data-path="regression.html"><a href="regression.html#categorical-predictors"><i class="fa fa-check"></i><b>6.4</b> Categorical predictors</a><ul>
+<li class="chapter" data-level="6.4" data-path="regression.html"><a href="regression.html#categorical-predictors"><i class="fa fa-check"></i><b>6.4</b> Categorical predictors</a>
+<ul>
 <li class="chapter" data-level="6.4.1" data-path="regression.html"><a href="regression.html#two-categories"><i class="fa fa-check"></i><b>6.4.1</b> Two categories</a></li>
 <li class="chapter" data-level="6.4.2" data-path="regression.html"><a href="regression.html#more-than-two-categories"><i class="fa fa-check"></i><b>6.4.2</b> More than two categories</a></li>
 </ul></li>
-<li class="chapter" data-level="6.5" data-path="regression.html"><a href="regression.html#extensions-of-the-linear-model"><i class="fa fa-check"></i><b>6.5</b> Extensions of the linear model</a><ul>
+<li class="chapter" data-level="6.5" data-path="regression.html"><a href="regression.html#extensions-of-the-linear-model"><i class="fa fa-check"></i><b>6.5</b> Extensions of the linear model</a>
+<ul>
 <li class="chapter" data-level="6.5.1" data-path="regression.html"><a href="regression.html#interaction-effects"><i class="fa fa-check"></i><b>6.5.1</b> Interaction effects</a></li>
 <li class="chapter" data-level="6.5.2" data-path="regression.html"><a href="regression.html#non-linear-relationships"><i class="fa fa-check"></i><b>6.5.2</b> Non-linear relationships</a></li>
 </ul></li>
-<li class="chapter" data-level="6.6" data-path="regression.html"><a href="regression.html#logistic-regression"><i class="fa fa-check"></i><b>6.6</b> Logistic regression</a><ul>
+<li class="chapter" data-level="6.6" data-path="regression.html"><a href="regression.html#logistic-regression"><i class="fa fa-check"></i><b>6.6</b> Logistic regression</a>
+<ul>
 <li class="chapter" data-level="6.6.1" data-path="regression.html"><a href="regression.html#motivation-and-intuition"><i class="fa fa-check"></i><b>6.6.1</b> Motivation and intuition</a></li>
 <li class="chapter" data-level="6.6.2" data-path="regression.html"><a href="regression.html#technical-details-of-the-model"><i class="fa fa-check"></i><b>6.6.2</b> Technical details of the model</a></li>
 <li class="chapter" data-level="6.6.3" data-path="regression.html"><a href="regression.html#estimation-in-r"><i class="fa fa-check"></i><b>6.6.3</b> Estimation in R</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html"><i class="fa fa-check"></i><b>7</b> Exploratory factor analysis</a><ul>
+<li class="chapter" data-level="7" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html"><i class="fa fa-check"></i><b>7</b> Exploratory factor analysis</a>
+<ul>
 <li class="chapter" data-level="7.1" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#introduction-2"><i class="fa fa-check"></i><b>7.1</b> Introduction</a></li>
-<li class="chapter" data-level="7.2" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#steps-in-factor-analysis"><i class="fa fa-check"></i><b>7.2</b> Steps in factor analysis</a><ul>
+<li class="chapter" data-level="7.2" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#steps-in-factor-analysis"><i class="fa fa-check"></i><b>7.2</b> Steps in factor analysis</a>
+<ul>
 <li class="chapter" data-level="7.2.1" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#are-the-assumptions-satisfied"><i class="fa fa-check"></i><b>7.2.1</b> Are the assumptions satisfied?</a></li>
 <li class="chapter" data-level="7.2.2" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#deriving-factors"><i class="fa fa-check"></i><b>7.2.2</b> Deriving factors</a></li>
 <li class="chapter" data-level="7.2.3" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#factor-interpretation"><i class="fa fa-check"></i><b>7.2.3</b> Factor interpretation</a></li>
@@ -269,15 +306,39 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="7.3" data-path="exploratory-factor-analysis.html"><a href="exploratory-factor-analysis.html#reliability-analysis"><i class="fa fa-check"></i><b>7.3</b> Reliability analysis</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i><b>8</b> Appendix</a><ul>
-<li class="chapter" data-level="8.1" data-path="appendix.html"><a href="appendix.html#random-variables-probability-distributions"><i class="fa fa-check"></i><b>8.1</b> Random Variables &amp; Probability Distributions</a><ul>
-<li class="chapter" data-level="8.1.1" data-path="appendix.html"><a href="appendix.html#random-variables"><i class="fa fa-check"></i><b>8.1.1</b> Random variables</a></li>
-<li class="chapter" data-level="8.1.2" data-path="appendix.html"><a href="appendix.html#probability-distributions"><i class="fa fa-check"></i><b>8.1.2</b> Probability Distributions</a></li>
-<li class="chapter" data-level="8.1.3" data-path="appendix.html"><a href="appendix.html#appendix-1"><i class="fa fa-check"></i><b>8.1.3</b> Appendix</a></li>
+<li class="chapter" data-level="8" data-path="simulation.html"><a href="simulation.html"><i class="fa fa-check"></i><b>8</b> Simulation</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="simulation.html"><a href="simulation.html#introduction-3"><i class="fa fa-check"></i><b>8.1</b> Introduction</a></li>
+<li class="chapter" data-level="8.2" data-path="simulation.html"><a href="simulation.html#covid-19-vaccine-development"><i class="fa fa-check"></i><b>8.2</b> Covid-19 Vaccine Development</a></li>
+<li class="chapter" data-level="8.3" data-path="simulation.html"><a href="simulation.html#developing-a-new-product"><i class="fa fa-check"></i><b>8.3</b> Developing a New Product</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="simulation.html"><a href="simulation.html#simulation-model"><i class="fa fa-check"></i><b>8.3.1</b> Simulation Model</a></li>
+<li class="chapter" data-level="8.3.2" data-path="simulation.html"><a href="simulation.html#number-of-simulation-runs"><i class="fa fa-check"></i><b>8.3.2</b> Number of Simulation Runs</a></li>
 </ul></li>
-<li class="chapter" data-level="8.2" data-path="appendix.html"><a href="appendix.html#regression-2"><i class="fa fa-check"></i><b>8.2</b> Regression</a><ul>
-<li class="chapter" data-level="8.2.1" data-path="appendix.html"><a href="appendix.html#linear-regression"><i class="fa fa-check"></i><b>8.2.1</b> Linear regression</a></li>
-<li class="chapter" data-level="8.2.2" data-path="appendix.html"><a href="appendix.html#logistic-regression-1"><i class="fa fa-check"></i><b>8.2.2</b> Logistic regression</a></li>
+<li class="chapter" data-level="8.4" data-path="simulation.html"><a href="simulation.html#newsvendor-model"><i class="fa fa-check"></i><b>8.4</b> Newsvendor Model</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="simulation.html"><a href="simulation.html#demand-sampling"><i class="fa fa-check"></i><b>8.4.1</b> Demand Sampling</a></li>
+<li class="chapter" data-level="8.4.2" data-path="simulation.html"><a href="simulation.html#order-simulation-model"><i class="fa fa-check"></i><b>8.4.2</b> Order Simulation Model</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="linear-programming.html"><a href="linear-programming.html"><i class="fa fa-check"></i><b>9</b> Linear Programming</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="linear-programming.html"><a href="linear-programming.html#introduction-4"><i class="fa fa-check"></i><b>9.1</b> Introduction</a></li>
+<li class="chapter" data-level="9.2" data-path="linear-programming.html"><a href="linear-programming.html#production-planning"><i class="fa fa-check"></i><b>9.2</b> Production Planning</a></li>
+<li class="chapter" data-level="9.3" data-path="linear-programming.html"><a href="linear-programming.html#transportation-problem"><i class="fa fa-check"></i><b>9.3</b> Transportation problem</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i><b>10</b> Appendix</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="appendix.html"><a href="appendix.html#random-variables-probability-distributions"><i class="fa fa-check"></i><b>10.1</b> Random Variables &amp; Probability Distributions</a>
+<ul>
+<li class="chapter" data-level="10.1.1" data-path="appendix.html"><a href="appendix.html#random-variables"><i class="fa fa-check"></i><b>10.1.1</b> Random variables</a></li>
+<li class="chapter" data-level="10.1.2" data-path="appendix.html"><a href="appendix.html#probability-distributions"><i class="fa fa-check"></i><b>10.1.2</b> Probability Distributions</a></li>
+<li class="chapter" data-level="10.1.3" data-path="appendix.html"><a href="appendix.html#appendix-1"><i class="fa fa-check"></i><b>10.1.3</b> Appendix</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="appendix.html"><a href="appendix.html#regression-2"><i class="fa fa-check"></i><b>10.2</b> Regression</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="appendix.html"><a href="appendix.html#linear-regression"><i class="fa fa-check"></i><b>10.2.1</b> Linear regression</a></li>
+<li class="chapter" data-level="10.2.2" data-path="appendix.html"><a href="appendix.html#logistic-regression-1"><i class="fa fa-check"></i><b>10.2.2</b> Logistic regression</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -297,7 +358,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="exploratory-factor-analysis" class="section level1">
+<div id="exploratory-factor-analysis" class="section level1" number="7">
 <h1><span class="header-section-number">7</span> Exploratory factor analysis</h1>
 <p>This chapter is primarily based on</p>
 <ul>
@@ -305,7 +366,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Malhotra, N. K.(2010). Marketing Research: An Applied Orientation (6th. ed.). Prentice Hall. <strong>chapter 19</strong></li>
 </ul>
 <p><a href="./Code/12-pca.R">You can download the corresponding R-Code here</a></p>
-<div id="introduction-2" class="section level2">
+<div id="introduction-2" class="section level2" number="7.1">
 <h2><span class="header-section-number">7.1</span> Introduction</h2>
 <p>In this chapter, we will focus on exploratory factor analysis.</p>
 <p>Generally, factor analysis is a class of procedures used for data reduction or summarization. It is an <strong>interdependence technique</strong>, meaning that there is
@@ -324,10 +385,10 @@ no distinction between dependent and independent variables and all variables are
 <li><strong>Item 6</strong>: The most important consideration in buying a toothpaste is attractive teeth.</li>
 </ul>
 <p>Let’s assume you collect data from 30 respondents and you use 7-point itemized rating scales to measure the extent of agreement to each of these statements. This is the data that you have collected:</p>
-<pre class="sourceCode r"><code class="sourceCode r">factor_analysis &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/toothpaste.dat&quot;</span>, 
-                          <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, 
-                          <span class="dt">header =</span> <span class="ot">TRUE</span>) <span class="co">#read in data</span>
-<span class="kw">str</span>(factor_analysis) <span class="co">#inspect data</span></code></pre>
+<div class="sourceCode" id="cb659"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb659-1"><a href="exploratory-factor-analysis.html#cb659-1" aria-hidden="true" tabindex="-1"></a>factor_analysis <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/toothpaste.dat&quot;</span>, </span>
+<span id="cb659-2"><a href="exploratory-factor-analysis.html#cb659-2" aria-hidden="true" tabindex="-1"></a>                          <span class="at">sep =</span> <span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>, </span>
+<span id="cb659-3"><a href="exploratory-factor-analysis.html#cb659-3" aria-hidden="true" tabindex="-1"></a>                          <span class="at">header =</span> <span class="cn">TRUE</span>) <span class="co">#read in data</span></span>
+<span id="cb659-4"><a href="exploratory-factor-analysis.html#cb659-4" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(factor_analysis) <span class="co">#inspect data</span></span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    30 obs. of  6 variables:
 ##  $ prevent_cavities: int  7 1 6 4 1 6 5 6 3 2 ...
 ##  $ shiny_teeth     : int  3 3 2 5 2 3 3 4 4 6 ...
@@ -335,7 +396,7 @@ no distinction between dependent and independent variables and all variables are
 ##  $ fresh_breath    : int  4 4 4 6 3 4 3 4 3 6 ...
 ##  $ prevent_decay   : int  6 3 7 6 2 6 4 7 2 1 ...
 ##  $ attract_teeth   : int  4 4 3 5 2 4 3 4 3 6 ...</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(factor_analysis) <span class="co">#inspect data</span></code></pre>
+<div class="sourceCode" id="cb661"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb661-1"><a href="exploratory-factor-analysis.html#cb661-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(factor_analysis) <span class="co">#inspect data</span></span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["prevent_cavities"],"name":[1],"type":["int"],"align":["right"]},{"label":["shiny_teeth"],"name":[2],"type":["int"],"align":["right"]},{"label":["strengthen_gum"],"name":[3],"type":["int"],"align":["right"]},{"label":["fresh_breath"],"name":[4],"type":["int"],"align":["right"]},{"label":["prevent_decay"],"name":[5],"type":["int"],"align":["right"]},{"label":["attract_teeth"],"name":[6],"type":["int"],"align":["right"]}],"data":[{"1":"7","2":"3","3":"6","4":"4","5":"6","6":"4"},{"1":"1","2":"3","3":"2","4":"4","5":"3","6":"4"},{"1":"6","2":"2","3":"7","4":"4","5":"7","6":"3"},{"1":"4","2":"5","3":"4","4":"6","5":"6","6":"5"},{"1":"1","2":"2","3":"2","4":"3","5":"2","6":"2"},{"1":"6","2":"3","3":"6","4":"4","5":"6","6":"4"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -344,8 +405,8 @@ no distinction between dependent and independent variables and all variables are
 <p><br></p>
 <p>A <strong>construct</strong> is a specific type of concept that exists at a higher level of abstraction than everyday concepts. In this example, the <em>perceived benefits</em> of toothpaste represent the construct that we would like to measure. The construct is unobservable (‘latent’) but it can be inferred from other measurable variables (items) that together comprise a scale (latent construct). A <strong>multi-item scale</strong> consists of multiple items, where an item is a single question or statement to be evaluated. In the above example, we use six items to measure the perceived benefits of toothpaste. If several items correlate highly, they might measure aspects of a common underlying dimension (a.k.a. factors). That is, specific patterns in the correlation matrix signal the existence of one or more factors underlying the data. Let’s inspect the correlation matrix using the <code>rcorr()</code> function from the <code>Hmisc</code> package.</p>
 <p><br></p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;Hmisc&quot;</span>)
-<span class="kw">rcorr</span>(<span class="kw">as.matrix</span>(factor_analysis))</code></pre>
+<div class="sourceCode" id="cb662"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb662-1"><a href="exploratory-factor-analysis.html#cb662-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;Hmisc&quot;</span>)</span>
+<span id="cb662-2"><a href="exploratory-factor-analysis.html#cb662-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rcorr</span>(<span class="fu">as.matrix</span>(factor_analysis))</span></code></pre></div>
 <pre><code>##                  prevent_cavities shiny_teeth strengthen_gum fresh_breath
 ## prevent_cavities             1.00       -0.05           0.87        -0.09
 ## shiny_teeth                 -0.05        1.00          -0.16         0.57
@@ -441,22 +502,22 @@ Social_i=&amp; 0.25*preventCavities_{i} + 0.80*shinyTeeth_{i} + 0.13*strengthenG
 \end{equation}\]</span></p>
 <p>where the variable names are replaced by the values that were observed for respondent <em>i</em> to compute the factor scores for respondent <em>i</em>. This means that we have reduced the number of variables from six to two. Note that this is a rather simple approach that is intended to explain the underlying logic. However, that the resulting factor scores will depend on the measurement scales of the variables. If different measurement scales would be used, the resulting factor scores for different factors could not be compared. Thus, R will compute the factor scores using more sophisticated methods as we will see below.</p>
 </div>
-<div id="steps-in-factor-analysis" class="section level2">
+<div id="steps-in-factor-analysis" class="section level2" number="7.2">
 <h2><span class="header-section-number">7.2</span> Steps in factor analysis</h2>
 <p>Now that we have a broad understanding of how factor analysis works, let’s use another example to go through the process of deriving factors step by step. In this section, we will use the R anxiety questionnaire from the book by Andy Field et al.. The questionnaire is intended to measure the various aspects of student’s anxiety towards learning R. It includes 23 items for which respondents are asked to indicate on a five-point Likert scale to what extent they agree with the respective statements. The questionnaire is shown in the following figure:</p>
 <div class="figure">
-<img src="https://github.com/IMSMWU/Teaching/raw/master/MRDA2017/ra_anx_quest.JPG" alt="The R anxiety questionnaire (source: Field, A. et al. (2012): Discovering Statistics Using R, p. 768)" />
-<p class="caption">The R anxiety questionnaire (source: Field, A. et al. (2012): Discovering Statistics Using R, p. 768)</p>
+<img src="https://github.com/IMSMWU/Teaching/raw/master/MRDA2017/ra_anx_quest.JPG" alt="" />
+<p class="caption">The R anxiety questionnaire (source: Field, A. et al. (2012): Discovering Statistics Using R, p. 768)</p>
 </div>
-<p>Let’s assume, we have collected data from 2,571 respondents and stored the results in the data set “raq.dat”.</p>
-<pre class="sourceCode r"><code class="sourceCode r">raq_data &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/raq.dat&quot;</span>, 
-                          <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, 
-                          <span class="dt">header =</span> <span class="ot">TRUE</span>) <span class="co">#read in data</span></code></pre>
-<div id="are-the-assumptions-satisfied" class="section level3">
+<p>Let’s assume, we have collected data from 2,571 respondents and stored the results in the data set “raq.dat.”</p>
+<div class="sourceCode" id="cb664"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb664-1"><a href="exploratory-factor-analysis.html#cb664-1" aria-hidden="true" tabindex="-1"></a>raq_data <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/raq.dat&quot;</span>, </span>
+<span id="cb664-2"><a href="exploratory-factor-analysis.html#cb664-2" aria-hidden="true" tabindex="-1"></a>                          <span class="at">sep =</span> <span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>, </span>
+<span id="cb664-3"><a href="exploratory-factor-analysis.html#cb664-3" aria-hidden="true" tabindex="-1"></a>                          <span class="at">header =</span> <span class="cn">TRUE</span>) <span class="co">#read in data</span></span></code></pre></div>
+<div id="are-the-assumptions-satisfied" class="section level3" number="7.2.1">
 <h3><span class="header-section-number">7.2.1</span> Are the assumptions satisfied?</h3>
 <p>Since PCA is based on the correlation between variables, the first step is to inspect the correlation matrix, which can be created using the <code>cor()</code> function.</p>
-<pre class="sourceCode r"><code class="sourceCode r">raq_matrix &lt;-<span class="st"> </span><span class="kw">cor</span>(raq_data)
-<span class="kw">round</span>(raq_matrix,<span class="dv">3</span>)</code></pre>
+<div class="sourceCode" id="cb665"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb665-1"><a href="exploratory-factor-analysis.html#cb665-1" aria-hidden="true" tabindex="-1"></a>raq_matrix <span class="ot">&lt;-</span> <span class="fu">cor</span>(raq_data)</span>
+<span id="cb665-2"><a href="exploratory-factor-analysis.html#cb665-2" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(raq_matrix,<span class="dv">3</span>)</span></code></pre></div>
 <pre><code>##        Q01    Q02    Q03    Q04    Q05    Q06    Q07    Q08    Q09    Q10
 ## Q01  1.000 -0.099 -0.337  0.436  0.402  0.217  0.305  0.331 -0.092  0.214
 ## Q02 -0.099  1.000  0.318 -0.112 -0.119 -0.074 -0.159 -0.050  0.315 -0.084
@@ -531,26 +592,24 @@ Social_i=&amp; 0.25*preventCavities_{i} + 0.80*shinyTeeth_{i} + 0.13*strengthenG
 ## Q23 -0.068  0.230  1.000</code></pre>
 <p>If the variables measure the same construct, we would expect to see a certain degree of correlation between the variables. Even if the variables turn out to measure different dimensions of the same underlying construct, we would still expect to see some degree of correlation. So the first problem that could occur is that the <strong>correlations are not high enough</strong>. A first approach would be to scan the correlation matrix for correlations lower than about 0.3 and identify variables that have many correlations below this threshold. If your data set contains many variables, this task can be quite tedious. To make the task a little easier, you could proceed as follows.</p>
 <p>Create a dataframe from the correlation matrix and set the diagonal elements to missing since these are always 1:</p>
-<pre class="sourceCode r"><code class="sourceCode r">correlations &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(raq_matrix)
-<span class="kw">diag</span>(correlations) &lt;-<span class="st"> </span><span class="ot">NA</span></code></pre>
+<div class="sourceCode" id="cb667"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb667-1"><a href="exploratory-factor-analysis.html#cb667-1" aria-hidden="true" tabindex="-1"></a>correlations <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(raq_matrix)</span>
+<span id="cb667-2"><a href="exploratory-factor-analysis.html#cb667-2" aria-hidden="true" tabindex="-1"></a><span class="fu">diag</span>(correlations) <span class="ot">&lt;-</span> <span class="cn">NA</span></span></code></pre></div>
 <p>Now we can use the <code>apply()</code> function to count the number of correlations for each variable that are below a certain threshold (say, 0.3). The <code>apply()</code> function is very useful as it lets you apply function by the rows or columns in your dataframe. In the following example <code>abs(correlations) &lt; 0.3</code> returns a logical value for the correlation matrix that returns <code>TRUE</code> if the statement is true. The second argument <code>1</code> means that the function should be applied to the rows (<code>2</code> would apply it to the columns). The third argument states the function that should be applied. In our case, we would like to count the number of absolute correlations below 0.3 so we apply the <code>sum</code> function, which sums the number of <code>TRUE</code> occurrences by row. The final argument <code>na.rm = TRUE</code> simply tells R to neglect the missing values that we have created for the diagonals of the matrix.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">apply</span>(<span class="kw">abs</span>(correlations) <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.3</span>, <span class="dv">1</span>, sum, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</code></pre>
-<pre><code>## Q01 Q02 Q03 Q04 Q05 Q06 Q07 Q08 Q09 Q10 Q11 Q12 Q13 Q14 Q15 Q16 Q17 Q18 
-##   9  20   6   8  11  14   8  16  21  20   8   8   6   8  11   8   8   8 
-## Q19 Q20 Q21 Q22 Q23 
-##  21  20   9  22  22</code></pre>
+<div class="sourceCode" id="cb668"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb668-1"><a href="exploratory-factor-analysis.html#cb668-1" aria-hidden="true" tabindex="-1"></a><span class="fu">apply</span>(<span class="fu">abs</span>(correlations) <span class="sc">&lt;</span> <span class="fl">0.3</span>, <span class="dv">1</span>, sum, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>## Q01 Q02 Q03 Q04 Q05 Q06 Q07 Q08 Q09 Q10 Q11 Q12 Q13 Q14 Q15 Q16 Q17 Q18 Q19 Q20 
+##   9  20   6   8  11  14   8  16  21  20   8   8   6   8  11   8   8   8  21  20 
+## Q21 Q22 Q23 
+##   9  22  22</code></pre>
 <p>The output shows you the number of correlations below the threshold for each variable. In a similar way, it would also be possible to compute the mean correlation for each variable.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">apply</span>(<span class="kw">abs</span>(correlations),<span class="dv">1</span>,mean,<span class="dt">na.rm=</span><span class="ot">TRUE</span>)</code></pre>
-<pre><code>##       Q01       Q02       Q03       Q04       Q05       Q06       Q07 
-## 0.2786461 0.1590732 0.3193955 0.3044131 0.2671130 0.2685230 0.3341477 
-##       Q08       Q09       Q10       Q11       Q12       Q13       Q14 
-## 0.2581210 0.1555957 0.2105303 0.3197517 0.3263889 0.3277661 0.3179673 
-##       Q15       Q16       Q17       Q18       Q19       Q20       Q21 
-## 0.2902898 0.3345197 0.3084564 0.3421177 0.2173012 0.2121990 0.3222743 
-##       Q22       Q23 
-## 0.1621558 0.0798525</code></pre>
+<div class="sourceCode" id="cb670"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb670-1"><a href="exploratory-factor-analysis.html#cb670-1" aria-hidden="true" tabindex="-1"></a><span class="fu">apply</span>(<span class="fu">abs</span>(correlations),<span class="dv">1</span>,mean,<span class="at">na.rm=</span><span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>##       Q01       Q02       Q03       Q04       Q05       Q06       Q07       Q08 
+## 0.2786461 0.1590732 0.3193955 0.3044131 0.2671130 0.2685230 0.3341477 0.2581210 
+##       Q09       Q10       Q11       Q12       Q13       Q14       Q15       Q16 
+## 0.1555957 0.2105303 0.3197517 0.3263889 0.3277661 0.3179673 0.2902898 0.3345197 
+##       Q17       Q18       Q19       Q20       Q21       Q22       Q23 
+## 0.3084564 0.3421177 0.2173012 0.2121990 0.3222743 0.1621558 0.0798525</code></pre>
 <p>Another way to make the correlations more salient is to plot the correlation matrix using different colors that indicate the strength of the correlations. This can be done using the <code>corPlot()</code> function from the <code>psych</code> package.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">corPlot</span>(correlations,<span class="dt">numbers=</span><span class="ot">TRUE</span>,<span class="dt">upper=</span><span class="ot">FALSE</span>,<span class="dt">diag=</span><span class="ot">FALSE</span>,<span class="dt">main=</span><span class="st">&quot;Correlations between variables&quot;</span>)</code></pre>
+<div class="sourceCode" id="cb672"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb672-1"><a href="exploratory-factor-analysis.html#cb672-1" aria-hidden="true" tabindex="-1"></a><span class="fu">corPlot</span>(correlations,<span class="at">numbers=</span><span class="cn">TRUE</span>,<span class="at">upper=</span><span class="cn">FALSE</span>,<span class="at">diag=</span><span class="cn">FALSE</span>,<span class="at">main=</span><span class="st">&quot;Correlations between variables&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-379"></span>
 <img src="_main_files/figure-html/unnamed-chunk-379-1.png" alt="Correlation matrix" width="960" />
 <p class="caption">
@@ -558,8 +617,8 @@ Figure 7.2: Correlation matrix
 </p>
 </div>
 <p>You will, however, notice that this is a rather subjective approach. The <strong>Bartlett’s test</strong> is a statistical test that can be used to test whether all the off-diagonal elements in the population correlation matrix are zero (i.e., whether the population correlation matrix resembles an identify matrix). Thus, it tests whether the correlations are overall too small. If the matrix is an identify matrix, it means that all variables are independent. Thus, a significant test statistic (i.e., p &lt; 0.05) indicates that there is some relationship between variables. The test can be implemented using the <code>cortest.bartlett()</code> function from the <code>psych</code> package:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(psych)
-<span class="kw">cortest.bartlett</span>(raq_matrix, <span class="dt">n =</span> <span class="kw">nrow</span>(raq_data))</code></pre>
+<div class="sourceCode" id="cb673"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb673-1"><a href="exploratory-factor-analysis.html#cb673-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(psych)</span>
+<span id="cb673-2"><a href="exploratory-factor-analysis.html#cb673-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cortest.bartlett</span>(raq_matrix, <span class="at">n =</span> <span class="fu">nrow</span>(raq_data))</span></code></pre></div>
 <pre><code>## $chisq
 ## [1] 19334.49
 ## 
@@ -570,15 +629,15 @@ Figure 7.2: Correlation matrix
 ## [1] 253</code></pre>
 <p>In our example, the p-value is less than 0.05, which is good news since it confirms that overall the correlation between variables is different from zero.</p>
 <p>The other problem that might occur is that <strong>the correlations are too high</strong>. Actually, a certain degree of multicollinearity is not a problem in PCA. However, it is important to avoid extreme multicollinearity (i.e., variables are highly correlated) and singularity (i.e., variables are perfectly correlated). Multicollinearity causes problems, because it becomes difficult to determine the unique contribution of a variable (as was the case in linear regression analysis). Again, inspecting the entire correlation matrix when there are many variables will be a tedious task. .</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">apply</span>(<span class="kw">abs</span>(correlations) <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.8</span>, <span class="dv">1</span>, sum, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</code></pre>
-<pre><code>## Q01 Q02 Q03 Q04 Q05 Q06 Q07 Q08 Q09 Q10 Q11 Q12 Q13 Q14 Q15 Q16 Q17 Q18 
-##   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0 
-## Q19 Q20 Q21 Q22 Q23 
-##   0   0   0   0   0</code></pre>
+<div class="sourceCode" id="cb675"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb675-1"><a href="exploratory-factor-analysis.html#cb675-1" aria-hidden="true" tabindex="-1"></a><span class="fu">apply</span>(<span class="fu">abs</span>(correlations) <span class="sc">&gt;</span> <span class="fl">0.8</span>, <span class="dv">1</span>, sum, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>## Q01 Q02 Q03 Q04 Q05 Q06 Q07 Q08 Q09 Q10 Q11 Q12 Q13 Q14 Q15 Q16 Q17 Q18 Q19 Q20 
+##   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0 
+## Q21 Q22 Q23 
+##   0   0   0</code></pre>
 <p>The results do not suggest any extreme or perfect correlations. Again, there is a more objective measure that could be applied. The <strong>determinant</strong> tells us whether the correlation matrix is singular (determinant = 0), or if all variables are completely unrelated (determinant = 1), or somewhere in between. As a rule of thumb, the determinant should be greater than 0.00001. The <code>det()</code> function can be used to compute the determinant:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">det</span>(raq_matrix)</code></pre>
+<div class="sourceCode" id="cb677"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb677-1"><a href="exploratory-factor-analysis.html#cb677-1" aria-hidden="true" tabindex="-1"></a><span class="fu">det</span>(raq_matrix)</span></code></pre></div>
 <pre><code>## [1] 0.0005271037</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">det</span>(raq_matrix) <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.00001</span></code></pre>
+<div class="sourceCode" id="cb679"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb679-1"><a href="exploratory-factor-analysis.html#cb679-1" aria-hidden="true" tabindex="-1"></a><span class="fu">det</span>(raq_matrix) <span class="sc">&gt;</span> <span class="fl">0.00001</span></span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <p>As you can see, the determinant is larger than the threshold, indicating that the overall correlation between variables is not too strong.</p>
 <p>Finally, you should test if the correlation pattern in the matrix is appropriate for factor analysis using the Kaiser-Meyer-Olkin (KMO) measure of sampling adequacy. This statistic is a measure of the proportion of variance among variables that might be common variance.</p>
@@ -596,18 +655,18 @@ MSA_j=\frac{\sum_{k\ne j}^{}{r^2_{jk}}}{\sum_{k\ne j}^{}{r^2_{jk}}+\sum_{k\ne j}
 <li>&gt;.90 = marvelous</li>
 </ul>
 <p>The KMO measure of sampling adequacy can be computed using the <code>KMO()</code> function from the <code>psych</code> package:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">KMO</span>(raq_data)</code></pre>
+<div class="sourceCode" id="cb681"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb681-1"><a href="exploratory-factor-analysis.html#cb681-1" aria-hidden="true" tabindex="-1"></a><span class="fu">KMO</span>(raq_data)</span></code></pre></div>
 <pre><code>## Kaiser-Meyer-Olkin factor adequacy
 ## Call: KMO(r = raq_data)
 ## Overall MSA =  0.93
 ## MSA for each item = 
-##  Q01  Q02  Q03  Q04  Q05  Q06  Q07  Q08  Q09  Q10  Q11  Q12  Q13  Q14  Q15 
-## 0.93 0.87 0.95 0.96 0.96 0.89 0.94 0.87 0.83 0.95 0.91 0.95 0.95 0.97 0.94 
-##  Q16  Q17  Q18  Q19  Q20  Q21  Q22  Q23 
-## 0.93 0.93 0.95 0.94 0.89 0.93 0.88 0.77</code></pre>
+##  Q01  Q02  Q03  Q04  Q05  Q06  Q07  Q08  Q09  Q10  Q11  Q12  Q13  Q14  Q15  Q16 
+## 0.93 0.87 0.95 0.96 0.96 0.89 0.94 0.87 0.83 0.95 0.91 0.95 0.95 0.97 0.94 0.93 
+##  Q17  Q18  Q19  Q20  Q21  Q22  Q23 
+## 0.93 0.95 0.94 0.89 0.93 0.88 0.77</code></pre>
 <p>You can see that the statistic is calculated for the entire matrix and for each variable individually. In our example, the values for all variables as well as the overall matrix is above 0.5, suggesting that factor analysis is appropriate.</p>
 </div>
-<div id="deriving-factors" class="section level3">
+<div id="deriving-factors" class="section level3" number="7.2.2">
 <h3><span class="header-section-number">7.2.2</span> Deriving factors</h3>
 <p>After testing that the data can be used for PCA, we can move on to conducting PCA. Conducting PCA is fairly simple in R using the <code>principal()</code> function from the <code>psych</code> package. However, before we apply the function to our data, it is useful to reflect on the goals of PCA again. The goal is to explain the maximum amount of total variance in a correlation matrix by transforming the original variables into a smaller set of linear components (factors). So the first decision we have to make is how many factors we should extract. There are different methods that can be used to decide on the appropriate number of factors, including:</p>
 <ul>
@@ -618,102 +677,102 @@ MSA_j=\frac{\sum_{k\ne j}^{}{r^2_{jk}}}{\sum_{k\ne j}^{}{r^2_{jk}}+\sum_{k\ne j}
 </ul>
 <p>Often, the decision is made based on a combination of different criteria.</p>
 <p>By extracting as many factors as there are variables we can inspect their eigenvalues and make decisions about which factors to extract. Since we have 23 variables, we set the argument <code>nfactors</code> to 23.</p>
-<pre class="sourceCode r"><code class="sourceCode r">pc1 &lt;-<span class="st"> </span><span class="kw">principal</span>(raq_data, <span class="dt">nfactors =</span> <span class="dv">23</span>, <span class="dt">rotate =</span> <span class="st">&quot;none&quot;</span>)
-pc1</code></pre>
+<div class="sourceCode" id="cb683"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb683-1"><a href="exploratory-factor-analysis.html#cb683-1" aria-hidden="true" tabindex="-1"></a>pc1 <span class="ot">&lt;-</span> <span class="fu">principal</span>(raq_data, <span class="at">nfactors =</span> <span class="dv">23</span>, <span class="at">rotate =</span> <span class="st">&quot;none&quot;</span>)</span>
+<span id="cb683-2"><a href="exploratory-factor-analysis.html#cb683-2" aria-hidden="true" tabindex="-1"></a>pc1</span></code></pre></div>
 <pre><code>## Principal Components Analysis
 ## Call: principal(r = raq_data, nfactors = 23, rotate = &quot;none&quot;)
 ## Standardized loadings (pattern matrix) based upon correlation matrix
-##       PC1   PC2   PC3   PC4   PC5   PC6   PC7   PC8   PC9  PC10  PC11
-## Q01  0.59  0.18 -0.22  0.12 -0.40 -0.11 -0.22 -0.08  0.01 -0.10  0.11
-## Q02 -0.30  0.55  0.15  0.01 -0.03 -0.38  0.19 -0.39  0.01 -0.12  0.30
-## Q03 -0.63  0.29  0.21 -0.07  0.02  0.00  0.01 -0.05  0.20  0.10  0.15
-## Q04  0.63  0.14 -0.15  0.15 -0.20 -0.12 -0.06  0.11 -0.11 -0.01 -0.03
-## Q05  0.56  0.10 -0.07  0.14 -0.42 -0.17 -0.06  0.11  0.24  0.09 -0.30
-## Q06  0.56  0.10  0.57 -0.05  0.17  0.01  0.00  0.05  0.00  0.00 -0.13
-## Q07  0.69  0.04  0.25  0.10  0.17 -0.08  0.05  0.03 -0.08  0.13 -0.27
-## Q08  0.55  0.40 -0.32 -0.42  0.15  0.10 -0.07 -0.04  0.01 -0.05 -0.09
-## Q09 -0.28  0.63 -0.01  0.10  0.17 -0.27 -0.01 -0.03  0.16  0.32 -0.22
-## Q10  0.44  0.03  0.36 -0.10 -0.34  0.22  0.44 -0.03  0.37 -0.22 -0.11
-## Q11  0.65  0.25 -0.21 -0.40  0.13  0.18 -0.01  0.03  0.10 -0.14  0.00
-## Q12  0.67 -0.05  0.05  0.25  0.04 -0.08 -0.14  0.08  0.01 -0.11  0.19
-## Q13  0.67  0.08  0.28 -0.01  0.13  0.03 -0.21  0.05  0.08 -0.22  0.24
-## Q14  0.66  0.02  0.20  0.14  0.08 -0.03 -0.10 -0.06 -0.14  0.16  0.08
-## Q15  0.59  0.01  0.12 -0.11 -0.07  0.29  0.32 -0.12 -0.27  0.41  0.15
-## Q16  0.68  0.01 -0.14  0.08 -0.32  0.00  0.12 -0.14 -0.19  0.15  0.16
-## Q17  0.64  0.33 -0.21 -0.34  0.10  0.05 -0.02  0.03 -0.04  0.02  0.01
-## Q18  0.70  0.03  0.30  0.13  0.15 -0.09 -0.10  0.06 -0.06 -0.12  0.05
-## Q19 -0.43  0.39  0.10 -0.01 -0.15  0.07  0.05  0.68  0.02  0.16  0.29
-## Q20  0.44 -0.21 -0.40  0.30  0.33 -0.01  0.34  0.03  0.33  0.02  0.21
-## Q21  0.66 -0.06 -0.19  0.28  0.24 -0.15  0.18  0.10  0.12  0.08 -0.02
-## Q22 -0.30  0.47 -0.12  0.38  0.07  0.12  0.31  0.12 -0.41 -0.39 -0.19
-## Q23 -0.14  0.37 -0.02  0.51  0.02  0.62 -0.28 -0.22  0.18  0.08  0.00
-##      PC12  PC13  PC14  PC15  PC16  PC17  PC18  PC19  PC20  PC21  PC22
-## Q01 -0.12  0.30 -0.25  0.18  0.12 -0.05 -0.17  0.16 -0.01 -0.21  0.05
-## Q02  0.27 -0.02  0.01 -0.24 -0.05 -0.08  0.00  0.01 -0.02 -0.02  0.03
-## Q03  0.03  0.10  0.13  0.40 -0.06  0.43  0.08  0.09  0.05  0.01  0.00
-## Q04  0.34 -0.32 -0.17  0.12  0.31  0.19  0.05 -0.21  0.04  0.09 -0.02
-## Q05  0.16  0.12  0.48 -0.07 -0.08 -0.04  0.01 -0.04  0.00 -0.02  0.02
-## Q06  0.20  0.24 -0.03  0.08  0.20 -0.14  0.05  0.09 -0.07  0.04 -0.32
-## Q07  0.20  0.04 -0.22  0.00 -0.23  0.03 -0.15  0.20  0.16  0.14  0.24
-## Q08  0.03 -0.01  0.04 -0.04  0.03  0.10  0.07  0.12 -0.15  0.06  0.16
-## Q09 -0.37 -0.17 -0.07  0.12  0.11 -0.19 -0.02 -0.08 -0.03  0.04 -0.01
-## Q10 -0.21 -0.17 -0.15 -0.07  0.03  0.07 -0.01  0.00  0.04 -0.03  0.02
-## Q11  0.03  0.02  0.03 -0.02  0.07 -0.05  0.07  0.07 -0.18  0.06  0.00
-## Q12 -0.07 -0.45  0.17  0.09 -0.10 -0.08  0.04  0.36  0.00 -0.04 -0.10
-## Q13 -0.08  0.01  0.12  0.14 -0.11 -0.06 -0.32 -0.30 -0.06  0.16  0.08
-## Q14 -0.29  0.07  0.14 -0.37  0.25  0.34 -0.09  0.06  0.02  0.03 -0.01
-## Q15  0.09 -0.09  0.16  0.16  0.06 -0.12 -0.10 -0.04 -0.07 -0.19  0.10
-## Q16 -0.19  0.12 -0.08  0.06 -0.22 -0.03  0.22 -0.02 -0.04  0.35 -0.12
-## Q17 -0.03 -0.01 -0.01 -0.05 -0.18  0.04 -0.04 -0.10  0.42 -0.15 -0.23
-## Q18 -0.11  0.09  0.00  0.03 -0.01 -0.06  0.45 -0.15  0.08 -0.18  0.23
-## Q19  0.04  0.06 -0.09 -0.16 -0.03 -0.06  0.01  0.05 -0.02  0.02  0.04
-## Q20  0.04  0.17  0.07  0.05  0.22 -0.09  0.00  0.04  0.18  0.10  0.06
-## Q21  0.04  0.03 -0.15 -0.04 -0.27  0.20 -0.03 -0.11 -0.31 -0.20 -0.13
-## Q22 -0.10  0.08  0.15  0.09  0.01  0.04 -0.06  0.02  0.00  0.01 -0.01
-## Q23  0.13 -0.01 -0.07 -0.12 -0.06 -0.03  0.05 -0.03  0.01 -0.01 -0.02
-##      PC23 h2                   u2 com
-## Q01  0.01  1  0.00000000000000067 6.0
-## Q02  0.02  1 -0.00000000000000089 6.1
-## Q03  0.05  1  0.00000000000000044 4.4
-## Q04  0.02  1  0.00000000000000033 4.9
-## Q05  0.01  1 -0.00000000000000044 5.2
-## Q06 -0.11  1  0.00000000000000011 4.4
-## Q07  0.09  1  0.00000000000000033 4.1
-## Q08 -0.36  1  0.00000000000000022 5.7
-## Q09  0.03  1  0.00000000000000044 5.0
-## Q10 -0.04  1 -0.00000000000000044 7.7
-## Q11  0.41  1 -0.00000000000000022 4.1
-## Q12 -0.02  1 -0.00000000000000044 3.8
-## Q13 -0.05  1 -0.00000000000000067 4.2
-## Q14  0.05  1  0.00000000000000000 4.3
-## Q15  0.00  1  0.00000000000000011 5.6
-## Q16 -0.01  1 -0.00000000000000111 4.0
-## Q17 -0.01  1 -0.00000000000000044 4.3
-## Q18  0.01  1  0.00000000000000067 3.4
-## Q19 -0.02  1  0.00000000000000067 3.5
-## Q20 -0.04  1  0.00000000000000078 8.7
-## Q21 -0.01  1  0.00000000000000022 4.6
-## Q22  0.01  1  0.00000000000000033 7.2
-## Q23  0.00  1  0.00000000000000022 4.2
+##       PC1   PC2   PC3   PC4   PC5   PC6   PC7   PC8   PC9  PC10  PC11  PC12
+## Q01  0.59  0.18 -0.22  0.12 -0.40 -0.11 -0.22 -0.08  0.01 -0.10  0.11 -0.12
+## Q02 -0.30  0.55  0.15  0.01 -0.03 -0.38  0.19 -0.39  0.01 -0.12  0.30  0.27
+## Q03 -0.63  0.29  0.21 -0.07  0.02  0.00  0.01 -0.05  0.20  0.10  0.15  0.03
+## Q04  0.63  0.14 -0.15  0.15 -0.20 -0.12 -0.06  0.11 -0.11 -0.01 -0.03  0.34
+## Q05  0.56  0.10 -0.07  0.14 -0.42 -0.17 -0.06  0.11  0.24  0.09 -0.30  0.16
+## Q06  0.56  0.10  0.57 -0.05  0.17  0.01  0.00  0.05  0.00  0.00 -0.13  0.20
+## Q07  0.69  0.04  0.25  0.10  0.17 -0.08  0.05  0.03 -0.08  0.13 -0.27  0.20
+## Q08  0.55  0.40 -0.32 -0.42  0.15  0.10 -0.07 -0.04  0.01 -0.05 -0.09  0.03
+## Q09 -0.28  0.63 -0.01  0.10  0.17 -0.27 -0.01 -0.03  0.16  0.32 -0.22 -0.37
+## Q10  0.44  0.03  0.36 -0.10 -0.34  0.22  0.44 -0.03  0.37 -0.22 -0.11 -0.21
+## Q11  0.65  0.25 -0.21 -0.40  0.13  0.18 -0.01  0.03  0.10 -0.14  0.00  0.03
+## Q12  0.67 -0.05  0.05  0.25  0.04 -0.08 -0.14  0.08  0.01 -0.11  0.19 -0.07
+## Q13  0.67  0.08  0.28 -0.01  0.13  0.03 -0.21  0.05  0.08 -0.22  0.24 -0.08
+## Q14  0.66  0.02  0.20  0.14  0.08 -0.03 -0.10 -0.06 -0.14  0.16  0.08 -0.29
+## Q15  0.59  0.01  0.12 -0.11 -0.07  0.29  0.32 -0.12 -0.27  0.41  0.15  0.09
+## Q16  0.68  0.01 -0.14  0.08 -0.32  0.00  0.12 -0.14 -0.19  0.15  0.16 -0.19
+## Q17  0.64  0.33 -0.21 -0.34  0.10  0.05 -0.02  0.03 -0.04  0.02  0.01 -0.03
+## Q18  0.70  0.03  0.30  0.13  0.15 -0.09 -0.10  0.06 -0.06 -0.12  0.05 -0.11
+## Q19 -0.43  0.39  0.10 -0.01 -0.15  0.07  0.05  0.68  0.02  0.16  0.29  0.04
+## Q20  0.44 -0.21 -0.40  0.30  0.33 -0.01  0.34  0.03  0.33  0.02  0.21  0.04
+## Q21  0.66 -0.06 -0.19  0.28  0.24 -0.15  0.18  0.10  0.12  0.08 -0.02  0.04
+## Q22 -0.30  0.47 -0.12  0.38  0.07  0.12  0.31  0.12 -0.41 -0.39 -0.19 -0.10
+## Q23 -0.14  0.37 -0.02  0.51  0.02  0.62 -0.28 -0.22  0.18  0.08  0.00  0.13
+##      PC13  PC14  PC15  PC16  PC17  PC18  PC19  PC20  PC21  PC22  PC23 h2
+## Q01  0.30 -0.25  0.18  0.12 -0.05 -0.17  0.16 -0.01 -0.21  0.05  0.01  1
+## Q02 -0.02  0.01 -0.24 -0.05 -0.08  0.00  0.01 -0.02 -0.02  0.03  0.02  1
+## Q03  0.10  0.13  0.40 -0.06  0.43  0.08  0.09  0.05  0.01  0.00  0.05  1
+## Q04 -0.32 -0.17  0.12  0.31  0.19  0.05 -0.21  0.04  0.09 -0.02  0.02  1
+## Q05  0.12  0.48 -0.07 -0.08 -0.04  0.01 -0.04  0.00 -0.02  0.02  0.01  1
+## Q06  0.24 -0.03  0.08  0.20 -0.14  0.05  0.09 -0.07  0.04 -0.32 -0.11  1
+## Q07  0.04 -0.22  0.00 -0.23  0.03 -0.15  0.20  0.16  0.14  0.24  0.09  1
+## Q08 -0.01  0.04 -0.04  0.03  0.10  0.07  0.12 -0.15  0.06  0.16 -0.36  1
+## Q09 -0.17 -0.07  0.12  0.11 -0.19 -0.02 -0.08 -0.03  0.04 -0.01  0.03  1
+## Q10 -0.17 -0.15 -0.07  0.03  0.07 -0.01  0.00  0.04 -0.03  0.02 -0.04  1
+## Q11  0.02  0.03 -0.02  0.07 -0.05  0.07  0.07 -0.18  0.06  0.00  0.41  1
+## Q12 -0.45  0.17  0.09 -0.10 -0.08  0.04  0.36  0.00 -0.04 -0.10 -0.02  1
+## Q13  0.01  0.12  0.14 -0.11 -0.06 -0.32 -0.30 -0.06  0.16  0.08 -0.05  1
+## Q14  0.07  0.14 -0.37  0.25  0.34 -0.09  0.06  0.02  0.03 -0.01  0.05  1
+## Q15 -0.09  0.16  0.16  0.06 -0.12 -0.10 -0.04 -0.07 -0.19  0.10  0.00  1
+## Q16  0.12 -0.08  0.06 -0.22 -0.03  0.22 -0.02 -0.04  0.35 -0.12 -0.01  1
+## Q17 -0.01 -0.01 -0.05 -0.18  0.04 -0.04 -0.10  0.42 -0.15 -0.23 -0.01  1
+## Q18  0.09  0.00  0.03 -0.01 -0.06  0.45 -0.15  0.08 -0.18  0.23  0.01  1
+## Q19  0.06 -0.09 -0.16 -0.03 -0.06  0.01  0.05 -0.02  0.02  0.04 -0.02  1
+## Q20  0.17  0.07  0.05  0.22 -0.09  0.00  0.04  0.18  0.10  0.06 -0.04  1
+## Q21  0.03 -0.15 -0.04 -0.27  0.20 -0.03 -0.11 -0.31 -0.20 -0.13 -0.01  1
+## Q22  0.08  0.15  0.09  0.01  0.04 -0.06  0.02  0.00  0.01 -0.01  0.01  1
+## Q23 -0.01 -0.07 -0.12 -0.06 -0.03  0.05 -0.03  0.01 -0.01 -0.02  0.00  1
+##                       u2 com
+## Q01 -0.00000000000000111 6.0
+## Q02 -0.00000000000000377 6.1
+## Q03  0.00000000000000067 4.4
+## Q04 -0.00000000000000111 4.9
+## Q05 -0.00000000000000067 5.2
+## Q06 -0.00000000000000044 4.4
+## Q07 -0.00000000000000044 4.1
+## Q08 -0.00000000000000133 5.7
+## Q09 -0.00000000000000133 5.0
+## Q10  0.00000000000000022 7.7
+## Q11 -0.00000000000000133 4.1
+## Q12 -0.00000000000000155 3.8
+## Q13 -0.00000000000000155 4.2
+## Q14 -0.00000000000000111 4.3
+## Q15 -0.00000000000000067 5.6
+## Q16 -0.00000000000000178 4.0
+## Q17 -0.00000000000000155 4.3
+## Q18 -0.00000000000000111 3.4
+## Q19 -0.00000000000000089 3.5
+## Q20  0.00000000000000044 8.7
+## Q21 -0.00000000000000022 4.6
+## Q22  0.00000000000000000 7.2
+## Q23  0.00000000000000011 4.2
 ## 
-##                        PC1  PC2  PC3  PC4  PC5  PC6  PC7  PC8  PC9 PC10
-## SS loadings           7.29 1.74 1.32 1.23 0.99 0.90 0.81 0.78 0.75 0.72
-## Proportion Var        0.32 0.08 0.06 0.05 0.04 0.04 0.04 0.03 0.03 0.03
-## Cumulative Var        0.32 0.39 0.45 0.50 0.55 0.59 0.62 0.65 0.69 0.72
-## Proportion Explained  0.32 0.08 0.06 0.05 0.04 0.04 0.04 0.03 0.03 0.03
-## Cumulative Proportion 0.32 0.39 0.45 0.50 0.55 0.59 0.62 0.65 0.69 0.72
-##                       PC11 PC12 PC13 PC14 PC15 PC16 PC17 PC18 PC19 PC20
-## SS loadings           0.68 0.67 0.61 0.58 0.55 0.52 0.51 0.46 0.42 0.41
-## Proportion Var        0.03 0.03 0.03 0.03 0.02 0.02 0.02 0.02 0.02 0.02
-## Cumulative Var        0.75 0.78 0.80 0.83 0.85 0.88 0.90 0.92 0.94 0.95
-## Proportion Explained  0.03 0.03 0.03 0.03 0.02 0.02 0.02 0.02 0.02 0.02
-## Cumulative Proportion 0.75 0.78 0.80 0.83 0.85 0.88 0.90 0.92 0.94 0.95
-##                       PC21 PC22 PC23
-## SS loadings           0.38 0.36 0.33
-## Proportion Var        0.02 0.02 0.01
-## Cumulative Var        0.97 0.99 1.00
-## Proportion Explained  0.02 0.02 0.01
-## Cumulative Proportion 0.97 0.99 1.00
+##                        PC1  PC2  PC3  PC4  PC5  PC6  PC7  PC8  PC9 PC10 PC11
+## SS loadings           7.29 1.74 1.32 1.23 0.99 0.90 0.81 0.78 0.75 0.72 0.68
+## Proportion Var        0.32 0.08 0.06 0.05 0.04 0.04 0.04 0.03 0.03 0.03 0.03
+## Cumulative Var        0.32 0.39 0.45 0.50 0.55 0.59 0.62 0.65 0.69 0.72 0.75
+## Proportion Explained  0.32 0.08 0.06 0.05 0.04 0.04 0.04 0.03 0.03 0.03 0.03
+## Cumulative Proportion 0.32 0.39 0.45 0.50 0.55 0.59 0.62 0.65 0.69 0.72 0.75
+##                       PC12 PC13 PC14 PC15 PC16 PC17 PC18 PC19 PC20 PC21 PC22
+## SS loadings           0.67 0.61 0.58 0.55 0.52 0.51 0.46 0.42 0.41 0.38 0.36
+## Proportion Var        0.03 0.03 0.03 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02
+## Cumulative Var        0.78 0.80 0.83 0.85 0.88 0.90 0.92 0.94 0.95 0.97 0.99
+## Proportion Explained  0.03 0.03 0.03 0.02 0.02 0.02 0.02 0.02 0.02 0.02 0.02
+## Cumulative Proportion 0.78 0.80 0.83 0.85 0.88 0.90 0.92 0.94 0.95 0.97 0.99
+##                       PC23
+## SS loadings           0.33
+## Proportion Var        0.01
+## Cumulative Var        1.00
+## Proportion Explained  0.01
+## Cumulative Proportion 1.00
 ## 
 ## Mean item complexity =  5
 ## Test of the hypothesis that 23 components are sufficient.
@@ -724,18 +783,18 @@ pc1</code></pre>
 ## Fit based upon off diagonal values = 1</code></pre>
 <p>The output is quite complex, but we will focus only on the <code>SS loadings</code> for now, which are the Eigenvalues (a.k.a. sum of squared loadings). One common rule is to retain factors with eigenvalues greater than 1.0. So based on this rule, we would extract four factors (i.e., the SS loadings for the fifth factor is &lt; 1).</p>
 <p>You can also plot the eigenvalues against the number of factors in order of extraction using a so-called <strong>Scree plot</strong>:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(pc1<span class="op">$</span>values, <span class="dt">type=</span><span class="st">&quot;b&quot;</span>)
-<span class="kw">abline</span>(<span class="dt">h=</span><span class="dv">1</span>, <span class="dt">lty=</span><span class="dv">2</span>)</code></pre>
+<div class="sourceCode" id="cb685"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb685-1"><a href="exploratory-factor-analysis.html#cb685-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pc1<span class="sc">$</span>values, <span class="at">type=</span><span class="st">&quot;b&quot;</span>)</span>
+<span id="cb685-2"><a href="exploratory-factor-analysis.html#cb685-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="dv">1</span>, <span class="at">lty=</span><span class="dv">2</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-385"></span>
 <img src="_main_files/figure-html/unnamed-chunk-385-1.png" alt="Scree plot" width="672" />
 <p class="caption">
 Figure 7.3: Scree plot
 </p>
 </div>
-<p>The dashed line is simply a visualization of the rule that we will retain factors with Eigenvalues &gt; 1 (suggesting four factors). Another criterion based on this plot would be to find the point where the curve flattens (point of inflection). If the largest few eigenvalues in the covariance matrix dominate in magnitude, then the scree plot will exhibit an “elbow”. From that point onwards, the incremental gain in explained variance is rather low. Also according to this criterion, we would extract four factors. Taken together, the results suggest that we should extract four factors.</p>
+<p>The dashed line is simply a visualization of the rule that we will retain factors with Eigenvalues &gt; 1 (suggesting four factors). Another criterion based on this plot would be to find the point where the curve flattens (point of inflection). If the largest few eigenvalues in the covariance matrix dominate in magnitude, then the scree plot will exhibit an “elbow.” From that point onwards, the incremental gain in explained variance is rather low. Also according to this criterion, we would extract four factors. Taken together, the results suggest that we should extract four factors.</p>
 <p>Now that we know how many components we want to extract, we can rerun the analysis, specifying that number:</p>
-<pre class="sourceCode r"><code class="sourceCode r">pc2 &lt;-<span class="st"> </span><span class="kw">principal</span>(raq_data, <span class="dt">nfactors =</span> <span class="dv">4</span>, <span class="dt">rotate =</span> <span class="st">&quot;none&quot;</span>)
-pc2</code></pre>
+<div class="sourceCode" id="cb686"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb686-1"><a href="exploratory-factor-analysis.html#cb686-1" aria-hidden="true" tabindex="-1"></a>pc2 <span class="ot">&lt;-</span> <span class="fu">principal</span>(raq_data, <span class="at">nfactors =</span> <span class="dv">4</span>, <span class="at">rotate =</span> <span class="st">&quot;none&quot;</span>)</span>
+<span id="cb686-2"><a href="exploratory-factor-analysis.html#cb686-2" aria-hidden="true" tabindex="-1"></a>pc2</span></code></pre></div>
 <pre><code>## Principal Components Analysis
 ## Call: principal(r = raq_data, nfactors = 4, rotate = &quot;none&quot;)
 ## Standardized loadings (pattern matrix) based upon correlation matrix
@@ -778,11 +837,11 @@ pc2</code></pre>
 ##  with the empirical chi square  4006.15  with prob &lt;  0 
 ## 
 ## Fit based upon off diagonal values = 0.96</code></pre>
-<p>Now that the output is less complex, we can inspect the remaining statistics. The first part of the output is the <strong>factor matrix</strong>, which contains the factor loadings of all the variables on the four extracted factors (i.e., PC1, PC2, PC3, PC4). As we have said before, the <strong>factor loadings</strong> are the correlations between the variables and the factors. The factor matrix also contains the columns “h2” and “u2”. “h2” refers to the <strong>communality</strong>, which is the proportion of variance a variable shares with all the other variables being considered. This is also the proportion of variance explained by the common factors. In contrast, “u2” refers to the unique variance, which is the proportion of the variance that is unique to a particular variable. In PCA, we are primarily interested in the common variance. When the communality is very low (say &lt;.30), a variable is “quite unique” and should be removed, as it is definitely measuring “something else”. In our example, all communalities (i.e., h2) are above 0.3 so that we retain all variables.</p>
+<p>Now that the output is less complex, we can inspect the remaining statistics. The first part of the output is the <strong>factor matrix</strong>, which contains the factor loadings of all the variables on the four extracted factors (i.e., PC1, PC2, PC3, PC4). As we have said before, the <strong>factor loadings</strong> are the correlations between the variables and the factors. The factor matrix also contains the columns “h2” and “u2.” “h2” refers to the <strong>communality</strong>, which is the proportion of variance a variable shares with all the other variables being considered. This is also the proportion of variance explained by the common factors. In contrast, “u2” refers to the unique variance, which is the proportion of the variance that is unique to a particular variable. In PCA, we are primarily interested in the common variance. When the communality is very low (say &lt;.30), a variable is “quite unique” and should be removed, as it is definitely measuring “something else.” In our example, all communalities (i.e., h2) are above 0.3 so that we retain all variables.</p>
 <p>Note that there is a difference between PCA and common factor analysis. PCA focuses on the variance and aims to reproduce the total variable variance. This means that the components reflect both common and unique variance of the variables. Factor analysis, in contrast, focuses on the correlation and aims to reproduce the correlations among variables. Here, the factors only represent the common variance that variable share and do not include the unique variance. In other words, while factor analysis focuses on explaining the off-diagonal terms in the correlation matrix (i.e., shared co-variance), PCA focuses on explaining the diagonal terms (i.e., the variances). However, although PCA aims to reproduce the on-diagonal terms in the correlation matrix, it also tends to fit the off-diagonal correlations quite well. Hence, the results are often comparable. See also <a href="https://en.wikipedia.org/wiki/Principal_component_analysis#Relation_between_PCA_and_factor_analysis" target="_blank">here</a>.</p>
 <p>You should also take a closer look at the residuals in order to check whether you have extracted the correct number of factors. The difference between the reproduced and the actual correlation matrices are the residuals. We can extract the residuals from our model using the <code>factor.residuals()</code> function from the <code>psych</code> package. It takes the original correlation matrix and the factor loadings as arguments:</p>
-<pre class="sourceCode r"><code class="sourceCode r">residuals &lt;-<span class="st"> </span><span class="kw">factor.residuals</span>(raq_matrix, pc2<span class="op">$</span>loadings)
-<span class="kw">round</span>(residuals,<span class="dv">3</span>)</code></pre>
+<div class="sourceCode" id="cb688"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb688-1"><a href="exploratory-factor-analysis.html#cb688-1" aria-hidden="true" tabindex="-1"></a>residuals <span class="ot">&lt;-</span> <span class="fu">factor.residuals</span>(raq_matrix, pc2<span class="sc">$</span>loadings)</span>
+<span id="cb688-2"><a href="exploratory-factor-analysis.html#cb688-2" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(residuals,<span class="dv">3</span>)</span></code></pre></div>
 <pre><code>##        Q01    Q02    Q03    Q04    Q05    Q06    Q07    Q08    Q09    Q10
 ## Q01  0.565  0.013  0.035 -0.011  0.027 -0.001 -0.061 -0.081 -0.050  0.042
 ## Q02  0.013  0.586 -0.062  0.022  0.003 -0.041 -0.011 -0.052 -0.115 -0.023
@@ -856,8 +915,8 @@ pc2</code></pre>
 ## Q22 -0.033  0.536 -0.177
 ## Q23 -0.100 -0.177  0.588</code></pre>
 <p>Note that the diagonal elements in the residual matrix correspond to the unique variance in each variable that cannot be explained by the factors (i.e., “u2” in the output above). For example, the proportion of unique variance for question 1 is 0.57, which is reflected in the first cell in the residual matrix. The off-diagonal elements represent the difference between the actual correlations and the correlation based on the reproduced correlation matrix for all variable pairs. To see this, the reproduced correlation matrix could be generated by using the <code>factor.model()</code> function:</p>
-<pre class="sourceCode r"><code class="sourceCode r">reproduced_matrix &lt;-<span class="st"> </span><span class="kw">factor.model</span>(pc2<span class="op">$</span>loadings)
-<span class="kw">round</span>(reproduced_matrix,<span class="dv">3</span>)</code></pre>
+<div class="sourceCode" id="cb690"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb690-1"><a href="exploratory-factor-analysis.html#cb690-1" aria-hidden="true" tabindex="-1"></a>reproduced_matrix <span class="ot">&lt;-</span> <span class="fu">factor.model</span>(pc2<span class="sc">$</span>loadings)</span>
+<span id="cb690-2"><a href="exploratory-factor-analysis.html#cb690-2" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(reproduced_matrix,<span class="dv">3</span>)</span></code></pre></div>
 <pre><code>##        Q01    Q02    Q03    Q04    Q05    Q06    Q07    Q08    Q09    Q10
 ## Q01  0.435 -0.112 -0.372  0.447  0.376  0.218  0.366  0.412 -0.042  0.172
 ## Q02 -0.112  0.414  0.380 -0.134 -0.122 -0.033 -0.148  0.002  0.430 -0.061
@@ -931,41 +990,41 @@ pc2</code></pre>
 ## Q22 -0.096  0.464  0.408
 ## Q23  0.032  0.408  0.412</code></pre>
 <p>You can see that the reproduced correlation between the first and second variable is -0.112. From the correlation table from the beginning we know, however, that the observed correlation was -0.099. Hence, the difference between the observed and reproduced correlation is: (-0.099)-(-0.112) = 0.013, which corresponds to the residual of this variable pair in the residual matrix. Note that the diagonal elements in the reproduced matrix correspond to the communalities in the model summary above (i.e., “h2”).</p>
-<p>A measure of fit can now be computed based on the size of the residuals. In the worst case, the residuals would be as large as the correlations in the original matrix, which would be the case if we extracted no factors at all. A measure of fit could therefore be the sum of the squared residuals divided by the sum of the squared correlations. We square the residuals to account for positive and negative deviations. <strong>Values &gt;0.90 are considered indicators of good fit.</strong> From the output above, you can see that: “Fit based upon off diagonal values = 0.96”. Thus, we conclude that the model fit is sufficient.</p>
+<p>A measure of fit can now be computed based on the size of the residuals. In the worst case, the residuals would be as large as the correlations in the original matrix, which would be the case if we extracted no factors at all. A measure of fit could therefore be the sum of the squared residuals divided by the sum of the squared correlations. We square the residuals to account for positive and negative deviations. <strong>Values &gt;0.90 are considered indicators of good fit.</strong> From the output above, you can see that: “Fit based upon off diagonal values = 0.96.” Thus, we conclude that the model fit is sufficient.</p>
 <p>You could also manually compute this statistic by summing over the squared residuals and correlations, take their ratio and subtract it from one (note that we use the <code>upper.tri()</code> function to use the upper triangle of the matrix only; this has the effect of discarding the diagonal elements and the elements below the diagonal).</p>
-<pre class="sourceCode r"><code class="sourceCode r">ssr &lt;-<span class="st"> </span>(<span class="kw">sum</span>(residuals[<span class="kw">upper.tri</span>((residuals))]<span class="op">^</span><span class="dv">2</span>)) <span class="co">#sum of squared residuals </span>
-ssc &lt;-<span class="st"> </span>(<span class="kw">sum</span>(raq_matrix[<span class="kw">upper.tri</span>((raq_matrix))]<span class="op">^</span><span class="dv">2</span>)) <span class="co">#sum of squared correlations</span>
-<span class="dv">1</span><span class="op">-</span>(ssr<span class="op">/</span>ssc) <span class="co">#model fit</span></code></pre>
+<div class="sourceCode" id="cb692"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb692-1"><a href="exploratory-factor-analysis.html#cb692-1" aria-hidden="true" tabindex="-1"></a>ssr <span class="ot">&lt;-</span> (<span class="fu">sum</span>(residuals[<span class="fu">upper.tri</span>((residuals))]<span class="sc">^</span><span class="dv">2</span>)) <span class="co">#sum of squared residuals </span></span>
+<span id="cb692-2"><a href="exploratory-factor-analysis.html#cb692-2" aria-hidden="true" tabindex="-1"></a>ssc <span class="ot">&lt;-</span> (<span class="fu">sum</span>(raq_matrix[<span class="fu">upper.tri</span>((raq_matrix))]<span class="sc">^</span><span class="dv">2</span>)) <span class="co">#sum of squared correlations</span></span>
+<span id="cb692-3"><a href="exploratory-factor-analysis.html#cb692-3" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">-</span>(ssr<span class="sc">/</span>ssc) <span class="co">#model fit</span></span></code></pre></div>
 <pre><code>## [1] 0.9645252</code></pre>
 <p>In a next step, we check the size of the residuals. <strong>If fewer residuals than 50% have absolute values greater than 0.05 the model is a good fit.</strong> This can be tested using the following code. We first convert the residuals to a matrix and select the upper triangular again to avoid duplicates. Finally, we count all occurrences where the absolute value is larger than 0.05 and divide it by the number of total observations to get the proportion.</p>
-<pre class="sourceCode r"><code class="sourceCode r">residuals &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(residuals[<span class="kw">upper.tri</span>((residuals))])
-large_res &lt;-<span class="st"> </span><span class="kw">abs</span>(residuals) <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.05</span>
-<span class="kw">sum</span>(large_res)</code></pre>
+<div class="sourceCode" id="cb694"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb694-1"><a href="exploratory-factor-analysis.html#cb694-1" aria-hidden="true" tabindex="-1"></a>residuals <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(residuals[<span class="fu">upper.tri</span>((residuals))])</span>
+<span id="cb694-2"><a href="exploratory-factor-analysis.html#cb694-2" aria-hidden="true" tabindex="-1"></a>large_res <span class="ot">&lt;-</span> <span class="fu">abs</span>(residuals) <span class="sc">&gt;</span> <span class="fl">0.05</span></span>
+<span id="cb694-3"><a href="exploratory-factor-analysis.html#cb694-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(large_res)</span></code></pre></div>
 <pre><code>## [1] 91</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sum</span>(large_res)<span class="op">/</span><span class="kw">nrow</span>(residuals)</code></pre>
+<div class="sourceCode" id="cb696"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb696-1"><a href="exploratory-factor-analysis.html#cb696-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(large_res)<span class="sc">/</span><span class="fu">nrow</span>(residuals)</span></code></pre></div>
 <pre><code>## [1] 0.3596838</code></pre>
 <p>In our example, we can confirm that the proportion of residuals &gt; 0.05 is less than 50%.</p>
 <p>Another way to evaluate the residuals is by looking at their mean value (rather, we square the residuals first to account for positive and negative values, compute the mean and then take the square root).</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sqrt</span>(<span class="kw">mean</span>(residuals<span class="op">^</span><span class="dv">2</span>))</code></pre>
+<div class="sourceCode" id="cb698"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb698-1"><a href="exploratory-factor-analysis.html#cb698-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">mean</span>(residuals<span class="sc">^</span><span class="dv">2</span>))</span></code></pre></div>
 <pre><code>## [1] 0.05549286</code></pre>
 <p>This means that our mean residual is 0.055 and this value should be as low as possible.</p>
 <p>Finally, we need to validate if the residuals are approximately normally distributed, which we do by using a histogram, a Q-Q plot and the Shapiro test.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(residuals)</code></pre>
+<div class="sourceCode" id="cb700"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb700-1"><a href="exploratory-factor-analysis.html#cb700-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(residuals)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-392"></span>
 <img src="_main_files/figure-html/unnamed-chunk-392-1.png" alt="Histogram of residuals" width="672" />
 <p class="caption">
 Figure 7.4: Histogram of residuals
 </p>
 </div>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqnorm</span>(residuals) 
-<span class="kw">qqline</span>(residuals)</code></pre>
+<div class="sourceCode" id="cb701"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb701-1"><a href="exploratory-factor-analysis.html#cb701-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(residuals) </span>
+<span id="cb701-2"><a href="exploratory-factor-analysis.html#cb701-2" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(residuals)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-393"></span>
 <img src="_main_files/figure-html/unnamed-chunk-393-1.png" alt="Q-Q plot" width="672" />
 <p class="caption">
 Figure 7.5: Q-Q plot
 </p>
 </div>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">shapiro.test</span>(residuals)</code></pre>
+<div class="sourceCode" id="cb702"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb702-1"><a href="exploratory-factor-analysis.html#cb702-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(residuals)</span></code></pre></div>
 <pre><code>## 
 ##  Shapiro-Wilk normality test
 ## 
@@ -973,7 +1032,7 @@ Figure 7.5: Q-Q plot
 ## W = 0.99436, p-value = 0.4691</code></pre>
 <p>All of the tests suggest that the distribution of the residuals is approximately normal.</p>
 </div>
-<div id="factor-interpretation" class="section level3">
+<div id="factor-interpretation" class="section level3" number="7.2.3">
 <h3><span class="header-section-number">7.2.3</span> Factor interpretation</h3>
 <p>To aid interpretation, it is possible to maximize the loading of a variable on one factor while minimizing its loading on all other factors. This is known as factor rotation. There are two types of factor rotation:</p>
 <ul>
@@ -981,8 +1040,8 @@ Figure 7.5: Q-Q plot
 <li>oblique (assumes that factors are intercorrelated)</li>
 </ul>
 <p>To carry out a orthogonal rotation, we change the rotate option in the <code>principal()</code> function from “none” to “varimax” (we could also exclude it altogether because varimax is the default if the option is not specified):</p>
-<pre class="sourceCode r"><code class="sourceCode r">pc3 &lt;-<span class="st"> </span><span class="kw">principal</span>(raq_data, <span class="dt">nfactors =</span> <span class="dv">4</span>, <span class="dt">rotate =</span> <span class="st">&quot;varimax&quot;</span>)
-pc3</code></pre>
+<div class="sourceCode" id="cb704"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb704-1"><a href="exploratory-factor-analysis.html#cb704-1" aria-hidden="true" tabindex="-1"></a>pc3 <span class="ot">&lt;-</span> <span class="fu">principal</span>(raq_data, <span class="at">nfactors =</span> <span class="dv">4</span>, <span class="at">rotate =</span> <span class="st">&quot;varimax&quot;</span>)</span>
+<span id="cb704-2"><a href="exploratory-factor-analysis.html#cb704-2" aria-hidden="true" tabindex="-1"></a>pc3</span></code></pre></div>
 <pre><code>## Principal Components Analysis
 ## Call: principal(r = raq_data, nfactors = 4, rotate = &quot;varimax&quot;)
 ## Standardized loadings (pattern matrix) based upon correlation matrix
@@ -1026,7 +1085,7 @@ pc3</code></pre>
 ## 
 ## Fit based upon off diagonal values = 0.96</code></pre>
 <p>Interpreting the factor loading matrix is a little complex, so we can make it easier by using the <code>print.psych()</code> function, which we can use to exclude loading below a cutoff from the display and order the variables by their loading within each factor. In the following, we will only display loadings that exceed the value 0.3.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print.psych</span>(pc3, <span class="dt">cut =</span> <span class="fl">0.3</span>, <span class="dt">sort =</span> <span class="ot">TRUE</span>)</code></pre>
+<div class="sourceCode" id="cb706"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb706-1"><a href="exploratory-factor-analysis.html#cb706-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print.psych</span>(pc3, <span class="at">cut =</span> <span class="fl">0.3</span>, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>## Principal Components Analysis
 ## Call: principal(r = raq_data, nfactors = 4, rotate = &quot;varimax&quot;)
 ## Standardized loadings (pattern matrix) based upon correlation matrix
@@ -1077,9 +1136,9 @@ pc3</code></pre>
 <li><strong>Factor 3:</strong> fear of maths</li>
 <li><strong>Factor 4:</strong> Peer evaluation</li>
 </ul>
-<p>The previous type of rotation (i.e., “varimax”) assumed that the factors are independent. Oblique rotation is another type of rotation that can handle correlation between the factors. The command for an oblique rotation is very similar to that for an orthogonal rotation – we just change the rotate option from “varimax” to “oblimin”.</p>
-<pre class="sourceCode r"><code class="sourceCode r">pc4 &lt;-<span class="st"> </span><span class="kw">principal</span>(raq_data, <span class="dt">nfactors =</span> <span class="dv">4</span>, <span class="dt">rotate =</span> <span class="st">&quot;oblimin&quot;</span>, <span class="dt">scores =</span> <span class="ot">TRUE</span>)
-<span class="kw">print.psych</span>(pc4, <span class="dt">cut =</span> <span class="fl">0.3</span>, <span class="dt">sort =</span> <span class="ot">TRUE</span>)</code></pre>
+<p>The previous type of rotation (i.e., “varimax”) assumed that the factors are independent. Oblique rotation is another type of rotation that can handle correlation between the factors. The command for an oblique rotation is very similar to that for an orthogonal rotation – we just change the rotate option from “varimax” to “oblimin.”</p>
+<div class="sourceCode" id="cb708"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb708-1"><a href="exploratory-factor-analysis.html#cb708-1" aria-hidden="true" tabindex="-1"></a>pc4 <span class="ot">&lt;-</span> <span class="fu">principal</span>(raq_data, <span class="at">nfactors =</span> <span class="dv">4</span>, <span class="at">rotate =</span> <span class="st">&quot;oblimin&quot;</span>, <span class="at">scores =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb708-2"><a href="exploratory-factor-analysis.html#cb708-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print.psych</span>(pc4, <span class="at">cut =</span> <span class="fl">0.3</span>, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>## Principal Components Analysis
 ## Call: principal(r = raq_data, nfactors = 4, rotate = &quot;oblimin&quot;, scores = TRUE)
 ## Standardized loadings (pattern matrix) based upon correlation matrix
@@ -1131,10 +1190,10 @@ pc3</code></pre>
 ## Fit based upon off diagonal values = 0.96</code></pre>
 <p>The component correlations indicate that the factors might indeed be correlated, so oblique rotation might actually be more appropriate in this case.</p>
 </div>
-<div id="creating-new-variables" class="section level3">
+<div id="creating-new-variables" class="section level3" number="7.2.4">
 <h3><span class="header-section-number">7.2.4</span> Creating new variables</h3>
 <p>Once we have decided on the final model, we can calculate the new variables as the weighted sum of the variables that form a factor. This means, we estimate a person’s score on a factor based on their scores on the items that constitute the measurement scales. These scores are also referred to as the <strong>factor scores</strong>. Because we have used the <code>scores = TRUE</code> argument in the previous command, the factor scores have already been created for us. By default, R uses the regression method to compute the factor scores, which controls for differences in the units of measurement. You can access the residuals as follows:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(pc4<span class="op">$</span>scores)</code></pre>
+<div class="sourceCode" id="cb710"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb710-1"><a href="exploratory-factor-analysis.html#cb710-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(pc4<span class="sc">$</span>scores)</span></code></pre></div>
 <pre><code>##              TC1        TC4         TC3        TC2
 ## [1,]  0.37296709  1.8808424  0.95979596  0.3910711
 ## [2,]  0.63334164  0.2374679  0.29090777 -0.3504080
@@ -1143,11 +1202,11 @@ pc3</code></pre>
 ## [5,]  0.04425942  0.6815179  0.59786611 -0.6912687
 ## [6,] -1.70018648  0.2091685  0.02784164  0.6653081</code></pre>
 <p>We can also use the <code>cbind()</code> function to add the computed factor scores to the existing data set:</p>
-<pre class="sourceCode r"><code class="sourceCode r">raq_data &lt;-<span class="st"> </span><span class="kw">cbind</span>(raq_data, pc4<span class="op">$</span>scores)</code></pre>
+<div class="sourceCode" id="cb712"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb712-1"><a href="exploratory-factor-analysis.html#cb712-1" aria-hidden="true" tabindex="-1"></a>raq_data <span class="ot">&lt;-</span> <span class="fu">cbind</span>(raq_data, pc4<span class="sc">$</span>scores)</span></code></pre></div>
 <p>This way, it is easier to use the new variables in subsequent analysis (e.g., t-tests, regression, ANOVA, cluster analysis).</p>
 </div>
 </div>
-<div id="reliability-analysis" class="section level2">
+<div id="reliability-analysis" class="section level2" number="7.3">
 <h2><span class="header-section-number">7.3</span> Reliability analysis</h2>
 <p>When you are using multi-item scales to measure a latent construct (e.g., the output from the PCA above), it is useful to check the reliability of your scale. Reliability means that our items should consistently reflect the construct that they are intended to measure. In other words, individual items should produce results consistent with the overall scale. This means that for a scale to be reliable, the score of a person on one half of the items should be similar to the score derived based on the other half of the items (split-half reliability). The problem is that there are several ways in which data can be split. A measure that reflects this underlying intuition is <strong>Cronbach’s alpha</strong>, which is approximately equal to the average of all possible split-half reliabilities. It is computed as follows:</p>
 <p><span class="math display" id="eq:calpha">\[\begin{equation} 
@@ -1161,12 +1220,12 @@ pc3</code></pre>
 <li>&gt;0.9 desirable for applied research</li>
 </ul>
 <p>To see if the subscales that were derived from the previous PCA exhibit a sufficient degree of reliability, we first create subsets of our data set that contain the respective items for each of the factors (we use the results from the oblimin rotation here):</p>
-<pre class="sourceCode r"><code class="sourceCode r">computer_fear &lt;-<span class="st"> </span>raq_data[,<span class="kw">c</span>(<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">10</span>,<span class="dv">13</span>,<span class="dv">14</span>,<span class="dv">15</span>,<span class="dv">18</span>)]
-statistics_fear &lt;-<span class="st"> </span>raq_data[,<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">12</span>,<span class="dv">16</span>,<span class="dv">20</span>,<span class="dv">21</span>)]
-math_fear &lt;-<span class="st"> </span>raq_data[,<span class="kw">c</span>(<span class="dv">8</span>,<span class="dv">11</span>,<span class="dv">17</span>)]
-peer_evaluation &lt;-<span class="st"> </span>raq_data[,<span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">9</span>,<span class="dv">19</span>,<span class="dv">22</span>,<span class="dv">23</span>)]</code></pre>
+<div class="sourceCode" id="cb713"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb713-1"><a href="exploratory-factor-analysis.html#cb713-1" aria-hidden="true" tabindex="-1"></a>computer_fear <span class="ot">&lt;-</span> raq_data[,<span class="fu">c</span>(<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">10</span>,<span class="dv">13</span>,<span class="dv">14</span>,<span class="dv">15</span>,<span class="dv">18</span>)]</span>
+<span id="cb713-2"><a href="exploratory-factor-analysis.html#cb713-2" aria-hidden="true" tabindex="-1"></a>statistics_fear <span class="ot">&lt;-</span> raq_data[,<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">12</span>,<span class="dv">16</span>,<span class="dv">20</span>,<span class="dv">21</span>)]</span>
+<span id="cb713-3"><a href="exploratory-factor-analysis.html#cb713-3" aria-hidden="true" tabindex="-1"></a>math_fear <span class="ot">&lt;-</span> raq_data[,<span class="fu">c</span>(<span class="dv">8</span>,<span class="dv">11</span>,<span class="dv">17</span>)]</span>
+<span id="cb713-4"><a href="exploratory-factor-analysis.html#cb713-4" aria-hidden="true" tabindex="-1"></a>peer_evaluation <span class="ot">&lt;-</span> raq_data[,<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">9</span>,<span class="dv">19</span>,<span class="dv">22</span>,<span class="dv">23</span>)]</span></code></pre></div>
 <p>Now we can use the <code>alpha()</code> function from the <code>psych</code> package to test the reliability. Note that the <code>keys</code> argument may be used to indicate reverse coded items. In the example below, the second item of the “statistics_fear” factor is reverse coded as indicated by the <code>-1</code>, meaning that it is phrased in a “positive” way, while the remaining items belonging to this factor are phrased in a “negative” way. This is often done to check if respondents are giving consistent answers.</p>
-<pre class="sourceCode r"><code class="sourceCode r">psych<span class="op">::</span><span class="kw">alpha</span>(computer_fear)</code></pre>
+<div class="sourceCode" id="cb714"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb714-1"><a href="exploratory-factor-analysis.html#cb714-1" aria-hidden="true" tabindex="-1"></a>psych<span class="sc">::</span><span class="fu">alpha</span>(computer_fear)</span></code></pre></div>
 <pre><code>## 
 ## Reliability analysis   
 ## Call: psych::alpha(x = computer_fear)
@@ -1206,39 +1265,39 @@ peer_evaluation &lt;-<span class="st"> </span>raq_data[,<span class="kw">c</span
 ## Q14 0.07 0.18 0.38 0.31 0.06    0
 ## Q15 0.06 0.18 0.30 0.39 0.07    0
 ## Q18 0.06 0.12 0.31 0.37 0.14    0</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">psych<span class="op">::</span><span class="kw">alpha</span>(statistics_fear, <span class="dt">keys=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>))</code></pre>
+<div class="sourceCode" id="cb716"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb716-1"><a href="exploratory-factor-analysis.html#cb716-1" aria-hidden="true" tabindex="-1"></a>psych<span class="sc">::</span><span class="fu">alpha</span>(statistics_fear, <span class="at">keys=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span></code></pre></div>
 <pre><code>## 
 ## Reliability analysis   
 ## Call: psych::alpha(x = statistics_fear, keys = c(1, -1, 1, 1, 1, 1, 
 ##     1, 1))
 ## 
-##   raw_alpha std.alpha G6(smc) average_r S/N  ase mean  sd median_r
-##       0.61      0.64    0.71      0.18 1.8 0.01  3.1 0.5     0.34
+##   raw_alpha std.alpha G6(smc) average_r S/N    ase mean   sd median_r
+##       0.82      0.82    0.81      0.37 4.7 0.0053    3 0.64      0.4
 ## 
 ##  lower alpha upper     95% confidence boundaries
-## 0.59 0.61 0.63 
+## 0.81 0.82 0.83 
 ## 
 ##  Reliability if an item is dropped:
-##     raw_alpha std.alpha G6(smc) average_r S/N alpha se var.r med.r
-## Q01      0.52      0.56    0.64      0.15 1.3   0.0128 0.123  0.33
-## Q03      0.80      0.80    0.79      0.37 4.1   0.0061 0.007  0.40
-## Q04      0.50      0.55    0.64      0.15 1.2   0.0133 0.119  0.33
-## Q05      0.52      0.57    0.66      0.16 1.3   0.0127 0.129  0.33
-## Q12      0.52      0.56    0.65      0.15 1.3   0.0131 0.120  0.33
-## Q16      0.51      0.55    0.63      0.15 1.2   0.0133 0.116  0.33
-## Q20      0.56      0.60    0.68      0.18 1.5   0.0118 0.133  0.39
-## Q21      0.50      0.55    0.63      0.15 1.2   0.0136 0.117  0.30
+##      raw_alpha std.alpha G6(smc) average_r S/N alpha se  var.r med.r
+## Q01       0.80      0.80    0.79      0.37 4.1   0.0060 0.0052  0.40
+## Q03-      0.80      0.80    0.79      0.37 4.1   0.0061 0.0070  0.40
+## Q04       0.80      0.80    0.78      0.36 4.0   0.0062 0.0061  0.35
+## Q05       0.81      0.81    0.80      0.38 4.2   0.0058 0.0058  0.41
+## Q12       0.80      0.80    0.79      0.36 4.0   0.0061 0.0067  0.39
+## Q16       0.79      0.80    0.78      0.36 3.9   0.0062 0.0057  0.35
+## Q20       0.82      0.82    0.80      0.40 4.6   0.0055 0.0022  0.41
+## Q21       0.79      0.80    0.78      0.36 3.9   0.0063 0.0063  0.38
 ## 
 ##  Item statistics 
-##        n raw.r std.r r.cor r.drop mean   sd
-## Q01 2571  0.65  0.68  0.62   0.51  3.6 0.83
-## Q03 2571 -0.35 -0.37 -0.64  -0.55  3.4 1.08
-## Q04 2571  0.69  0.69  0.65   0.53  3.2 0.95
-## Q05 2571  0.65  0.65  0.57   0.47  3.3 0.96
-## Q12 2571  0.66  0.67  0.62   0.50  2.8 0.92
-## Q16 2571  0.69  0.70  0.66   0.53  3.1 0.92
-## Q20 2571  0.57  0.55  0.45   0.35  2.4 1.04
-## Q21 2571  0.70  0.70  0.66   0.54  2.8 0.98
+##         n raw.r std.r r.cor r.drop mean   sd
+## Q01  2571  0.65  0.67  0.60   0.54  3.6 0.83
+## Q03- 2571  0.69  0.67  0.60   0.55  2.6 1.08
+## Q04  2571  0.69  0.70  0.64   0.58  3.2 0.95
+## Q05  2571  0.63  0.63  0.55   0.49  3.3 0.96
+## Q12  2571  0.69  0.69  0.63   0.57  2.8 0.92
+## Q16  2571  0.71  0.71  0.67   0.60  3.1 0.92
+## Q20  2571  0.58  0.56  0.47   0.42  2.4 1.04
+## Q21  2571  0.72  0.71  0.67   0.61  2.8 0.98
 ## 
 ## Non missing response frequency for each item
 ##        1    2    3    4    5 miss
@@ -1250,7 +1309,7 @@ peer_evaluation &lt;-<span class="st"> </span>raq_data[,<span class="kw">c</span
 ## Q16 0.06 0.16 0.42 0.33 0.04    0
 ## Q20 0.22 0.37 0.25 0.15 0.02    0
 ## Q21 0.09 0.29 0.34 0.26 0.02    0</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">psych<span class="op">::</span><span class="kw">alpha</span>(math_fear)</code></pre>
+<div class="sourceCode" id="cb718"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb718-1"><a href="exploratory-factor-analysis.html#cb718-1" aria-hidden="true" tabindex="-1"></a>psych<span class="sc">::</span><span class="fu">alpha</span>(math_fear)</span></code></pre></div>
 <pre><code>## 
 ## Reliability analysis   
 ## Call: psych::alpha(x = math_fear)
@@ -1278,7 +1337,7 @@ peer_evaluation &lt;-<span class="st"> </span>raq_data[,<span class="kw">c</span
 ## Q08 0.03 0.06 0.19 0.58 0.15    0
 ## Q11 0.02 0.06 0.22 0.53 0.16    0
 ## Q17 0.03 0.10 0.27 0.52 0.08    0</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">psych<span class="op">::</span><span class="kw">alpha</span>(peer_evaluation)</code></pre>
+<div class="sourceCode" id="cb720"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb720-1"><a href="exploratory-factor-analysis.html#cb720-1" aria-hidden="true" tabindex="-1"></a>psych<span class="sc">::</span><span class="fu">alpha</span>(peer_evaluation)</span></code></pre></div>
 <pre><code>## 
 ## Reliability analysis   
 ## Call: psych::alpha(x = peer_evaluation)
@@ -1314,40 +1373,40 @@ peer_evaluation &lt;-<span class="st"> </span>raq_data[,<span class="kw">c</span
 ## Q23 0.12 0.42 0.27 0.12 0.06    0</code></pre>
 <p>The above output would lead us to conclude that the fear of computers, fear of statistics and fear of maths subscales of the RAQ all had sufficiently high reliabilities (i.e., Cronbach’s alpha &gt; 0.70). However, the fear of negative peer evaluation subscale had relatively low reliability (Cronbach’s alpha = 0.57). As the output under “Reliability if an item is dropped” suggests, the alpha score would also not increase if an item was dropped from the scale.</p>
 <p>As another example, consider the multi-item scale from the statistical ability questionnaire.</p>
-<pre class="sourceCode r"><code class="sourceCode r">test_data &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/survey2017.dat&quot;</span>, 
-                        <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)
-<span class="kw">head</span>(test_data)</code></pre>
+<div class="sourceCode" id="cb722"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb722-1"><a href="exploratory-factor-analysis.html#cb722-1" aria-hidden="true" tabindex="-1"></a>test_data <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;https://raw.githubusercontent.com/IMSMWU/Teaching/master/MRDA2017/survey2017.dat&quot;</span>, </span>
+<span id="cb722-2"><a href="exploratory-factor-analysis.html#cb722-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">sep =</span> <span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb722-3"><a href="exploratory-factor-analysis.html#cb722-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(test_data)</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["startdate"],"name":[1],"type":["fctr"],"align":["left"]},{"label":["enddate"],"name":[2],"type":["fctr"],"align":["left"]},{"label":["ipaddress"],"name":[3],"type":["fctr"],"align":["left"]},{"label":["duration"],"name":[4],"type":["int"],"align":["right"]},{"label":["experience"],"name":[5],"type":["int"],"align":["right"]},{"label":["theory_ht"],"name":[6],"type":["int"],"align":["right"]},{"label":["theory_anova"],"name":[7],"type":["int"],"align":["right"]},{"label":["theory_reg"],"name":[8],"type":["int"],"align":["right"]},{"label":["theory_fa"],"name":[9],"type":["int"],"align":["right"]},{"label":["pract_ht"],"name":[10],"type":["int"],"align":["right"]},{"label":["pract_anova"],"name":[11],"type":["int"],"align":["right"]},{"label":["pract_reg"],"name":[12],"type":["int"],"align":["right"]},{"label":["pract_fa"],"name":[13],"type":["int"],"align":["right"]},{"label":["overall_knowledge"],"name":[14],"type":["int"],"align":["right"]},{"label":["multi_1"],"name":[15],"type":["int"],"align":["right"]},{"label":["multi_2"],"name":[16],"type":["int"],"align":["right"]},{"label":["multi_3"],"name":[17],"type":["int"],"align":["right"]},{"label":["multi_4"],"name":[18],"type":["int"],"align":["right"]},{"label":["overall_100"],"name":[19],"type":["int"],"align":["right"]},{"label":["prior_SPSS"],"name":[20],"type":["int"],"align":["right"]},{"label":["prior_R"],"name":[21],"type":["int"],"align":["right"]},{"label":["prior_Stata"],"name":[22],"type":["int"],"align":["right"]},{"label":["prior_Excel"],"name":[23],"type":["int"],"align":["right"]},{"label":["prior_SAS"],"name":[24],"type":["int"],"align":["right"]},{"label":["software_preference"],"name":[25],"type":["int"],"align":["right"]},{"label":["future_importance"],"name":[26],"type":["int"],"align":["right"]},{"label":["gender"],"name":[27],"type":["int"],"align":["right"]},{"label":["country"],"name":[28],"type":["int"],"align":["right"]},{"label":["group"],"name":[29],"type":["int"],"align":["right"]},{"label":["lat"],"name":[30],"type":["dbl"],"align":["right"]},{"label":["long"],"name":[31],"type":["dbl"],"align":["right"]}],"data":[{"1":"04.09.2017 21:03","2":"04.09.2017 21:05","3":"188.23.190.194","4":"136","5":"3","6":"2","7":"2","8":"2","9":"2","10":"3","11":"3","12":"3","13":"3","14":"2","15":"2","16":"2","17":"4","18":"3","19":"25","20":"1","21":"1","22":"1","23":"5","24":"1","25":"5","26":"4","27":"1","28":"1","29":"1","30":"48.30000","31":"16.350006"},{"1":"04.09.2017 21:07","2":"04.09.2017 21:12","3":"93.10.250.2","4":"297","5":"3","6":"1","7":"3","8":"3","9":"3","10":"1","11":"1","12":"1","13":"1","14":"2","15":"2","16":"2","17":"2","18":"4","19":"15","20":"1","21":"1","22":"1","23":"4","24":"1","25":"5","26":"4","27":"2","28":"2","29":"1","30":"43.71671","31":"7.366699"},{"1":"04.09.2017 21:09","2":"04.09.2017 21:13","3":"91.0.18.86","4":"237","5":"3","6":"2","7":"3","8":"3","9":"1","10":"1","11":"1","12":"1","13":"1","14":"2","15":"3","16":"3","17":"3","18":"3","19":"30","20":"1","21":"1","22":"1","23":"2","24":"1","25":"5","26":"4","27":"2","28":"2","29":"2","30":"50.91330","31":"6.815201"},{"1":"04.09.2017 21:14","2":"04.09.2017 21:23","3":"37.116.255.55","4":"579","5":"1","6":"3","7":"3","8":"3","9":"2","10":"3","11":"3","12":"2","13":"2","14":"3","15":"4","16":"3","17":"3","18":"2","19":"65","20":"1","21":"1","22":"1","23":"3","24":"1","25":"3","26":"4","27":"2","28":"2","29":"1","30":"45.50000","31":"11.399994"},{"1":"04.09.2017 21:25","2":"04.09.2017 21:30","3":"178.165.131.208","4":"290","5":"1","6":"3","7":"3","8":"2","9":"2","10":"5","11":"5","12":"4","13":"3","14":"3","15":"4","16":"3","17":"4","18":"2","19":"70","20":"3","21":"1","22":"1","23":"3","24":"1","25":"1","26":"4","27":"2","28":"1","29":"1","30":"48.20869","31":"16.240707"},{"1":"04.09.2017 21:42","2":"04.09.2017 21:46","3":"212.28.68.81","4":"205","5":"3","6":"2","7":"3","8":"3","9":"1","10":"1","11":"1","12":"1","13":"1","14":"1","15":"3","16":"3","17":"2","18":"4","19":"0","20":"1","21":"1","22":"1","23":"1","24":"1","25":"5","26":"4","27":"2","28":"2","29":"1","30":"47.00560","31":"28.857498"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["startdate"],"name":[1],"type":["chr"],"align":["left"]},{"label":["enddate"],"name":[2],"type":["chr"],"align":["left"]},{"label":["ipaddress"],"name":[3],"type":["chr"],"align":["left"]},{"label":["duration"],"name":[4],"type":["int"],"align":["right"]},{"label":["experience"],"name":[5],"type":["int"],"align":["right"]},{"label":["theory_ht"],"name":[6],"type":["int"],"align":["right"]},{"label":["theory_anova"],"name":[7],"type":["int"],"align":["right"]},{"label":["theory_reg"],"name":[8],"type":["int"],"align":["right"]},{"label":["theory_fa"],"name":[9],"type":["int"],"align":["right"]},{"label":["pract_ht"],"name":[10],"type":["int"],"align":["right"]},{"label":["pract_anova"],"name":[11],"type":["int"],"align":["right"]},{"label":["pract_reg"],"name":[12],"type":["int"],"align":["right"]},{"label":["pract_fa"],"name":[13],"type":["int"],"align":["right"]},{"label":["overall_knowledge"],"name":[14],"type":["int"],"align":["right"]},{"label":["multi_1"],"name":[15],"type":["int"],"align":["right"]},{"label":["multi_2"],"name":[16],"type":["int"],"align":["right"]},{"label":["multi_3"],"name":[17],"type":["int"],"align":["right"]},{"label":["multi_4"],"name":[18],"type":["int"],"align":["right"]},{"label":["overall_100"],"name":[19],"type":["int"],"align":["right"]},{"label":["prior_SPSS"],"name":[20],"type":["int"],"align":["right"]},{"label":["prior_R"],"name":[21],"type":["int"],"align":["right"]},{"label":["prior_Stata"],"name":[22],"type":["int"],"align":["right"]},{"label":["prior_Excel"],"name":[23],"type":["int"],"align":["right"]},{"label":["prior_SAS"],"name":[24],"type":["int"],"align":["right"]},{"label":["software_preference"],"name":[25],"type":["int"],"align":["right"]},{"label":["future_importance"],"name":[26],"type":["int"],"align":["right"]},{"label":["gender"],"name":[27],"type":["int"],"align":["right"]},{"label":["country"],"name":[28],"type":["int"],"align":["right"]},{"label":["group"],"name":[29],"type":["int"],"align":["right"]},{"label":["lat"],"name":[30],"type":["dbl"],"align":["right"]},{"label":["long"],"name":[31],"type":["dbl"],"align":["right"]}],"data":[{"1":"04.09.2017 21:03","2":"04.09.2017 21:05","3":"188.23.190.194","4":"136","5":"3","6":"2","7":"2","8":"2","9":"2","10":"3","11":"3","12":"3","13":"3","14":"2","15":"2","16":"2","17":"4","18":"3","19":"25","20":"1","21":"1","22":"1","23":"5","24":"1","25":"5","26":"4","27":"1","28":"1","29":"1","30":"48.30000","31":"16.350006"},{"1":"04.09.2017 21:07","2":"04.09.2017 21:12","3":"93.10.250.2","4":"297","5":"3","6":"1","7":"3","8":"3","9":"3","10":"1","11":"1","12":"1","13":"1","14":"2","15":"2","16":"2","17":"2","18":"4","19":"15","20":"1","21":"1","22":"1","23":"4","24":"1","25":"5","26":"4","27":"2","28":"2","29":"1","30":"43.71671","31":"7.366699"},{"1":"04.09.2017 21:09","2":"04.09.2017 21:13","3":"91.0.18.86","4":"237","5":"3","6":"2","7":"3","8":"3","9":"1","10":"1","11":"1","12":"1","13":"1","14":"2","15":"3","16":"3","17":"3","18":"3","19":"30","20":"1","21":"1","22":"1","23":"2","24":"1","25":"5","26":"4","27":"2","28":"2","29":"2","30":"50.91330","31":"6.815201"},{"1":"04.09.2017 21:14","2":"04.09.2017 21:23","3":"37.116.255.55","4":"579","5":"1","6":"3","7":"3","8":"3","9":"2","10":"3","11":"3","12":"2","13":"2","14":"3","15":"4","16":"3","17":"3","18":"2","19":"65","20":"1","21":"1","22":"1","23":"3","24":"1","25":"3","26":"4","27":"2","28":"2","29":"1","30":"45.50000","31":"11.399994"},{"1":"04.09.2017 21:25","2":"04.09.2017 21:30","3":"178.165.131.208","4":"290","5":"1","6":"3","7":"3","8":"2","9":"2","10":"5","11":"5","12":"4","13":"3","14":"3","15":"4","16":"3","17":"4","18":"2","19":"70","20":"3","21":"1","22":"1","23":"3","24":"1","25":"1","26":"4","27":"2","28":"1","29":"1","30":"48.20869","31":"16.240707"},{"1":"04.09.2017 21:42","2":"04.09.2017 21:46","3":"212.28.68.81","4":"205","5":"3","6":"2","7":"3","8":"3","9":"1","10":"1","11":"1","12":"1","13":"1","14":"1","15":"3","16":"3","17":"2","18":"4","19":"0","20":"1","21":"1","22":"1","23":"1","24":"1","25":"5","26":"4","27":"2","28":"2","29":"1","30":"47.00560","31":"28.857498"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <p>The four variables “multi_1” - “multi_4” represent the multi-item scales. We can test the reliability of the scale using the <code>alpha()</code> function (item 4 was reverse coded, hence the “-1” in the <code>keys</code> vector):</p>
-<pre class="sourceCode r"><code class="sourceCode r">psych<span class="op">::</span><span class="kw">alpha</span>(test_data[,<span class="kw">c</span>(<span class="st">&quot;multi_1&quot;</span>,<span class="st">&quot;multi_2&quot;</span>,<span class="st">&quot;multi_3&quot;</span>,<span class="st">&quot;multi_4&quot;</span>)], <span class="dt">keys=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>))</code></pre>
+<div class="sourceCode" id="cb723"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb723-1"><a href="exploratory-factor-analysis.html#cb723-1" aria-hidden="true" tabindex="-1"></a>psych<span class="sc">::</span><span class="fu">alpha</span>(test_data[,<span class="fu">c</span>(<span class="st">&quot;multi_1&quot;</span>,<span class="st">&quot;multi_2&quot;</span>,<span class="st">&quot;multi_3&quot;</span>,<span class="st">&quot;multi_4&quot;</span>)], <span class="at">keys=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>))</span></code></pre></div>
 <pre><code>## 
 ## Reliability analysis   
 ## Call: psych::alpha(x = test_data[, c(&quot;multi_1&quot;, &quot;multi_2&quot;, &quot;multi_3&quot;, 
 ##     &quot;multi_4&quot;)], keys = c(1, 1, 1, -1))
 ## 
-##   raw_alpha std.alpha G6(smc) average_r  S/N  ase mean   sd median_r
-##       0.22      0.27    0.71     0.084 0.37 0.14  2.8 0.58     0.05
+##   raw_alpha std.alpha G6(smc) average_r S/N   ase mean   sd median_r
+##        0.9       0.9    0.88      0.68 8.7 0.024  2.7 0.92     0.65
 ## 
 ##  lower alpha upper     95% confidence boundaries
-## -0.06 0.22 0.51 
+## 0.85 0.9 0.94 
 ## 
 ##  Reliability if an item is dropped:
-##         raw_alpha std.alpha G6(smc) average_r   S/N alpha se  var.r med.r
-## multi_1     -0.69     -0.61    0.39     -0.14 -0.38    0.377 0.6413 -0.61
-## multi_2     -0.85     -0.77    0.23     -0.17 -0.43    0.412 0.5494 -0.59
-## multi_3     -0.57     -0.47    0.49     -0.12 -0.32    0.358 0.6858 -0.59
-## multi_4      0.91      0.91    0.88      0.77  9.95    0.022 0.0058  0.78
+##          raw_alpha std.alpha G6(smc) average_r  S/N alpha se  var.r med.r
+## multi_1       0.85      0.86    0.81      0.66  5.9    0.035 0.0101  0.61
+## multi_2       0.83      0.83    0.77      0.63  5.0    0.039 0.0028  0.61
+## multi_3       0.86      0.86    0.83      0.68  6.3    0.034 0.0195  0.61
+## multi_4-      0.91      0.91    0.88      0.77 10.0    0.022 0.0058  0.78
 ## 
 ##  Item statistics 
-##          n raw.r std.r r.cor r.drop mean  sd
-## multi_1 55  0.86  0.87  0.87   0.62  2.7 1.0
-## multi_2 55  0.89  0.90  0.95   0.70  2.6 1.0
-## multi_3 55  0.83  0.83  0.79   0.54  2.5 1.1
-## multi_4 55 -0.34 -0.36 -0.73  -0.65  3.2 1.1
+##           n raw.r std.r r.cor r.drop mean  sd
+## multi_1  55  0.89  0.89  0.86   0.80  2.7 1.0
+## multi_2  55  0.92  0.92  0.92   0.85  2.6 1.0
+## multi_3  55  0.88  0.88  0.83   0.78  2.5 1.1
+## multi_4- 55  0.81  0.80  0.68   0.65  2.8 1.1
 ## 
 ## Non missing response frequency for each item
 ##            1    2    3    4    5 miss
@@ -1356,11 +1415,11 @@ peer_evaluation &lt;-<span class="st"> </span>raq_data[,<span class="kw">c</span
 ## multi_3 0.18 0.38 0.22 0.20 0.02    0
 ## multi_4 0.04 0.31 0.16 0.40 0.09    0</code></pre>
 <p>Since the scale exhibits a sufficient degree of reliability, we can compute the new variable as the average score on these items. However, before doing this, we need to recode the reverse coded variable in the appropriate way. It is easy to recode the reverse coded item to be in line with the remaining items on the dimension using the <code>recode()</code> function from the <code>car</code> package.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(car)
-test_data<span class="op">$</span>multi_<span class="dv">4</span>_rec =<span class="st"> </span><span class="kw">recode</span>(test_data<span class="op">$</span>multi_<span class="dv">4</span>, <span class="st">&quot;1=5; 2=4; 3=3; 4=2; 5=1&quot;</span>)</code></pre>
+<div class="sourceCode" id="cb725"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb725-1"><a href="exploratory-factor-analysis.html#cb725-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb725-2"><a href="exploratory-factor-analysis.html#cb725-2" aria-hidden="true" tabindex="-1"></a>test_data<span class="sc">$</span>multi_4_rec <span class="ot">=</span> <span class="fu">recode</span>(test_data<span class="sc">$</span>multi_4, <span class="st">&quot;1=5; 2=4; 3=3; 4=2; 5=1&quot;</span>)</span></code></pre></div>
 <p>Now we can compute the new variable as the average score of the four items:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(car)
-test_data<span class="op">$</span>new_variable =<span class="st"> </span>(test_data<span class="op">$</span>multi_<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>test_data<span class="op">$</span>multi_<span class="dv">2</span> <span class="op">+</span><span class="st"> </span>test_data<span class="op">$</span>multi_<span class="dv">3</span> <span class="op">+</span><span class="st"> </span>test_data<span class="op">$</span>multi_<span class="dv">4</span>_rec) <span class="op">/</span><span class="st"> </span><span class="dv">4</span></code></pre>
+<div class="sourceCode" id="cb726"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb726-1"><a href="exploratory-factor-analysis.html#cb726-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb726-2"><a href="exploratory-factor-analysis.html#cb726-2" aria-hidden="true" tabindex="-1"></a>test_data<span class="sc">$</span>new_variable <span class="ot">=</span> (test_data<span class="sc">$</span>multi_1 <span class="sc">+</span> test_data<span class="sc">$</span>multi_2 <span class="sc">+</span> test_data<span class="sc">$</span>multi_3 <span class="sc">+</span> test_data<span class="sc">$</span>multi_4_rec) <span class="sc">/</span> <span class="dv">4</span></span></code></pre></div>
 
 </div>
 </div>
@@ -1370,16 +1429,18 @@ test_data<span class="op">$</span>new_variable =<span class="st"> </span>(test_d
         </div>
       </div>
 <a href="regression.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="appendix.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="simulation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
@@ -1387,12 +1448,12 @@ gitbook.start({
 "github": false,
 "facebook": true,
 "twitter": true,
-"google": false,
 "linkedin": false,
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -1404,6 +1465,10 @@ gitbook.start({
 "text": null
 },
 "history": {
+"link": null,
+"text": null
+},
+"view": {
 "link": null,
 "text": null
 },
@@ -1422,8 +1487,9 @@ gitbook.start({
     script.type = "text/javascript";
     var src = "true";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(src))
-      src = src.replace(/^https?:/, '');
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();

@@ -1,0 +1,239 @@
+---
+title: "Business Analytics"
+output:
+  html_document:
+    toc: yes
+  html_notebook: default
+  pdf_document:
+    toc: yes
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Linear Programming
+
+This chapter is primarily based on 
+
+* Hillier-Liebermann (2001): Introduction to Operations Research
+
+
+[You can download the corresponding R-Code here](./Code/14-lp.R)
+
+## Introduction
+
+Linear programming is a problem-solving approach that has been developed to help managers make decisions. It uses a mathematical model to describe the problem of concern. The adjective linear means that all the mathematical functions in this model are required to be linear functions. The word programming does not refer here to computer programming; rather, it is essentially a synonym for planning. Thus, linear programming involves the planning of activities to obtain an optimal result that maximizes or minimizes the outcome.
+
+In general, the process of Linear Programming follows three steps:
+
+* The process begins by carefully observing and formulating the problem, including gathering all relevant data.
+
+* The next step is to construct a mathematical model that attempts to abstract the real problem.
+
+* It then attempts to find an optimal solution.
+
+Optimization models are used to make the optimum decision concerning the design of a system by allocating scarce resources.
+
+* **Production Planning**: Given several products with varying production requirements and cost structures, determine how much of each product to produce in order to maximize profits.
+
+* **Scheduling**: Given a staff of people, determine an optimal work schedule that maximizes worker preferences while adhering to scheduling rules. 
+
+* **Network Installation**: Given point-to-point demands on a network, install capacities on the telecom links so as to minimize installation and routing costs.
+
+The three main components of an optimization model are:
+
+* **Objective function**: a function to be minimized or maximized
+
+* **Decision variables**: controllable variables that influence the result of the objective function
+
+* **Constraints**: restrictions for the values the decision variables can take
+
+When all decision variables and constraints in the model are linear, linear programming is used to solve an optimization problem.
+In R, the package `lpSolve` is used for solving linear programming problems. 
+
+
+## Production Planning
+
+Consider the following example on how to solve linear programs in R.
+
+> A company wants to determine how much of each product 1 and 2 to produce in order to maximize profits. They have three plants with limited capacities. Product 1 requires 1 hour at plant 1 and 3 hours at plant 3, generating profits of $3 per item. Product 2 requires 2 hours at plant 2 and 3 hours at plant 3, and can be sold for $5 per item. The production capacities are 4, 12, and 18 hours, for plant 1, 2, and 3, respectively. Because both products are competing for the same production capacity in Plant 3, it is not clear which mix of the two products is most profitable. 
+> We want to determine how many items of each of the two products should be produced in order to maximize the total profit, subject to the restrictions imposed by the limited production capacities available in the three plants.
+
+The corresponding mathematical model will then be defined as follows:
+
+$x_1$: number of produced items of product 1
+
+$x_2$: number of produced items of product 2
+
+$$
+\begin{aligned}
+max.\ 3x_1 * 5x_2 \\
+s.t. \\
+3x_1 \leq 4 \\
+2x_2 \leq 12 \\
+3x_1 + 2x_2 \leq 18 \\
+x_1 \geq 0 \\
+x_2 \geq 0
+\end{aligned}
+$$
+
+To solve this linear programming model in R, we first need to import the lpSolve package. Do not forget to install the package first, if not already installed.
+```{r lpSolve, echo=FALSE, include=FALSE}
+#install.packages(lpSolve)
+library(lpSolve)
+```
+
+To build the model, first the coefficients f the objective function need to be set:
+```{r objective}
+objective<-c(3,5)
+```
+
+The production capacity constraints of the linear programming model shown above can be summarized in the following matrix:
+$$
+\begin{bmatrix}
+3 & 0\\
+0 & 2\\
+3 & 2
+\end{bmatrix}
+\begin{bmatrix}
+x_1\\
+x_2
+\end{bmatrix}
+\leq
+\begin{bmatrix}
+4\\
+12\\
+18
+\end{bmatrix}
+$$
+
+The non-negativity constraint can be ignored, R automatically assumes this constraint.
+The constraints are constructed with three different functions. First, the left-hand side:
+
+```{r constraintl}
+constraint.lhs <- matrix(c(3, 0, 0, 2, 3, 2), nrow = 3, byrow = TRUE)
+```
+
+The argument `nrow=3` ensures that the matrix has three rows. The argument `byrow=TRUE` causes the numbers 3,0,0,2,3,2 to be arranged line by line in the generated matrix.
+
+Next, the inequality signs are set:
+```{r signs}
+constraint.direction <- c("<=","<=","<=")
+```
+
+Finally, the right hand side of the constraints are set:
+```{r constraintr}
+constraint.rhs <- c(4,12,18)
+```
+
+To run the optimization, the function `lp` is used.
+```{r run}
+lp(direction="max", objective, constraint.lhs, constraint.direction, constraint.rhs)
+```
+
+Here, we get a success message and the objective value of $34 is returned. 
+
+The final values of the decision variables are displayed using this function and adding `$solution`.
+```{r solution}
+# display final values
+lp(direction="max", objective, constraint.lhs, constraint.direction, 
+   constraint.rhs)$solution
+```
+
+So, we should order 1.33 items of product 1 and 6 items of product 2.
+
+Adding `$duals` shows the shadow prices for the constraints as well as for the decision variables.
+```{r duals}
+# display shadow prices and decision variables
+lp("max", objective, constraint.lhs, constraint.direction, 
+   constraint.rhs, compute.sens=TRUE)$duals
+```
+
+
+## Transportation problem
+
+A transportation problem is a special form of linear programming. Here, the goal is to minimize transportation cost or distance to transport a given commodity from a number of origins to a number of destinations. The constraints are given as capacities of the origins and demand of the destinations.
+
+A common notation of transportation problems is:
+
+m = number of sources (1…m)
+
+n = number of destinations (1…n)
+
+$c_{ij}$ = unit cost of shipping one unit from source i to destination j
+
+$x_{ij}$= amount shipped from source i to destination j
+
+$s_i$ = supply (capacity) at source i
+
+$s_i$  = demand at destination j
+
+Let's illustrate that based on an example of a classical transportation problem. Consider a regional retail company selling organic apples. They purchase their apples at three farms or suppliers from the region. They sell the apples to four customers who process them then to organic apple juice. However, the customers and suppliers are distributed throughout the region. The company must decide now which customer should be supplied by which supplier. Here, they have to consider the transportation costs to deliver the apples from the supplier to the customer. 
+
+The table provides the amount of apples each supplier can provide and the amount of apples each customer demands. The gray cells show the transportation costs for each supplier-customer combination.
+
+| Cost          | Customer 1    | Customer 2    | Customer 3    | Customer 4    | Supply        |
+| ------------- |:-------------:|:-------------:|:-------------:|:-------------:|:-------------:|
+| **Supplier 1**| 10            |  2            | 20            | 11            | **15**        |
+| **Supplier 2**| 12            |  7            |  9            | 20            | **25**        |
+| **Supplier 3**|  4            | 14            | 16            | 18            | **10**        |
+| **Demand**    |  **5**        | **15**        | **15**        | **15**        |               |
+
+In mathematical form, this transportation problem looks like this:
+$$
+\begin{aligned}
+min.\ \sum_{i=1}^{3} \sum_{j=1}^{4} c_{ij}x_{ij} \\
+s.t. \\
+x_{11}+x_{12}+x_{13}+x_{14} \leq 15 \\
+x_{21}+x_{22}+x_{23}+x_{24} \leq 25 \\
+x_{31}+x_{32}+x_{33}+x_{34} \leq 10 \\
+x_{11}+x_{21}+x_{31} \geq 5 \\
+x_{12}+x_{22}+x_{32} \geq 15 \\
+x_{13}+x_{23}+x_{33} \geq 15 \\
+x_{14}+x_{24}+x_{34} \geq 15 \\
+x_{ij} \geq 0
+\end{aligned}
+$$
+
+
+The R code to solve this transportation problem then looks as follows. First, we define the cost matrix in R.
+```{r}
+costs<-matrix(c(10,2,20,11,12,7,9,20,4,14,16,18), nrow = 3, byrow = TRUE)
+```
+
+Then we specify the customers´and the suppliers´ names. They are added as column names and rownames of the cost matrix, for customers and suppliers, respectively.
+```{r}
+colnames(costs) <- c("Customer 1", "Customer 2", "Customer 3", "Customer 4")
+rownames(costs) <- c("Supplier 1", "Supplier 2", "Supplier 3")
+```
+
+The transportation problem consists out of two sets of constraints. One set specifying the maximum capacity at the supplier and the other one the minimum demand required by the customers.
+
+The supplier constraints are built with smaller or equal signs. As the suppliers are considered the rows in the matrix above, we use the following formula to set the inequality signs and right hand side coefficients:
+```{r}
+row.signs <- rep("<=", 3)
+row.rhs <- c(15, 25, 10)
+```
+
+The customer constraints are built with larger or equal signs. As the customers are considered the columns in the matrix above, we use the following formula to set the inequality signs and right hand side coefficients:
+
+```{r}
+col.signs <- rep(">=", 4)
+col.rhs <- c(5, 15, 15, 15)
+```
+
+The final values are retrieved as in the simple linear program shown above.
+```{r}
+lp.transport(costs, "min", row.signs, row.rhs, col.signs, col.rhs)
+lp.transport(costs, "min", row.signs, row.rhs, col.signs, col.rhs)$solution
+```
+
+The total transportation costs for this problem are $435. The allocation is shown in the table below.
+
+| Allocation    | Customer 1    | Customer 2    | Customer 3    | Customer 4    |
+| ------------- |:-------------:|:-------------:|:-------------:|:-------------:|
+| **Supplier 1**| -             |  5            | -             | 10            |
+| **Supplier 2**| -             | 10            | 15            | -             |
+| **Supplier 3**|  5            | -             | -             |  5            |
+
